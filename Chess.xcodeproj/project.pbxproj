@@ -8,6 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		5E99B5C11F49C6A2001DC3FA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B5C01F49C6A2001DC3FA /* main.cpp */; };
+		FA4875701F9CB5200016E7E9 /* NodeConnectorImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA48756E1F9CB5200016E7E9 /* NodeConnectorImplementation.cpp */; };
+		FAA361A31F81D759009CB874 /* benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617D1F81D713009CB874 /* benchmark.cpp */; };
+		FAA361A41F81D759009CB874 /* bitbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617E1F81D713009CB874 /* bitbase.cpp */; };
+		FAA361A51F81D759009CB874 /* bitboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617F1F81D713009CB874 /* bitboard.cpp */; };
+		FAA361A61F81D759009CB874 /* endgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361811F81D713009CB874 /* endgame.cpp */; };
+		FAA361A71F81D759009CB874 /* evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361831F81D713009CB874 /* evaluate.cpp */; };
+		FAA361A91F81D759009CB874 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361861F81D713009CB874 /* material.cpp */; };
+		FAA361AA1F81D759009CB874 /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361881F81D713009CB874 /* misc.cpp */; };
+		FAA361AB1F81D759009CB874 /* movegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3618A1F81D713009CB874 /* movegen.cpp */; };
+		FAA361AC1F81D759009CB874 /* movepick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3618C1F81D713009CB874 /* movepick.cpp */; };
+		FAA361AD1F81D759009CB874 /* pawns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3618E1F81D713009CB874 /* pawns.cpp */; };
+		FAA361AE1F81D759009CB874 /* position.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361901F81D713009CB874 /* position.cpp */; };
+		FAA361AF1F81D759009CB874 /* psqt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361921F81D713009CB874 /* psqt.cpp */; };
+		FAA361B01F81D759009CB874 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361931F81D713009CB874 /* search.cpp */; };
+		FAA361B11F81D759009CB874 /* tbprobe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361961F81D713009CB874 /* tbprobe.cpp */; };
+		FAA361B21F81D759009CB874 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361981F81D713009CB874 /* thread.cpp */; };
+		FAA361B31F81D759009CB874 /* timeman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3619B1F81D713009CB874 /* timeman.cpp */; };
+		FAA361B41F81D759009CB874 /* tt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3619D1F81D713009CB874 /* tt.cpp */; };
+		FAA361B61F81D759009CB874 /* ucioption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361A21F81D713009CB874 /* ucioption.cpp */; };
+		FAA6DFCA1F8CD6DE00614DCD /* StockfishEngineWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */; };
+		FAA6DFCB1F8CD6E300614DCD /* PythonChessValidator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA6DFC71F8CD6C300614DCD /* PythonChessValidator.cpp */; };
+		FAEF98951F8C936700CF47ED /* libpython.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FAEBA0901F8B356C00A00F6E /* libpython.tbd */; };
+		FAF85AFC1F8E1AF000AA3E24 /* libboost_python.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85AF81F8E1AE500AA3E24 /* libboost_python.dylib */; };
+		FAF85AFD1F8E1AF300AA3E24 /* libcpprest.2.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85AF91F8E1AE500AA3E24 /* libcpprest.2.9.dylib */; };
+		FAF85AFE1F8E1AF500AA3E24 /* libcrypto.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85AFA1F8E1AE500AA3E24 /* libcrypto.1.0.0.dylib */; };
+		FAF85AFF1F8E1AF900AA3E24 /* libssl.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85AFB1F8E1AE500AA3E24 /* libssl.1.0.0.dylib */; };
+		FAF85B011F8E1C4800AA3E24 /* libboost_chrono.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85B001F8E1C4400AA3E24 /* libboost_chrono.dylib */; };
+		FAF85B031F8E1C6700AA3E24 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85B021F8E1C6500AA3E24 /* libboost_system.dylib */; };
+		FAF85B051F8E1C8900AA3E24 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85B041F8E1C8600AA3E24 /* libboost_thread-mt.dylib */; };
+		FAF85B0B1F966DD300AA3E24 /* libsioclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85B0A1F966DCB00AA3E24 /* libsioclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +55,66 @@
 /* Begin PBXFileReference section */
 		5E99B5BD1F49C6A2001DC3FA /* Chess */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chess; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E99B5C01F49C6A2001DC3FA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FA4875671F9C59430016E7E9 /* BaseConnectorProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseConnectorProtocol.h; sourceTree = "<group>"; };
+		FA4875681F9C59430016E7E9 /* ConnectingEventsProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectingEventsProtocol.h; sourceTree = "<group>"; };
+		FA4875691F9C59430016E7E9 /* GameEventsProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameEventsProtocol.h; sourceTree = "<group>"; };
+		FA48756A1F9C59430016E7E9 /* RoomEventsProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomEventsProtocol.h; sourceTree = "<group>"; };
+		FA48756D1F9C59E80016E7E9 /* NodeConnectorImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeConnectorImplementation.h; sourceTree = "<group>"; };
+		FA48756E1F9CB5200016E7E9 /* NodeConnectorImplementation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NodeConnectorImplementation.cpp; sourceTree = "<group>"; };
+		FA4875731F9DF9AB0016E7E9 /* GameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		FAA3617D1F81D713009CB874 /* benchmark.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = benchmark.cpp; sourceTree = "<group>"; };
+		FAA3617E1F81D713009CB874 /* bitbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bitbase.cpp; sourceTree = "<group>"; };
+		FAA3617F1F81D713009CB874 /* bitboard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bitboard.cpp; sourceTree = "<group>"; };
+		FAA361801F81D713009CB874 /* bitboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitboard.h; sourceTree = "<group>"; };
+		FAA361811F81D713009CB874 /* endgame.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = endgame.cpp; sourceTree = "<group>"; };
+		FAA361821F81D713009CB874 /* endgame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = endgame.h; sourceTree = "<group>"; };
+		FAA361831F81D713009CB874 /* evaluate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = evaluate.cpp; sourceTree = "<group>"; };
+		FAA361841F81D713009CB874 /* evaluate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = evaluate.h; sourceTree = "<group>"; };
+		FAA361861F81D713009CB874 /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
+		FAA361871F81D713009CB874 /* material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		FAA361881F81D713009CB874 /* misc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
+		FAA361891F81D713009CB874 /* misc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		FAA3618A1F81D713009CB874 /* movegen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = movegen.cpp; sourceTree = "<group>"; };
+		FAA3618B1F81D713009CB874 /* movegen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movegen.h; sourceTree = "<group>"; };
+		FAA3618C1F81D713009CB874 /* movepick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = movepick.cpp; sourceTree = "<group>"; };
+		FAA3618D1F81D713009CB874 /* movepick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movepick.h; sourceTree = "<group>"; };
+		FAA3618E1F81D713009CB874 /* pawns.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pawns.cpp; sourceTree = "<group>"; };
+		FAA3618F1F81D713009CB874 /* pawns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pawns.h; sourceTree = "<group>"; };
+		FAA361901F81D713009CB874 /* position.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = position.cpp; sourceTree = "<group>"; };
+		FAA361911F81D713009CB874 /* position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = position.h; sourceTree = "<group>"; };
+		FAA361921F81D713009CB874 /* psqt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = psqt.cpp; sourceTree = "<group>"; };
+		FAA361931F81D713009CB874 /* search.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = search.cpp; sourceTree = "<group>"; };
+		FAA361941F81D713009CB874 /* search.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = search.h; sourceTree = "<group>"; };
+		FAA361961F81D713009CB874 /* tbprobe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tbprobe.cpp; sourceTree = "<group>"; };
+		FAA361971F81D713009CB874 /* tbprobe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbprobe.h; sourceTree = "<group>"; };
+		FAA361981F81D713009CB874 /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
+		FAA361991F81D713009CB874 /* thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
+		FAA3619A1F81D713009CB874 /* thread_win32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_win32.h; sourceTree = "<group>"; };
+		FAA3619B1F81D713009CB874 /* timeman.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = timeman.cpp; sourceTree = "<group>"; };
+		FAA3619C1F81D713009CB874 /* timeman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timeman.h; sourceTree = "<group>"; };
+		FAA3619D1F81D713009CB874 /* tt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tt.cpp; sourceTree = "<group>"; };
+		FAA3619E1F81D713009CB874 /* tt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tt.h; sourceTree = "<group>"; };
+		FAA3619F1F81D713009CB874 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		FAA361A21F81D713009CB874 /* ucioption.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ucioption.cpp; sourceTree = "<group>"; };
+		FAA6DFC11F8CD6C300614DCD /* BaseTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTypes.h; sourceTree = "<group>"; };
+		FAA6DFC31F8CD6C300614DCD /* EngineWrapperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineWrapperProtocol.h; sourceTree = "<group>"; };
+		FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockfishEngineWrapper.cpp; sourceTree = "<group>"; };
+		FAA6DFC51F8CD6C300614DCD /* StockfishEngineWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockfishEngineWrapper.h; sourceTree = "<group>"; };
+		FAA6DFC71F8CD6C300614DCD /* PythonChessValidator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PythonChessValidator.cpp; sourceTree = "<group>"; };
+		FAA6DFC81F8CD6C300614DCD /* PythonChessValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PythonChessValidator.h; sourceTree = "<group>"; };
+		FAA6DFC91F8CD6C300614DCD /* ValidatorProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValidatorProtocol.h; sourceTree = "<group>"; };
+		FAEBA0901F8B356C00A00F6E /* libpython.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpython.tbd; path = usr/lib/libpython.tbd; sourceTree = SDKROOT; };
+		FAF85AF81F8E1AE500AA3E24 /* libboost_python.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_python.dylib; sourceTree = "<group>"; };
+		FAF85AF91F8E1AE500AA3E24 /* libcpprest.2.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcpprest.2.9.dylib; sourceTree = "<group>"; };
+		FAF85AFA1F8E1AE500AA3E24 /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		FAF85AFB1F8E1AE500AA3E24 /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
+		FAF85B001F8E1C4400AA3E24 /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_chrono.dylib; sourceTree = "<group>"; };
+		FAF85B021F8E1C6500AA3E24 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_system.dylib; sourceTree = "<group>"; };
+		FAF85B041F8E1C8600AA3E24 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_thread-mt.dylib"; sourceTree = "<group>"; };
+		FAF85B071F966D7E00AA3E24 /* sio_client.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_client.h; sourceTree = "<group>"; };
+		FAF85B081F966D7E00AA3E24 /* sio_message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_message.h; sourceTree = "<group>"; };
+		FAF85B091F966D7E00AA3E24 /* sio_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_socket.h; sourceTree = "<group>"; };
+		FAF85B0A1F966DCB00AA3E24 /* libsioclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsioclient.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +122,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF85B0B1F966DD300AA3E24 /* libsioclient.a in Frameworks */,
+				FAEF98951F8C936700CF47ED /* libpython.tbd in Frameworks */,
+				FAF85AFC1F8E1AF000AA3E24 /* libboost_python.dylib in Frameworks */,
+				FAF85AFD1F8E1AF300AA3E24 /* libcpprest.2.9.dylib in Frameworks */,
+				FAF85AFE1F8E1AF500AA3E24 /* libcrypto.1.0.0.dylib in Frameworks */,
+				FAF85AFF1F8E1AF900AA3E24 /* libssl.1.0.0.dylib in Frameworks */,
+				FAF85B011F8E1C4800AA3E24 /* libboost_chrono.dylib in Frameworks */,
+				FAF85B031F8E1C6700AA3E24 /* libboost_system.dylib in Frameworks */,
+				FAF85B051F8E1C8900AA3E24 /* libboost_thread-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +140,13 @@
 		5E99B5B41F49C6A2001DC3FA = {
 			isa = PBXGroup;
 			children = (
+				FAF85AF71F8E1AE500AA3E24 /* Dylibs */,
+				FAA3617C1F81D713009CB874 /* Stockfish */,
+				FAF85B061F966D7E00AA3E24 /* Socket.io-client-cpp */,
+				FA4875611F9C4DAD0016E7E9 /* Network */,
 				5E99B5BF1F49C6A2001DC3FA /* Chess */,
 				5E99B5BE1F49C6A2001DC3FA /* Products */,
+				FAEBA08D1F89E2EE00A00F6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,10 +161,169 @@
 		5E99B5BF1F49C6A2001DC3FA /* Chess */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6DFBF1F8CD6C300614DCD /* GameLogicProcessor */,
+				FA4875721F9DF8E00016E7E9 /* GameController */,
 				5E99B5C01F49C6A2001DC3FA /* main.cpp */,
 			);
 			path = Chess;
 			sourceTree = "<group>";
+		};
+		FA4875611F9C4DAD0016E7E9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FA4875661F9C59430016E7E9 /* NetworkEventsProtocol */,
+				FA48756C1F9C59B90016E7E9 /* NodeServerEventsImplementation */,
+			);
+			path = Network;
+			sourceTree = SOURCE_ROOT;
+		};
+		FA4875661F9C59430016E7E9 /* NetworkEventsProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				FA4875671F9C59430016E7E9 /* BaseConnectorProtocol.h */,
+				FA4875681F9C59430016E7E9 /* ConnectingEventsProtocol.h */,
+				FA4875691F9C59430016E7E9 /* GameEventsProtocol.h */,
+				FA48756A1F9C59430016E7E9 /* RoomEventsProtocol.h */,
+			);
+			path = NetworkEventsProtocol;
+			sourceTree = "<group>";
+		};
+		FA48756C1F9C59B90016E7E9 /* NodeServerEventsImplementation */ = {
+			isa = PBXGroup;
+			children = (
+				FA48756D1F9C59E80016E7E9 /* NodeConnectorImplementation.h */,
+				FA48756E1F9CB5200016E7E9 /* NodeConnectorImplementation.cpp */,
+			);
+			path = NodeServerEventsImplementation;
+			sourceTree = "<group>";
+		};
+		FA4875721F9DF8E00016E7E9 /* GameController */ = {
+			isa = PBXGroup;
+			children = (
+				FA4875731F9DF9AB0016E7E9 /* GameController.h */,
+			);
+			path = GameController;
+			sourceTree = "<group>";
+		};
+		FAA3617C1F81D713009CB874 /* Stockfish */ = {
+			isa = PBXGroup;
+			children = (
+				FAA3617D1F81D713009CB874 /* benchmark.cpp */,
+				FAA3617E1F81D713009CB874 /* bitbase.cpp */,
+				FAA3617F1F81D713009CB874 /* bitboard.cpp */,
+				FAA361801F81D713009CB874 /* bitboard.h */,
+				FAA361811F81D713009CB874 /* endgame.cpp */,
+				FAA361821F81D713009CB874 /* endgame.h */,
+				FAA361831F81D713009CB874 /* evaluate.cpp */,
+				FAA361841F81D713009CB874 /* evaluate.h */,
+				FAA361861F81D713009CB874 /* material.cpp */,
+				FAA361871F81D713009CB874 /* material.h */,
+				FAA361881F81D713009CB874 /* misc.cpp */,
+				FAA361891F81D713009CB874 /* misc.h */,
+				FAA3618A1F81D713009CB874 /* movegen.cpp */,
+				FAA3618B1F81D713009CB874 /* movegen.h */,
+				FAA3618C1F81D713009CB874 /* movepick.cpp */,
+				FAA3618D1F81D713009CB874 /* movepick.h */,
+				FAA3618E1F81D713009CB874 /* pawns.cpp */,
+				FAA3618F1F81D713009CB874 /* pawns.h */,
+				FAA361901F81D713009CB874 /* position.cpp */,
+				FAA361911F81D713009CB874 /* position.h */,
+				FAA361921F81D713009CB874 /* psqt.cpp */,
+				FAA361931F81D713009CB874 /* search.cpp */,
+				FAA361941F81D713009CB874 /* search.h */,
+				FAA361951F81D713009CB874 /* syzygy */,
+				FAA361981F81D713009CB874 /* thread.cpp */,
+				FAA361991F81D713009CB874 /* thread.h */,
+				FAA3619A1F81D713009CB874 /* thread_win32.h */,
+				FAA3619B1F81D713009CB874 /* timeman.cpp */,
+				FAA3619C1F81D713009CB874 /* timeman.h */,
+				FAA3619D1F81D713009CB874 /* tt.cpp */,
+				FAA3619E1F81D713009CB874 /* tt.h */,
+				FAA3619F1F81D713009CB874 /* types.h */,
+				FAA361A21F81D713009CB874 /* ucioption.cpp */,
+			);
+			path = Stockfish;
+			sourceTree = "<group>";
+		};
+		FAA361951F81D713009CB874 /* syzygy */ = {
+			isa = PBXGroup;
+			children = (
+				FAA361961F81D713009CB874 /* tbprobe.cpp */,
+				FAA361971F81D713009CB874 /* tbprobe.h */,
+			);
+			path = syzygy;
+			sourceTree = "<group>";
+		};
+		FAA6DFBF1F8CD6C300614DCD /* GameLogicProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				FAA6DFC01F8CD6C300614DCD /* Common */,
+				FAA6DFC21F8CD6C300614DCD /* EngineWrapper */,
+				FAA6DFC61F8CD6C300614DCD /* Validator */,
+			);
+			path = GameLogicProcessor;
+			sourceTree = "<group>";
+		};
+		FAA6DFC01F8CD6C300614DCD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FAA6DFC11F8CD6C300614DCD /* BaseTypes.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FAA6DFC21F8CD6C300614DCD /* EngineWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				FAA6DFC31F8CD6C300614DCD /* EngineWrapperProtocol.h */,
+				FAA6DFC51F8CD6C300614DCD /* StockfishEngineWrapper.h */,
+				FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */,
+			);
+			path = EngineWrapper;
+			sourceTree = "<group>";
+		};
+		FAA6DFC61F8CD6C300614DCD /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				FAA6DFC91F8CD6C300614DCD /* ValidatorProtocol.h */,
+				FAA6DFC81F8CD6C300614DCD /* PythonChessValidator.h */,
+				FAA6DFC71F8CD6C300614DCD /* PythonChessValidator.cpp */,
+			);
+			path = Validator;
+			sourceTree = "<group>";
+		};
+		FAEBA08D1F89E2EE00A00F6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FAEBA0901F8B356C00A00F6E /* libpython.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FAF85AF71F8E1AE500AA3E24 /* Dylibs */ = {
+			isa = PBXGroup;
+			children = (
+				FAF85AF81F8E1AE500AA3E24 /* libboost_python.dylib */,
+				FAF85AF91F8E1AE500AA3E24 /* libcpprest.2.9.dylib */,
+				FAF85AFA1F8E1AE500AA3E24 /* libcrypto.1.0.0.dylib */,
+				FAF85AFB1F8E1AE500AA3E24 /* libssl.1.0.0.dylib */,
+				FAF85B001F8E1C4400AA3E24 /* libboost_chrono.dylib */,
+				FAF85B021F8E1C6500AA3E24 /* libboost_system.dylib */,
+				FAF85B041F8E1C8600AA3E24 /* libboost_thread-mt.dylib */,
+				FAF85B0A1F966DCB00AA3E24 /* libsioclient.a */,
+			);
+			path = Dylibs;
+			sourceTree = "<group>";
+		};
+		FAF85B061F966D7E00AA3E24 /* Socket.io-client-cpp */ = {
+			isa = PBXGroup;
+			children = (
+				FAF85B071F966D7E00AA3E24 /* sio_client.h */,
+				FAF85B081F966D7E00AA3E24 /* sio_message.h */,
+				FAF85B091F966D7E00AA3E24 /* sio_socket.h */,
+			);
+			path = "Socket.io-client-cpp";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -119,7 +382,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA361A31F81D759009CB874 /* benchmark.cpp in Sources */,
+				FAA361A41F81D759009CB874 /* bitbase.cpp in Sources */,
+				FAA361A51F81D759009CB874 /* bitboard.cpp in Sources */,
+				FAA361A61F81D759009CB874 /* endgame.cpp in Sources */,
+				FAA361A71F81D759009CB874 /* evaluate.cpp in Sources */,
+				FAA361A91F81D759009CB874 /* material.cpp in Sources */,
+				FAA361AA1F81D759009CB874 /* misc.cpp in Sources */,
+				FAA361AB1F81D759009CB874 /* movegen.cpp in Sources */,
+				FAA361AC1F81D759009CB874 /* movepick.cpp in Sources */,
+				FAA361AD1F81D759009CB874 /* pawns.cpp in Sources */,
+				FAA361AE1F81D759009CB874 /* position.cpp in Sources */,
+				FAA361AF1F81D759009CB874 /* psqt.cpp in Sources */,
+				FAA361B01F81D759009CB874 /* search.cpp in Sources */,
+				FAA361B11F81D759009CB874 /* tbprobe.cpp in Sources */,
+				FAA361B21F81D759009CB874 /* thread.cpp in Sources */,
+				FA4875701F9CB5200016E7E9 /* NodeConnectorImplementation.cpp in Sources */,
+				FAA361B31F81D759009CB874 /* timeman.cpp in Sources */,
+				FAA361B41F81D759009CB874 /* tt.cpp in Sources */,
+				FAA361B61F81D759009CB874 /* ucioption.cpp in Sources */,
 				5E99B5C11F49C6A2001DC3FA /* main.cpp in Sources */,
+				FAA6DFCA1F8CD6DE00614DCD /* StockfishEngineWrapper.cpp in Sources */,
+				FAA6DFCB1F8CD6E300614DCD /* PythonChessValidator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +500,21 @@
 		5E99B5C51F49C6A2001DC3FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Stockfish\"",
+					/usr/local/Cellar/boost/1.65.1/include,
+					/usr/local/Cellar/openssl/1.0.2l/include,
+					/usr/local/Cellar/cpprestsdk/2.9.1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/boost/1.65.1/lib,
+					/usr/local/Cellar/openssl/1.0.2l/lib,
+					/usr/local/Cellar/cpprestsdk/2.9.1/lib,
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Dylibs",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -223,6 +522,21 @@
 		5E99B5C61F49C6A2001DC3FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Stockfish\"",
+					/usr/local/Cellar/boost/1.65.1/include,
+					/usr/local/Cellar/openssl/1.0.2l/include,
+					/usr/local/Cellar/cpprestsdk/2.9.1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/boost/1.65.1/lib,
+					/usr/local/Cellar/openssl/1.0.2l/lib,
+					/usr/local/Cellar/cpprestsdk/2.9.1/lib,
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Dylibs",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -246,6 +560,7 @@
 				5E99B5C61F49C6A2001DC3FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
