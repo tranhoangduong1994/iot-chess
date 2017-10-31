@@ -117,9 +117,6 @@
 		FAF85B001F8E1C4400AA3E24 /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_chrono.dylib; sourceTree = "<group>"; };
 		FAF85B021F8E1C6500AA3E24 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_system.dylib; sourceTree = "<group>"; };
 		FAF85B041F8E1C8600AA3E24 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_thread-mt.dylib"; sourceTree = "<group>"; };
-		FAF85B071F966D7E00AA3E24 /* sio_client.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_client.h; sourceTree = "<group>"; };
-		FAF85B081F966D7E00AA3E24 /* sio_message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_message.h; sourceTree = "<group>"; };
-		FAF85B091F966D7E00AA3E24 /* sio_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio_socket.h; sourceTree = "<group>"; };
 		FAF85B0A1F966DCB00AA3E24 /* libsioclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsioclient.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,7 +145,6 @@
 			children = (
 				FAF85AF71F8E1AE500AA3E24 /* Dylibs */,
 				FAA3617C1F81D713009CB874 /* Stockfish */,
-				FAF85B061F966D7E00AA3E24 /* Socket.io-client-cpp */,
 				FA4875611F9C4DAD0016E7E9 /* Network */,
 				FA52B1B71FA6437500CDAC1E /* Common */,
 				5E99B5BF1F49C6A2001DC3FA /* Chess */,
@@ -324,16 +320,6 @@
 			);
 			path = Dylibs;
 			sourceTree = "<group>";
-		};
-		FAF85B061F966D7E00AA3E24 /* Socket.io-client-cpp */ = {
-			isa = PBXGroup;
-			children = (
-				FAF85B071F966D7E00AA3E24 /* sio_client.h */,
-				FAF85B081F966D7E00AA3E24 /* sio_message.h */,
-				FAF85B091F966D7E00AA3E24 /* sio_socket.h */,
-			);
-			path = "Socket.io-client-cpp";
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -518,6 +504,7 @@
 					/usr/local/Cellar/boost/1.65.1/include,
 					/usr/local/Cellar/openssl/1.0.2l/include,
 					/usr/local/Cellar/cpprestsdk/2.9.1/include,
+					"\"$(SRCROOT)/../socket.io-client-cpp/build/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/boost/1.65.1/lib,
@@ -540,6 +527,7 @@
 					/usr/local/Cellar/boost/1.65.1/include,
 					/usr/local/Cellar/openssl/1.0.2l/include,
 					/usr/local/Cellar/cpprestsdk/2.9.1/include,
+					"\"$(SRCROOT)/../socket.io-client-cpp/build/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/boost/1.65.1/lib,
