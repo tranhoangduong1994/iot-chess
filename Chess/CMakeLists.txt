@@ -9,13 +9,6 @@ file(GLOB SOURCES
 				"GameLogicProcessor/Validator/*.cpp"
 	)
 
-#set(Boost_INCLUDE_DIR /usr/local/Cellar/boost/1.65.1)
-#set(Boost_LIBRARY_DIR /usr/local/Cellar/boost/1.65.1/lib)
-#set(BoostPython_INCLUDE_DIR /usr/local/Cellar/boost-python/1.65.1)
-#set(BoostPython_LIBRARY_DIR /usr/local/Cellar/boost-python/1.65.1/lib)
-#find_package(Boost COMPONENTS system filesystem REQUIRED)
-#find_package(Boost COMPONENTS python REQUIRED)
-
 find_package(Boost COMPONENTS filesystem system date_time python REQUIRED)
 message("Include dirs of boost: " ${Boost_INCLUDE_DIRS} )
 message("Libs of boost: " ${Boost_LIBRARIES} )

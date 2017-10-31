@@ -9,15 +9,6 @@ include_directories(
 					../../socket.io-client-cpp/build/include/
 					)
 
-#link_directories(
-#				../../socket.io-client-cpp/build/lib/Release/
-#				)
-
-#target_link_libraries(
-#					Network
-#					libsioclient.a
-#					)
-
 file(GLOB SOURCES 
 				"NodeServerEventsImplementation/*.cpp" 
 				"NetworkEventsProtocol/*.cpp"
