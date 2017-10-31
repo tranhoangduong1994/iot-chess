@@ -1,18 +1,18 @@
 //
-//  EngineWrapperProtocol.h
+//  EngineProtocol.h
 //  Chess
 //
 //  Created by Tran Hoang Duong on 9/17/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#ifndef EngineWrapperProtocol_h
-#define EngineWrapperProtocol_h
+#ifndef EngineProtocol_h
+#define EngineProtocol_h
 
 #include "BaseTypes.h"
 #include <functional>
 
-class EngineWrapperProtocol {
+class EngineProtocol {
 public:
     virtual void start(int difficulty) = 0;
     virtual bool move(const BaseTypes::Move& move) = 0;

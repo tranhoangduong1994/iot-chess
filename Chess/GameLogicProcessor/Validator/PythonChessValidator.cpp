@@ -7,7 +7,6 @@
 //
 
 #include "PythonChessValidator.h"
-#include <cstdlib>
 
 const char* PYTHONPATH = ".";
 

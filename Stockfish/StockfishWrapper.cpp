@@ -1,17 +1,12 @@
 //
-//  StockfishEngineWrapper.cpp
+//  StockfishWrapper.cpp
 //  Chess
 //
-//  Created by Tran Hoang Duong on 9/17/17.
+//  Created by macbook on 10/30/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#include "StockfishEngineWrapper.h"
-#include "PythonChessValidator.h"
-
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "StockfishWrapper.h"
 
 #include "bitboard.h"
 #include "position.h"
@@ -21,6 +16,9 @@
 #include "timeman.h"
 #include "uci.h"
 #include "syzygy/tbprobe.h"
+
+#include <sstream>
+#include <iostream>
 
 namespace PSQT {
     void init();
@@ -70,7 +68,7 @@ namespace {
         pos.set(fen, Options["UCI_Chess960"], &States->back(), Threads.main());
         
         // Parse move list (if any)
-        while (is >> token && (m = StockfishEngineWrapper::to_move(pos, token)) != MOVE_NONE)
+        while (is >> token && (m = StockfishWrapper::to_move(pos, token)) != MOVE_NONE)
         {
             States->push_back(StateInfo());
             pos.do_move(m, States->back());
@@ -116,7 +114,7 @@ namespace {
         while (is >> token)
             if (token == "searchmoves")
                 while (is >> token)
-                    limits.searchmoves.push_back(StockfishEngineWrapper::to_move(pos, token));
+                    limits.searchmoves.push_back(StockfishWrapper::to_move(pos, token));
         
             else if (token == "wtime")     is >> limits.time[WHITE];
             else if (token == "btime")     is >> limits.time[BLACK];
@@ -141,7 +139,7 @@ namespace {
         Tablebases::init(Options["SyzygyPath"]);
         Time.availableNodes = 0;
     }
-
+    
 } // namespace
 
 /// UCI::value() converts a Value to a string suitable for use with the UCI
@@ -151,7 +149,7 @@ namespace {
 /// mate <y>  Mate in y moves, not plies. If the engine is getting mated
 ///           use negative values for y.
 
-std::string StockfishEngineWrapper::value(Value v) {
+std::string StockfishWrapper::value(Value v) {
     
     assert(-VALUE_INFINITE < v && v < VALUE_INFINITE);
     
@@ -168,7 +166,7 @@ std::string StockfishEngineWrapper::value(Value v) {
 
 /// UCI::square() converts a Square to a string in algebraic notation (g1, a7, etc.)
 
-std::string StockfishEngineWrapper::square(Square s) {
+std::string StockfishWrapper::square(Square s) {
     return std::string{ char('a' + file_of(s)), char('1' + rank_of(s)) };
 }
 
@@ -178,7 +176,7 @@ std::string StockfishEngineWrapper::square(Square s) {
 /// normal chess mode, and in e1h1 notation in chess960 mode. Internally all
 /// castling moves are always encoded as 'king captures rook'.
 
-std::string StockfishEngineWrapper::move(Move m, bool chess960) {
+std::string StockfishWrapper::move(Move m, bool chess960) {
     
     Square from = from_sq(m);
     Square to = to_sq(m);
@@ -192,7 +190,7 @@ std::string StockfishEngineWrapper::move(Move m, bool chess960) {
     if (type_of(m) == CASTLING && !chess960)
         to = make_square(to > from ? FILE_G : FILE_C, rank_of(from));
     
-    std::string move = StockfishEngineWrapper::square(from) + StockfishEngineWrapper::square(to);
+    std::string move = StockfishWrapper::square(from) + StockfishWrapper::square(to);
     
     if (type_of(m) == PROMOTION)
         move += " pnbrqk"[promotion_type(m)];
@@ -204,76 +202,34 @@ std::string StockfishEngineWrapper::move(Move m, bool chess960) {
 /// UCI::to_move() converts a string representing a move in coordinate notation
 /// (g1f3, a7a8q) to the corresponding legal Move, if any.
 
-Move StockfishEngineWrapper::to_move(const Position& pos, std::string& str) {
+Move StockfishWrapper::to_move(const Position& pos, std::string& str) {
     
     if (str.length() == 5) // Junior could send promotion piece in uppercase
         str[4] = char(tolower(str[4]));
     
     for (const auto& m : MoveList<LEGAL>(pos))
-        if (str == StockfishEngineWrapper::move(m, pos.is_chess960()))
+        if (str == StockfishWrapper::move(m, pos.is_chess960()))
             return m;
     
     return MOVE_NONE;
 }
 
-std::function<void(BaseTypes::Move bestMove)>& StockfishEngineWrapper::getCaculatingCallback() {
-    return this->onCalculated;
-}
+StockfishWrapper* StockfishWrapper::instance = NULL;
 
-StockfishEngineWrapper* StockfishEngineWrapper::instance = NULL;
-
-StockfishEngineWrapper* StockfishEngineWrapper::getInstance() {
+StockfishWrapper* StockfishWrapper::getInstance() {
     if (!instance) {
-        instance = new StockfishEngineWrapper();
+        instance = new StockfishWrapper();
         instance->init();
     }
     
     return instance;
 }
 
-void StockfishEngineWrapper::start(int difficulty) {
-    gameMoves = "startpos moves ";
-    
-    //ucinewgame
-    std::string token, cmd;
-    newgame();
-    pos.set(StartFEN, false, &States->back(), Threads.main());
-    
-    //new validator
-    validator = PythonChessValidator::getInstance();
-    validator->start();
+std::function<void(BaseTypes::Move bestMove)>& StockfishWrapper::getCaculatingCallback() {
+    return this->onCalculated;
 }
 
-bool StockfishEngineWrapper::move(const BaseTypes::Move& move) {
-    bool isValidMove = validator->checkMove(move);
-    if (!isValidMove) {
-        return false;
-    }
-    
-    //add new move to gameMoves
-    std::string fromPosRank = std::to_string(move.fromPos.rank);
-    std::string toPosRank = std::to_string(move.toPos.rank);
-    gameMoves += (move.fromPos.file + fromPosRank + move.toPos.file + toPosRank + " ");
-    
-    std::istringstream is(gameMoves);
-    position(pos, is);
-    
-    validator->move(move);
-    
-    return true;
-}
-
-void StockfishEngineWrapper::calculate(std::function<void(BaseTypes::Move bestMove)> onCalculated) {
-    std::istringstream is(gameMoves);
-    go(pos, is);
-    this->onCalculated = onCalculated;
-}
-
-void StockfishEngineWrapper::log() {
-    std::cout << pos << std::endl;
-}
-
-void StockfishEngineWrapper::init() {
+void StockfishWrapper::init() {
     UCI::init(Options);
     PSQT::init();
     Bitboards::init();
@@ -282,4 +238,33 @@ void StockfishEngineWrapper::init() {
     Search::init();
     Pawns::init();
     Threads.init();
+}
+
+void StockfishWrapper::start(int difficulty) {
+    gameMoves = "startpos moves ";
+    
+    //ucinewgame
+    std::string token, cmd;
+    newgame();
+    pos.set(StartFEN, false, &States->back(), Threads.main());
+}
+
+void StockfishWrapper::move(BaseTypes::Move move) {
+    //add new move to gameMoves
+    std::string fromPosRank = std::to_string(move.fromPos.rank);
+    std::string toPosRank = std::to_string(move.toPos.rank);
+    gameMoves += (move.fromPos.file + fromPosRank + move.toPos.file + toPosRank + " ");
+    
+    std::istringstream is(gameMoves);
+    position(pos, is);
+}
+
+void StockfishWrapper::calculate(std::function<void(BaseTypes::Move bestMove)> onCalculated) {
+    std::istringstream is(gameMoves);
+    go(pos, is);
+    this->onCalculated = onCalculated;
+}
+
+void StockfishWrapper::log() {
+    std::cout << pos << std::endl;
 }

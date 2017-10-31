@@ -65,20 +65,20 @@ private:
   OnChange on_change;
 };
 
-void init(OptionsMap&);
-void loop(int argc, char* argv[]);
-std::string value(Value v);
-std::string square(Square s);
-std::string move(Move m, bool chess960);
-std::string pv(const Position& pos, Depth depth, Value alpha, Value beta);
-Move to_move(const Position& pos, std::string& str);
-
-    
-    void newgame();
-    void go(Position& pos, std::istringstream& is);
-    void position(Position& pos, std::istringstream& is);
-
-    void setupPosition(Position& pos);
+//void init(OptionsMap&);
+//void loop(int argc, char* argv[]);
+//std::string value(Value v);
+//std::string square(Square s);
+//std::string move(Move m, bool chess960);
+//std::string pv(const Position& pos, Depth depth, Value alpha, Value beta);
+//Move to_move(const Position& pos, std::string& str);
+//
+//    
+//    void newgame();
+//    void go(Position& pos, std::istringstream& is);
+//    void position(Position& pos, std::istringstream& is);
+//
+//    void setupPosition(Position& pos);
 } // namespace UCI
 
 extern UCI::OptionsMap Options;

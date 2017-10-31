@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5E99B5C11F49C6A2001DC3FA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B5C01F49C6A2001DC3FA /* main.cpp */; };
 		FA4875701F9CB5200016E7E9 /* NodeConnectorImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA48756E1F9CB5200016E7E9 /* NodeConnectorImplementation.cpp */; };
+		FA52B1BA1FA78E0300CDAC1E /* StockfishWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA52B1B81FA78E0300CDAC1E /* StockfishWrapper.cpp */; };
+		FA52B1C01FA8D64F00CDAC1E /* uci.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA52B1BF1FA8D64E00CDAC1E /* uci.cpp */; };
 		FAA361A31F81D759009CB874 /* benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617D1F81D713009CB874 /* benchmark.cpp */; };
 		FAA361A41F81D759009CB874 /* bitbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617E1F81D713009CB874 /* bitbase.cpp */; };
 		FAA361A51F81D759009CB874 /* bitboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3617F1F81D713009CB874 /* bitboard.cpp */; };
@@ -27,7 +29,7 @@
 		FAA361B31F81D759009CB874 /* timeman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3619B1F81D713009CB874 /* timeman.cpp */; };
 		FAA361B41F81D759009CB874 /* tt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA3619D1F81D713009CB874 /* tt.cpp */; };
 		FAA361B61F81D759009CB874 /* ucioption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA361A21F81D713009CB874 /* ucioption.cpp */; };
-		FAA6DFCA1F8CD6DE00614DCD /* StockfishEngineWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */; };
+		FAA6DFCA1F8CD6DE00614DCD /* StockfishEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA6DFC41F8CD6C300614DCD /* StockfishEngine.cpp */; };
 		FAA6DFCB1F8CD6E300614DCD /* PythonChessValidator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA6DFC71F8CD6C300614DCD /* PythonChessValidator.cpp */; };
 		FAEF98951F8C936700CF47ED /* libpython.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FAEBA0901F8B356C00A00F6E /* libpython.tbd */; };
 		FAF85AFC1F8E1AF000AA3E24 /* libboost_python.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF85AF81F8E1AE500AA3E24 /* libboost_python.dylib */; };
@@ -62,6 +64,10 @@
 		FA48756D1F9C59E80016E7E9 /* NodeConnectorImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeConnectorImplementation.h; sourceTree = "<group>"; };
 		FA48756E1F9CB5200016E7E9 /* NodeConnectorImplementation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NodeConnectorImplementation.cpp; sourceTree = "<group>"; };
 		FA4875731F9DF9AB0016E7E9 /* GameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		FA52B1B81FA78E0300CDAC1E /* StockfishWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockfishWrapper.cpp; sourceTree = "<group>"; };
+		FA52B1B91FA78E0300CDAC1E /* StockfishWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockfishWrapper.h; sourceTree = "<group>"; };
+		FA52B1BE1FA8D64E00CDAC1E /* uci.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uci.h; sourceTree = "<group>"; };
+		FA52B1BF1FA8D64E00CDAC1E /* uci.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uci.cpp; sourceTree = "<group>"; };
 		FAA3617D1F81D713009CB874 /* benchmark.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = benchmark.cpp; sourceTree = "<group>"; };
 		FAA3617E1F81D713009CB874 /* bitbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bitbase.cpp; sourceTree = "<group>"; };
 		FAA3617F1F81D713009CB874 /* bitboard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bitboard.cpp; sourceTree = "<group>"; };
@@ -97,9 +103,9 @@
 		FAA3619F1F81D713009CB874 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		FAA361A21F81D713009CB874 /* ucioption.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ucioption.cpp; sourceTree = "<group>"; };
 		FAA6DFC11F8CD6C300614DCD /* BaseTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTypes.h; sourceTree = "<group>"; };
-		FAA6DFC31F8CD6C300614DCD /* EngineWrapperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineWrapperProtocol.h; sourceTree = "<group>"; };
-		FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockfishEngineWrapper.cpp; sourceTree = "<group>"; };
-		FAA6DFC51F8CD6C300614DCD /* StockfishEngineWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockfishEngineWrapper.h; sourceTree = "<group>"; };
+		FAA6DFC31F8CD6C300614DCD /* EngineProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineProtocol.h; sourceTree = "<group>"; };
+		FAA6DFC41F8CD6C300614DCD /* StockfishEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockfishEngine.cpp; sourceTree = "<group>"; };
+		FAA6DFC51F8CD6C300614DCD /* StockfishEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockfishEngine.h; sourceTree = "<group>"; };
 		FAA6DFC71F8CD6C300614DCD /* PythonChessValidator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PythonChessValidator.cpp; sourceTree = "<group>"; };
 		FAA6DFC81F8CD6C300614DCD /* PythonChessValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PythonChessValidator.h; sourceTree = "<group>"; };
 		FAA6DFC91F8CD6C300614DCD /* ValidatorProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValidatorProtocol.h; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 				FAA3617C1F81D713009CB874 /* Stockfish */,
 				FAF85B061F966D7E00AA3E24 /* Socket.io-client-cpp */,
 				FA4875611F9C4DAD0016E7E9 /* Network */,
+				FA52B1B71FA6437500CDAC1E /* Common */,
 				5E99B5BF1F49C6A2001DC3FA /* Chess */,
 				5E99B5BE1F49C6A2001DC3FA /* Products */,
 				FAEBA08D1F89E2EE00A00F6E /* Frameworks */,
@@ -205,6 +212,14 @@
 			path = GameController;
 			sourceTree = "<group>";
 		};
+		FA52B1B71FA6437500CDAC1E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FAA6DFC11F8CD6C300614DCD /* BaseTypes.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		FAA3617C1F81D713009CB874 /* Stockfish */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +255,11 @@
 				FAA3619D1F81D713009CB874 /* tt.cpp */,
 				FAA3619E1F81D713009CB874 /* tt.h */,
 				FAA3619F1F81D713009CB874 /* types.h */,
+				FA52B1BF1FA8D64E00CDAC1E /* uci.cpp */,
+				FA52B1BE1FA8D64E00CDAC1E /* uci.h */,
 				FAA361A21F81D713009CB874 /* ucioption.cpp */,
+				FA52B1B81FA78E0300CDAC1E /* StockfishWrapper.cpp */,
+				FA52B1B91FA78E0300CDAC1E /* StockfishWrapper.h */,
 			);
 			path = Stockfish;
 			sourceTree = "<group>";
@@ -257,29 +276,20 @@
 		FAA6DFBF1F8CD6C300614DCD /* GameLogicProcessor */ = {
 			isa = PBXGroup;
 			children = (
-				FAA6DFC01F8CD6C300614DCD /* Common */,
-				FAA6DFC21F8CD6C300614DCD /* EngineWrapper */,
+				FAA6DFC21F8CD6C300614DCD /* Engine */,
 				FAA6DFC61F8CD6C300614DCD /* Validator */,
 			);
 			path = GameLogicProcessor;
 			sourceTree = "<group>";
 		};
-		FAA6DFC01F8CD6C300614DCD /* Common */ = {
+		FAA6DFC21F8CD6C300614DCD /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				FAA6DFC11F8CD6C300614DCD /* BaseTypes.h */,
+				FAA6DFC31F8CD6C300614DCD /* EngineProtocol.h */,
+				FAA6DFC51F8CD6C300614DCD /* StockfishEngine.h */,
+				FAA6DFC41F8CD6C300614DCD /* StockfishEngine.cpp */,
 			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		FAA6DFC21F8CD6C300614DCD /* EngineWrapper */ = {
-			isa = PBXGroup;
-			children = (
-				FAA6DFC31F8CD6C300614DCD /* EngineWrapperProtocol.h */,
-				FAA6DFC51F8CD6C300614DCD /* StockfishEngineWrapper.h */,
-				FAA6DFC41F8CD6C300614DCD /* StockfishEngineWrapper.cpp */,
-			);
-			path = EngineWrapper;
+			path = Engine;
 			sourceTree = "<group>";
 		};
 		FAA6DFC61F8CD6C300614DCD /* Validator */ = {
@@ -383,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAA361A31F81D759009CB874 /* benchmark.cpp in Sources */,
+				FA52B1BA1FA78E0300CDAC1E /* StockfishWrapper.cpp in Sources */,
 				FAA361A41F81D759009CB874 /* bitbase.cpp in Sources */,
 				FAA361A51F81D759009CB874 /* bitboard.cpp in Sources */,
 				FAA361A61F81D759009CB874 /* endgame.cpp in Sources */,
@@ -390,6 +401,7 @@
 				FAA361A91F81D759009CB874 /* material.cpp in Sources */,
 				FAA361AA1F81D759009CB874 /* misc.cpp in Sources */,
 				FAA361AB1F81D759009CB874 /* movegen.cpp in Sources */,
+				FA52B1C01FA8D64F00CDAC1E /* uci.cpp in Sources */,
 				FAA361AC1F81D759009CB874 /* movepick.cpp in Sources */,
 				FAA361AD1F81D759009CB874 /* pawns.cpp in Sources */,
 				FAA361AE1F81D759009CB874 /* position.cpp in Sources */,
@@ -402,7 +414,7 @@
 				FAA361B41F81D759009CB874 /* tt.cpp in Sources */,
 				FAA361B61F81D759009CB874 /* ucioption.cpp in Sources */,
 				5E99B5C11F49C6A2001DC3FA /* main.cpp in Sources */,
-				FAA6DFCA1F8CD6DE00614DCD /* StockfishEngineWrapper.cpp in Sources */,
+				FAA6DFCA1F8CD6DE00614DCD /* StockfishEngine.cpp in Sources */,
 				FAA6DFCB1F8CD6E300614DCD /* PythonChessValidator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

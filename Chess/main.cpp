@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "StockfishEngineWrapper.h"
+#include "StockfishEngine.h"
 #include "thread.h"
 #include "NodeConnectorImplementation.h"
 
@@ -24,7 +24,7 @@ void playerTurn();
 void computerTurn();
 
 std::atomic<bool> isPlayerTurn (false);
-StockfishEngineWrapper* engine;
+StockfishEngine* engine;
 
 void playerTurn() {
     std::cout << "\nYou play: ";
@@ -123,15 +123,15 @@ int main(int argc, const char * argv[]) {
 //        std::cout << "Message: " << message->get_map()["message"]->get_string() << std::endl;
 //    });
     
-//    engine = StockfishEngineWrapper::getInstance();
-//    engine->start(1);
-//    std::cout << "\nGame started!!!";
-//    engine->log();
-//
-//    startGame(true);
-    BaseConnectorProtocol* connector = NodeConnectorImplementation::getInstance();
-    connector->setConnectingEventsDelegate(NULL);
-    connector->setRoomEventsDelegate(NULL);
-    connector->setGameEventsDelegate(NULL);
-    getchar();
+    engine = StockfishEngine::getInstance();
+    engine->start(1);
+    std::cout << "\nGame started!!!";
+    engine->log();
+
+    startGame(true);
+//    BaseConnectorProtocol* connector = NodeConnectorImplementation::getInstance();
+//    connector->setConnectingEventsDelegate(NULL);
+//    connector->setRoomEventsDelegate(NULL);
+//    connector->setGameEventsDelegate(NULL);
+//    getchar();
 }

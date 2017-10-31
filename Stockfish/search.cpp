@@ -37,7 +37,7 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
-#include "StockfishEngineWrapper.h"
+#include "StockfishWrapper.h"
 
 namespace Search {
 
@@ -228,8 +228,9 @@ uint64_t Search::perft(Position& pos, Depth depth) {
           nodes += cnt;
           pos.undo_move(m);
       }
-      if (Root)
-          sync_cout << StockfishEngineWrapper::move(m, pos.is_chess960()) << ": " << cnt << sync_endl;
+      if (Root) {
+//          sync_cout << StockfishEngineWrapper::move(m, pos.is_chess960()) << ": " << cnt << sync_endl;
+      }
   }
   return nodes;
 }
@@ -253,9 +254,9 @@ void MainThread::search() {
   if (rootMoves.empty())
   {
       rootMoves.push_back(RootMove(MOVE_NONE));
-      sync_cout << "info depth 0 score "
-                << StockfishEngineWrapper::value(rootPos.checkers() ? -VALUE_MATE : VALUE_DRAW)
-                << sync_endl;
+//      sync_cout << "info depth 0 score "
+//                << StockfishEngineWrapper::value(rootPos.checkers() ? -VALUE_MATE : VALUE_DRAW)
+//                << sync_endl;
   }
   else
   {
@@ -311,19 +312,20 @@ void MainThread::search() {
   previousScore = bestThread->rootMoves[0].score;
 
   // Send new PV when needed
-  if (bestThread != this)
-      sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << sync_endl;
+    if (bestThread != this) {
+//      sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << sync_endl;
+    }
 
 //  sync_cout << StockfishEngineImplementation::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
     
-    auto callback = StockfishEngineWrapper::getInstance()->getCaculatingCallback();
-    auto string = StockfishEngineWrapper::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
+    auto callback = StockfishWrapper::getInstance()->getCaculatingCallback();
+    auto string = StockfishWrapper::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
     auto best_move = BaseTypes::Move(string);
     callback(best_move);
     
-    if (bestThread->rootMoves[0].pv.size() > 1 || bestThread->rootMoves[0].extract_ponder_from_tt(rootPos)) {
+//    if (bestThread->rootMoves[0].pv.size() > 1 || bestThread->rootMoves[0].extract_ponder_from_tt(rootPos)) {
 //      std::cout << " ponder " << StockfishEngineImplementation::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
-    }
+//    }
   std::cout << sync_endl;
 }
 
@@ -427,8 +429,9 @@ void Thread::search() {
               if (   mainThread
                   && multiPV == 1
                   && (bestValue <= alpha || bestValue >= beta)
-                  && Time.elapsed() > 3000)
-                  sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+                  && Time.elapsed() > 3000) {
+//                  sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+              }
 
               // In case of failing low/high increase aspiration window and
               // re-search, otherwise exit the loop.
@@ -462,8 +465,9 @@ void Thread::search() {
           if (!mainThread)
               continue;
 
-          if (Threads.stop || PVIdx + 1 == multiPV || Time.elapsed() > 3000)
-              sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+          if (Threads.stop || PVIdx + 1 == multiPV || Time.elapsed() > 3000) {
+//              sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+          }
       }
 
       if (!Threads.stop)
@@ -847,13 +851,13 @@ moves_loop: // When in check search starts from here
                                   thisThread->rootMoves.end(), move))
           continue;
 
-      ss->moveCount = ++moveCount;
+        ss->moveCount = ++moveCount;
 
         if (rootNode && thisThread == Threads.main() && Time.elapsed() > 3000){
-          sync_cout << "info depth " << depth / ONE_PLY
-                    << " currmove " << StockfishEngineWrapper::move(move, pos.is_chess960())
-                    << " currmovenumber " << moveCount + thisThread->PVIdx << sync_endl;
-          }
+//          sync_cout << "info depth " << depth / ONE_PLY
+//                    << " currmove " << StockfishEngineWrapper::move(move, pos.is_chess960())
+//                    << " currmovenumber " << moveCount + thisThread->PVIdx << sync_endl;
+      }
       if (PvNode)
           (ss+1)->pv = nullptr;
 
@@ -1508,57 +1512,57 @@ moves_loop: // When in check search starts from here
 /// UCI::pv() formats PV information according to the UCI protocol. UCI requires
 /// that all (if any) unsearched PV lines are sent using a previous search score.
 
-string UCI::pv(const Position& pos, Depth depth, Value alpha, Value beta) {
+//string UCI::pv(const Position& pos, Depth depth, Value alpha, Value beta) {
 
-  std::stringstream ss;
-  int elapsed = Time.elapsed() + 1;
-  const RootMoves& rootMoves = pos.this_thread()->rootMoves;
-  size_t PVIdx = pos.this_thread()->PVIdx;
-  size_t multiPV = std::min((size_t)Options["MultiPV"], rootMoves.size());
-  uint64_t nodesSearched = Threads.nodes_searched();
-  uint64_t tbHits = Threads.tb_hits() + (TB::RootInTB ? rootMoves.size() : 0);
-
-  for (size_t i = 0; i < multiPV; ++i)
-  {
-      bool updated = (i <= PVIdx && rootMoves[i].score != -VALUE_INFINITE);
-
-      if (depth == ONE_PLY && !updated)
-          continue;
-
-      Depth d = updated ? depth : depth - ONE_PLY;
-      Value v = updated ? rootMoves[i].score : rootMoves[i].previousScore;
-
-      bool tb = TB::RootInTB && abs(v) < VALUE_MATE - MAX_PLY;
-      v = tb ? TB::Score : v;
-
-      if (ss.rdbuf()->in_avail()) // Not at first line
-          ss << "\n";
-
-      ss << "info"
-         << " depth "    << d / ONE_PLY
-         << " seldepth " << rootMoves[i].selDepth
-         << " multipv "  << i + 1
-         << " score "    << StockfishEngineWrapper::value(v);
-
-      if (!tb && i == PVIdx)
-          ss << (v >= beta ? " lowerbound" : v <= alpha ? " upperbound" : "");
-
-      ss << " nodes "    << nodesSearched
-         << " nps "      << nodesSearched * 1000 / elapsed;
-
-      if (elapsed > 1000) // Earlier makes little sense
-          ss << " hashfull " << TT.hashfull();
-
-      ss << " tbhits "   << tbHits
-         << " time "     << elapsed
-         << " pv";
-
-      for (Move m : rootMoves[i].pv)
-          ss << " " << StockfishEngineWrapper::move(m, pos.is_chess960());
-  }
-
-  return ss.str();
-}
+//  std::stringstream ss;
+//  int elapsed = Time.elapsed() + 1;
+//  const RootMoves& rootMoves = pos.this_thread()->rootMoves;
+//  size_t PVIdx = pos.this_thread()->PVIdx;
+//  size_t multiPV = std::min((size_t)Options["MultiPV"], rootMoves.size());
+//  uint64_t nodesSearched = Threads.nodes_searched();
+//  uint64_t tbHits = Threads.tb_hits() + (TB::RootInTB ? rootMoves.size() : 0);
+//
+//  for (size_t i = 0; i < multiPV; ++i)
+//  {
+//      bool updated = (i <= PVIdx && rootMoves[i].score != -VALUE_INFINITE);
+//
+//      if (depth == ONE_PLY && !updated)
+//          continue;
+//
+//      Depth d = updated ? depth : depth - ONE_PLY;
+//      Value v = updated ? rootMoves[i].score : rootMoves[i].previousScore;
+//
+//      bool tb = TB::RootInTB && abs(v) < VALUE_MATE - MAX_PLY;
+//      v = tb ? TB::Score : v;
+//
+//      if (ss.rdbuf()->in_avail()) // Not at first line
+//          ss << "\n";
+//
+//      ss << "info"
+//         << " depth "    << d / ONE_PLY
+//         << " seldepth " << rootMoves[i].selDepth
+//         << " multipv "  << i + 1
+//         << " score "    << StockfishEngineWrapper::value(v);
+//
+//      if (!tb && i == PVIdx)
+//          ss << (v >= beta ? " lowerbound" : v <= alpha ? " upperbound" : "");
+//
+//      ss << " nodes "    << nodesSearched
+//         << " nps "      << nodesSearched * 1000 / elapsed;
+//
+//      if (elapsed > 1000) // Earlier makes little sense
+//          ss << " hashfull " << TT.hashfull();
+//
+//      ss << " tbhits "   << tbHits
+//         << " time "     << elapsed
+//         << " pv";
+//
+//      for (Move m : rootMoves[i].pv)
+//          ss << " " << StockfishEngineWrapper::move(m, pos.is_chess960());
+//  }
+//
+//  return ss.str();
+//}
 
 
 /// RootMove::extract_ponder_from_tt() is called in case we have no ponder move

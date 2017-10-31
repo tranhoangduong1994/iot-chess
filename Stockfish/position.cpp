@@ -34,7 +34,7 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
-#include "StockfishEngineWrapper.h"
+#include "StockfishWrapper.h"
 
 using std::string;
 
@@ -109,7 +109,7 @@ std::ostream& operator<<(std::ostream& os, const Position& pos) {
 //     << std::setfill(' ') << std::dec << "\nCheckers: ";
 
   for (Bitboard b = pos.checkers(); b; )
-      os << StockfishEngineWrapper::square(pop_lsb(&b)) << " ";
+      os << StockfishWrapper::square(pop_lsb(&b)) << " ";
 
   if (    int(Tablebases::MaxCardinality) >= popcount(pos.pieces())
       && !pos.can_castle(ANY_CASTLING))
@@ -446,7 +446,7 @@ const string Position::fen() const {
   if (!can_castle(WHITE) && !can_castle(BLACK))
       ss << '-';
 
-  ss << (ep_square() == SQ_NONE ? " - " : " " + StockfishEngineWrapper::square(ep_square()) + " ")
+  ss << (ep_square() == SQ_NONE ? " - " : " " + StockfishWrapper::square(ep_square()) + " ")
      << st->rule50 << " " << 1 + (gamePly - (sideToMove == BLACK)) / 2;
 
   return ss.str();
