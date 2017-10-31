@@ -1,4 +1,4 @@
-project(iot_chess)
+project(iot_chess C CXX)
 cmake_minimum_required(VERSION 2.8)
 
 if(UNIX)
