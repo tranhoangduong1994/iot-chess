@@ -9,6 +9,9 @@ file(GLOB SOURCES
 				"GameLogicProcessor/Validator/*.cpp"
 	)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 find_package(Boost COMPONENTS filesystem system date_time python REQUIRED)
 message("Include dirs of boost: " ${Boost_INCLUDE_DIRS} )
 message("Libs of boost: " ${Boost_LIBRARIES} )
@@ -45,6 +48,7 @@ target_link_libraries(
 					#sioclient
 					${Boost_LIBRARIES}
 					${PYTHON_LIBRARIES}
+					Threads::Threads
 					)
 
 install(TARGETS iot-chess DESTINATION bin)
