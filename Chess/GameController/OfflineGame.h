@@ -13,6 +13,7 @@
 #define ONLINE
 
 #include "BaseTypes.h"
+#include <atomic>
 #include <vector>
 
 class GameEventsProtocol;
