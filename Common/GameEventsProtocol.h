@@ -19,12 +19,12 @@ public:
     virtual void onTurnEnded(const EventData& data) = 0;
     virtual void onInvalidMove(const EventData& data) = 0;
     
-    virtual void onDrawGameOffered(const EventData& data) = 0;
-    virtual void onOpponentSurrendered(const EventData& data) = 0;
-    
     virtual void onWinGame(const EventData& data) = 0;
     virtual void onLoseGame(const EventData& data) = 0;
     virtual void onDrawGame(const EventData& data) = 0;
+    
+    //    virtual void onDrawGameOffered(const EventData& data) = 0;
+    //    virtual void onOpponentSurrendered(const EventData& data) = 0;
 };
 
 #endif /* GameEventsProtocol_h */
