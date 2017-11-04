@@ -29,37 +29,37 @@ void NodeConnectorImplementation::login(std::string username, std::string passwo
     client->socket()->emit("login", msg);
 }
 
-void NodeConnectorImplementation::createRoom(std::string roomName, BaseTypes::Side side) {
-    std::string sideString = (side == BaseTypes::Side::WHITE ? "WHITE" : "BLACK");
-    auto msg = sio::object_message::create();
-    msg->get_map()["roomName"] = sio::string_message::create(roomName);
-    msg->get_map()["side"] = sio::string_message::create(sideString);
-    client->socket()->emit("createRoom", msg);
-}
-
-void NodeConnectorImplementation::joinRoom(std::string roomId) {
-    auto msg = sio::object_message::create();
-    msg->get_map()["roomId"] = sio::string_message::create(roomId);
-    client->socket()->emit("joinRoom", msg);
-}
-
-void NodeConnectorImplementation::quitRoom() {
-    client->socket()->emit("quitRoom");
-}
-
-void NodeConnectorImplementation::move(BaseTypes::Move move) {
-    auto msg = sio::object_message::create();
-    msg->get_map()["move"] = sio::string_message::create(move.toString());
-    client->socket()->emit("move", msg);
-}
-
-void NodeConnectorImplementation::offerDrawGame() {
-    client->socket()->emit("offerDrawGame");
-}
-
-void NodeConnectorImplementation::surrender() {
-    client->socket()->emit("surrender");
-}
+//void NodeConnectorImplementation::createRoom(std::string roomName, BaseTypes::Side side) {
+//    std::string sideString = (side == BaseTypes::Side::WHITE ? "WHITE" : "BLACK");
+//    auto msg = sio::object_message::create();
+//    msg->get_map()["roomName"] = sio::string_message::create(roomName);
+//    msg->get_map()["side"] = sio::string_message::create(sideString);
+//    client->socket()->emit("createRoom", msg);
+//}
+//
+//void NodeConnectorImplementation::joinRoom(std::string roomId) {
+//    auto msg = sio::object_message::create();
+//    msg->get_map()["roomId"] = sio::string_message::create(roomId);
+//    client->socket()->emit("joinRoom", msg);
+//}
+//
+//void NodeConnectorImplementation::quitRoom() {
+//    client->socket()->emit("quitRoom");
+//}
+//
+//void NodeConnectorImplementation::move(BaseTypes::Move move) {
+//    auto msg = sio::object_message::create();
+//    msg->get_map()["move"] = sio::string_message::create(move.toString());
+//    client->socket()->emit("move", msg);
+//}
+//
+//void NodeConnectorImplementation::offerDrawGame() {
+//    client->socket()->emit("offerDrawGame");
+//}
+//
+//void NodeConnectorImplementation::surrender() {
+//    client->socket()->emit("surrender");
+//}
 
 void NodeConnectorImplementation::init() {
     client = new sio::client();
@@ -145,12 +145,12 @@ void NodeConnectorImplementation::init() {
     
     client->socket()->on("drawGameOffered", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onDrawGameOffered(data);
+//        gameDelegate->onDrawGameOffered(data);
     });
     
     client->socket()->on("opponentSurrendered", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onOpponentSurrendered(data);
+//        gameDelegate->onOpponentSurrendered(data);
     });
     
     client->socket()->on("winGame", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
@@ -177,6 +177,7 @@ void NodeConnectorImplementation::setRoomEventsDelegate(RoomEventsProtocol* dele
     roomDelegate = delegate;
 }
 
-void NodeConnectorImplementation::setGameEventsDelegate(GameEventsProtocol* delegate) {
-    gameDelegate = delegate;
-}
+//void NodeConnectorImplementation::setGameEventsDelegate(GameEventsProtocol* delegate) {
+//    gameDelegate = delegate;
+//}
+

@@ -26,6 +26,7 @@ include_directories(
 					../Common/
 					GameLogicProcessor/Engine/
 					GameLogicProcessor/Validator/
+					GameController/
 					../Stockfish/
 					../Network/NetworkEventsProtocol/
 					../Network/NodeServerEventsImplementation/

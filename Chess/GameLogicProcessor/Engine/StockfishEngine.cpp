@@ -31,18 +31,18 @@ void StockfishEngine::start(int difficulty) {
     wrapper->start(difficulty);
     
     //new validator
-    validator = PythonChessValidator::getInstance();
-    validator->start();
+//    validator = PythonChessValidator::getInstance();
+//    validator->start();
 }
 
 bool StockfishEngine::move(const BaseTypes::Move& move) {
-    bool isValidMove = validator->checkMove(move);
-    if (!isValidMove) {
-        return false;
-    }
+//    bool isValidMove = validator->checkMove(move);
+//    if (!isValidMove) {
+//        return false;
+//    }
     
     wrapper->move(move);
-    validator->move(move);
+//    validator->move(move);
     
     return true;
 }

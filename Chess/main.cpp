@@ -6,10 +6,10 @@
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#include <iostream>
-#include "StockfishEngine.h"
-#include "thread.h"
-#include "NodeConnectorImplementation.h"
+//#include <iostream>
+//#include "StockfishEngine.h"
+//#include "thread.h"
+//#include "NodeConnectorImplementation.h"
 
 //#include <cpprest/http_client.h>
 //#include <cpprest/filestream.h>
@@ -20,51 +20,51 @@
 //using namespace web::http::client;          // HTTP client features
 //using namespace concurrency::streams;       // Asynchronous streams
 
-void playerTurn();
-void computerTurn();
+//void playerTurn();
+//void computerTurn();
+//
+//std::atomic<bool> isPlayerTurn (false);
+//StockfishEngine* engine;
 
-std::atomic<bool> isPlayerTurn (false);
-StockfishEngine* engine;
+//void playerTurn() {
+//    std::cout << "\nYou play: ";
+//    std::string input;
+//    std::cin >> input;
+//    bool result = engine->move(BaseTypes::Move(input));
+//    if (result) {
+//        engine->log();
+//        isPlayerTurn = false;
+//        computerTurn();
+//    } else {
+//        std::cout << "\nInvalid move!!!";
+//        playerTurn();
+//    }
+//}
+//
+//void computerTurn() {
+//    engine->calculate([=](BaseTypes::Move move) {
+//        std::cout << "\nCom play: " << move.fromPos.file << move.fromPos.rank << move.toPos.file << move.toPos.rank;
+//        engine->move(move);
+//        engine->log();
+//        isPlayerTurn = true;
+//    });
+//    Threads.main()->wait(isPlayerTurn);
+//    playerTurn();
+//}
+//
+//void startGame(bool playerGoFirst) {
+//    if (playerGoFirst) {
+//        playerTurn();
+//    } else {
+//        computerTurn();
+//    }
+//}
+//
+//void OnConnected() {
+//    std::cout << "On connect";
+//}
 
-void playerTurn() {
-    std::cout << "\nYou play: ";
-    std::string input;
-    std::cin >> input;
-    bool result = engine->move(BaseTypes::Move(input));
-    if (result) {
-        engine->log();
-        isPlayerTurn = false;
-        computerTurn();
-    } else {
-        std::cout << "\nInvalid move!!!";
-        playerTurn();
-    }
-}
-
-void computerTurn() {
-    engine->calculate([=](BaseTypes::Move move) {
-        std::cout << "\nCom play: " << move.fromPos.file << move.fromPos.rank << move.toPos.file << move.toPos.rank;
-        engine->move(move);
-        engine->log();
-        isPlayerTurn = true;
-    });
-    Threads.main()->wait(isPlayerTurn);
-    playerTurn();
-}
-
-void startGame(bool playerGoFirst) {
-    if (playerGoFirst) {
-        playerTurn();
-    } else {
-        computerTurn();
-    }
-}
-
-void OnConnected() {
-    std::cout << "On connect";
-}
-
-int main(int argc, const char * argv[]) {    
+//int main(int argc, const char * argv[]) {
 //    auto fileStream = std::make_shared<ostream>();
 //
 //    pplx::task<void> requestTask = fstream::open_ostream(U("result.html"))
@@ -123,15 +123,21 @@ int main(int argc, const char * argv[]) {
 //        std::cout << "Message: " << message->get_map()["message"]->get_string() << std::endl;
 //    });
     
-    engine = StockfishEngine::getInstance();
-    engine->start(1);
-    std::cout << "\nGame started!!!";
-    engine->log();
+//    engine = StockfishEngine::getInstance();
+//    engine->start(1);
+//    std::cout << "\nGame started!!!";
+//    engine->log();
+//
+//    startGame(true);
+    
+    
+//}
 
-    startGame(true);
-//    BaseConnectorProtocol* connector = NodeConnectorImplementation::getInstance();
-//    connector->setConnectingEventsDelegate(NULL);
-//    connector->setRoomEventsDelegate(NULL);
-//    connector->setGameEventsDelegate(NULL);
-//    getchar();
+#include "OfflineGame.h"
+#include "GameScreen.h"
+
+int main(int argc, char* argv[]) {
+    OfflineGame* game = new OfflineGame();
+    GameScreen::create(game, 20, 4);
 }
+

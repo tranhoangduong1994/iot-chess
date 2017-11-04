@@ -14,6 +14,7 @@ public:
     virtual void onConnected(const EventData& data) = 0;
     virtual void onLoggedInSucceeded(const EventData& data) = 0;
     virtual void onLoggedInFailed(const EventData& data) = 0;
+    virtual void onConnectionLost(const EventData& data) = 0;
 };
 
 #endif /* ConnectingEventsProtocol_h */

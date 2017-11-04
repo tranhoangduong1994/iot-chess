@@ -22,7 +22,6 @@ class Position;
 class StockfishEngine : public EngineProtocol {
 private:
     StockfishWrapper* wrapper;
-    ValidatorProtocol* validator;
     
     static StockfishEngine* instance;
     

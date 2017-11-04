@@ -1,24 +1,42 @@
 //
-//  GameController.h
+//  OfflineGame.h
 //  Chess
 //
 //  Created by macbook on 10/23/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#ifndef GameController_h
-#define GameController_h
+#ifndef OfflineGame_h
+#define OfflineGame_h
 
 #define OFFLINE
 #define ONLINE
 
 #include "BaseTypes.h"
-#include "GameEventsProtocol.h"
+#include <vector>
+
+class GameEventsProtocol;
+class EngineProtocol;
+class ValidatorProtocol;
 
 class OfflineGame {
+private:
+    GameEventsProtocol* delegate;
+    
+    EngineProtocol* engine;
+    ValidatorProtocol* validator;
+    
+    std::vector<BaseTypes::Move> moves;
+    bool isPlayerTurn;
+    std::atomic<bool> hasComputerFinishedThinking;
+    
+    void playerTurn();
+    void computerTurn();
+    
 public:
     void start(BaseTypes::Side side, int difficulty);
-    void setDelegate(OfflineGameEventsProtocol* delegate);
-}
+    void move(BaseTypes::Move move);
+    void setDelegate(GameEventsProtocol* delegate);
+};
 
-#endif /* GameController_h */
+#endif /* OfflineGame_h */

@@ -32,17 +32,17 @@ public:
     virtual void connect(std::string host) override;
     virtual void login(std::string username, std::string password) override;
     
-    virtual void createRoom(std::string roomName, BaseTypes::Side side) override;
-    virtual void joinRoom(std::string roomId) override;
-    virtual void quitRoom() override;
+//    virtual void createRoom(std::string roomName, BaseTypes::Side side) override;
+//    virtual void joinRoom(std::string roomId) override;
+//    virtual void quitRoom() override;
     
-    virtual void move(BaseTypes::Move move) override;
-    virtual void offerDrawGame() override;
-    virtual void surrender() override;
+//    virtual void move(BaseTypes::Move move) override;
+//    virtual void offerDrawGame() override;
+//    virtual void surrender() override;
     
     virtual void setConnectingEventsDelegate(ConnectingEventsProtocol* delegate) override;
     virtual void setRoomEventsDelegate(RoomEventsProtocol* delegate) override;
-    virtual void setGameEventsDelegate(GameEventsProtocol* delegate) override;
+//    virtual void setGameEventsDelegate(GameEventsProtocol* delegate) override;
     
     static NodeConnectorImplementation* getInstance();
 };
