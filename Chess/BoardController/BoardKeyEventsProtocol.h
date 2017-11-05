@@ -9,5 +9,9 @@
 #ifndef BoardKeyEventsProtocol_h
 #define BoardKeyEventsProtocol_h
 
+class BoardKeyEventsProtocol {
+public:
+    virtual void onKeyPressed(const EventData& data) = 0;
+};
 
 #endif /* BoardKeyEventsProtocol_h */

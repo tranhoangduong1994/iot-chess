@@ -11,42 +11,21 @@
 #include <iostream>
 
 GameScreen* GameScreen::create(OfflineGame* game, int width, int height) {
-    GameScreen* gameScreen = new GameScreen();
+    if (!displayer) {
+        displayer = DisplayerImplementation::getInstance();
+    }
     
-    gameScreen->width = width;
-    gameScreen->height = height;
-    
-    gameScreen->screenBuffer.resize(height);
-    
-    gameScreen->game = game;
-    
-    game->setDelegate(gameScreen);
+    GameScreen* screen = new GameScreen();
+    screen->game = game;
+    screen->width = width;
+    screen->height = height;
+    return screen;
+}
+
+void GameScreen::initWithGame(OfflineGame *game) {
+    this->game = game;
+    game->setDelegate(this);
     game->start(BaseTypes::WHITE, 1);
-    
-    return gameScreen;
-}
-
-void GameScreen::clearScreen() {
-    for (int i = 0; i < 30; i++) {
-        std::cout << std::endl;
-    }
-}
-
-void GameScreen::display(int lineNumber, std::string string) {
-    if (lineNumber > screenBuffer.size()) {
-        return;
-    }
-    screenBuffer[lineNumber - 1] = string;
-    
-    clearScreen();
-    
-    for (int i = 0; i < screenBuffer.size(); i++) {
-        if (screenBuffer.at(i) != "") {
-            std::cout << "#" << (i + 1) << " " << screenBuffer.at(i) << std::endl;
-        } else {
-//            std::cout << "#" << (i + 1) << " " << std::endl;
-        }
-    }
 }
 
 std::string GameScreen::getInput() {
@@ -56,18 +35,18 @@ std::string GameScreen::getInput() {
 }
 
 void GameScreen::onGameStarted(const EventData& data) {
-    display(1, "Game started!!");
+    print(1, "Game started!!");
 }
 
 void GameScreen::onTurnBegan(const EventData& data) {
     if (data.find("opponent_move") != data.end()) {
         std::string opponentMove = data.at("opponent_move");
-        display(1, "Opponent move: " + opponentMove);
+        print(1, "Opponent move: " + opponentMove);
     }
     
-    display(2, "It's your turn.");
-    display(3, "You play: ");
-    display(4, "");
+    print(2, "It's your turn.");
+    print(3, "You play: ");
+    print(4, "");
     
     std::string move = getInput();
     std::cout << "test move: " + move;
@@ -75,13 +54,13 @@ void GameScreen::onTurnBegan(const EventData& data) {
 }
 
 void GameScreen::onTurnEnded(const EventData& data) {
-    display(3, "You play: " + data.at("your_move"));
-    display(4, "Please wait for opponent move...");
+    print(3, "You play: " + data.at("your_move"));
+    print(4, "Please wait for opponent move...");
 }
 
 void GameScreen::onInvalidMove(const EventData& data) {
-    display(3, "You play: " + data.at("your_move"));
-    display(4, "Invalid move, please try again: ");
+    print(3, "You play: " + data.at("your_move"));
+    print(4, "Invalid move, please try again: ");
     std::string move = getInput();
     game->move(BaseTypes::Move(move));
 }

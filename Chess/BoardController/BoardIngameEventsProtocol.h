@@ -9,5 +9,11 @@
 #ifndef BoardIngameEventsProtocol_h
 #define BoardIngameEventsProtocol_h
 
+class BoardIngameEventsProtocol {
+public:
+    virtual void onMoveDone() = 0;
+    virtual void onScanDone(EventData data) = 0;
+    virtual void onGameReset() = 0;
+};
 
 #endif /* BoardIngameEventsProtocol_h */

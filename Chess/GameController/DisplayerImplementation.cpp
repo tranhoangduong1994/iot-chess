@@ -6,4 +6,21 @@
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#include <stdio.h>
+#include "DisplayerImplementation.h"
+
+DisplayerImplementation* DisplayerImplementation::instance = NULL;
+
+DisplayerImplementation* DisplayerImplementation::getInstance() {
+    if (!instance) {
+        instance = new DisplayerImplementation();
+    }
+    return instance;
+}
+
+void DisplayerImplementation::print(int lineNumber, std::string content) {
+    
+}
+
+void DisplayerImplementation::clear() {
+    
+}

@@ -5,8 +5,8 @@ set(CMAKE_BUILD_TYPE Release)
 file(GLOB SOURCES 
 				"*.cpp" 
 				"GameController/*.cpp" 
-				"GameLogicProcessor/Engine/*.cpp"
-				"GameLogicProcessor/Validator/*.cpp"
+				"ChessAI/Engine/*.cpp"
+				"ChessAI/Validator/*.cpp"
 	)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -24,8 +24,8 @@ add_executable(iot-chess ${SOURCES})
 
 include_directories(
 					../Common/
-					GameLogicProcessor/Engine/
-					GameLogicProcessor/Validator/
+					ChessAI/Engine/
+					ChessAI/Validator/
 					GameController/
 					../Stockfish/
 					../Network/NetworkEventsProtocol/

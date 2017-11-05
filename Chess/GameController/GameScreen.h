@@ -10,12 +10,14 @@
 #define GameScreen_h
 
 #include "GameEventsProtocol.h"
+#include "Screen.h"
 #include <vector>
 
 class OfflineGame;
 
-class GameScreen : public GameEventsProtocol {
+class GameScreen : public Screen, public GameEventsProtocol {
 public:
+    static GameScreen* create(OfflineGame* game, int width, int height);
     
     void onGameStarted(const EventData& data) override;
     
@@ -27,18 +29,10 @@ public:
     void onLoseGame(const EventData& data) override;
     void onDrawGame(const EventData& data) override;
     
-    static GameScreen* create(OfflineGame* game, int width, int height);
+    void initWithGame(OfflineGame* game);
     
 private:
-    int width;
-    int height;
-    
-    std::vector<std::string> screenBuffer;
-    
     OfflineGame* game;
-    
-    void clearScreen();
-    void display(int lineNumber, std::string text);
     std::string getInput();
 };
 

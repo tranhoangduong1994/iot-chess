@@ -9,5 +9,9 @@
 #ifndef BoardSystemEventsProtocol_h
 #define BoardSystemEventsProtocol_h
 
+class BoardSystemEventsProtocol {
+public:
+    virtual void onStartedUp(const EventData& data) = 0;
+};
 
 #endif /* BoardSystemEventsProtocol_h */

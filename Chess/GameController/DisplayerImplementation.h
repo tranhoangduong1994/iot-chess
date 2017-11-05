@@ -9,5 +9,17 @@
 #ifndef DisplayerImplementation_h
 #define DisplayerImplementation_h
 
+#include "DisplayerProtocol.h"
+
+class DisplayerImplementation : public DisplayerProtocol {
+public:
+    static DisplayerImplementation* getInstance();
+    
+    void print(int lineNumber, std::string content) override;
+    void clear() override;
+    
+private:
+    static DisplayerImplementation* instance;
+};
 
 #endif /* DisplayerImplementation_h */

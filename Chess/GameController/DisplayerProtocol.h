@@ -9,5 +9,12 @@
 #ifndef DisplayerProtocol_h
 #define DisplayerProtocol_h
 
+#include <string>
+
+class DisplayerProtocol {
+public:
+    virtual void print(int line, std::string content) = 0;
+    virtual void clear() = 0;
+};
 
 #endif /* DisplayerProtocol_h */
