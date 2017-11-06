@@ -14,18 +14,18 @@
 
 #include "BaseTypes.h"
 #include "IEngine.h"
+#include "IValidator.h"
 #include <atomic>
 #include <vector>
 
 class GameEventsProtocol;
-class ValidatorProtocol;
 
 class OfflineGame {
 private:
     GameEventsProtocol* delegate;
     
     IEngine* engine;
-    ValidatorProtocol* validator;
+    IValidator* validator;
     
     std::vector<BaseTypes::Move> moves;
     bool isPlayerTurn;
