@@ -17,7 +17,6 @@
 
 class BoardServicesProtocol {
 public:
-//    virtual void awaitStartingUp() = 0;
     virtual void resetGame() = 0;
     virtual void move(BaseTypes::Move move) = 0;
     virtual void capture(BaseTypes::Move move) = 0;
