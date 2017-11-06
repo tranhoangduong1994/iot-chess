@@ -12,15 +12,21 @@ std::vector<Screen*> Screen::screenStack;
 DisplayerProtocol* Screen::displayer = NULL;
 Screen* Screen::currentScreen = NULL;
 
+void Screen::runScreen(Screen* screen) {
+    displayer->clear();
+    if (screen) {
+        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
+            displayer->print(i, currentScreen->screenBuffer[i]);
+        }
+    }
+}
+
 void Screen::pushScreen(Screen* screen) {
     if (currentScreen) {
         screenStack.push_back(currentScreen);
     }
     currentScreen = screen;
-    displayer->clear();
-    for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
-        displayer->print(i, currentScreen->screenBuffer[i]);
-    }
+    runScreen(currentScreen);
 }
 
 void Screen::popScreen() {
@@ -28,18 +34,15 @@ void Screen::popScreen() {
         return;
     }
     
-    displayer->clear();
-    
     delete screenStack.back();
     screenStack.pop_back();
     
     if (screenStack.size() > 0) {
         currentScreen = screenStack.back();
-        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
-            displayer->print(i, currentScreen->screenBuffer[i]);
-        }
+        runScreen(currentScreen);
     } else {
         currentScreen = NULL;
+        displayer->clear();
     }
 }
 

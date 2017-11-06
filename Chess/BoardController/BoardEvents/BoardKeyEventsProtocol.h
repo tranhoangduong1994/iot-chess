@@ -9,6 +9,8 @@
 #ifndef BoardKeyEventsProtocol_h
 #define BoardKeyEventsProtocol_h
 
+#include "BaseTypes.h"
+
 class BoardKeyEventsProtocol {
 public:
     virtual void onKeyPressed(const EventData& data) = 0;

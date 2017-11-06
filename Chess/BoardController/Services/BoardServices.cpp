@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#include "BoardServicesImplementation.h"
+#include "BoardServices.h"
 
 //#include <wiringPi.h>
 //#include <wiringSerial.h>
@@ -18,11 +18,11 @@
 const char* PORT = "/dev/ttyUSB0";
 const int BAUD = 9600;
 
-BoardServicesImplementation* BoardServicesImplementation::instance = NULL;
+BoardServices* BoardServices::instance = NULL;
 
-BoardServicesImplementation* BoardServicesImplementation::getInstance() {
+BoardServices* BoardServices::getInstance() {
     if (!instance) {
-        instance = new BoardServicesImplementation();
+        instance = new BoardServices();
         instance->fileDescription = -1;
         instance->ready = false;
         instance->awaitStartingUp(); 
@@ -30,7 +30,7 @@ BoardServicesImplementation* BoardServicesImplementation::getInstance() {
     return instance;
 }
 
-void BoardServicesImplementation::awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished) {
+void BoardServices::awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished) {
     if (!ready) {
         return;
     }
@@ -45,14 +45,14 @@ void BoardServicesImplementation::awaitService(std::string serviceRequest, std::
     ready = true;
 }
 
-void BoardServicesImplementation::callService(std::string serviceRequest) {
+void BoardServices::callService(std::string serviceRequest) {
     if (!ready) {
         return;
     }
     serialPuts(fileDescription, serviceRequest.c_str());
 }
 
-void BoardServicesImplementation::awaitStartingUp() {
+void BoardServices::awaitStartingUp() {
     if (fileDescription > -1) {
         return;
     }
@@ -68,58 +68,58 @@ void BoardServicesImplementation::awaitStartingUp() {
     });
 }
 
-bool BoardServicesImplementation::isReady() {
+bool BoardServices::isReady() {
     return ready;
 }
 
-void BoardServicesImplementation::resetGame() {
-    std::thread(&BoardServicesImplementation::awaitService, this, "reset_game", [=](EventData data){
+void BoardServices::resetGame() {
+    std::thread(&BoardServices::awaitService, this, "reset_game", [=](EventData data){
         if (this->gDelegate) {
             gDelegate->onGameReset();
         }
     });
 }
 
-void BoardServicesImplementation::move(BaseTypes::Move move) {
-    std::thread(&BoardServicesImplementation::awaitService, this, "move," + move.toString(), [=](EventData data){
+void BoardServices::move(BaseTypes::Move move) {
+    std::thread(&BoardServices::awaitService, this, "move," + move.toString(), [=](EventData data){
         if (this->gDelegate) {
             gDelegate->onMoveDone();
         }
     });
 }
 
-void BoardServicesImplementation::capture(BaseTypes::Move move) {
-    std::thread(&BoardServicesImplementation::awaitService, this, "capture," + move.toString(), [=](EventData data){
+void BoardServices::capture(BaseTypes::Move move) {
+    std::thread(&BoardServices::awaitService, this, "capture," + move.toString(), [=](EventData data){
         if (this->gDelegate) {
             gDelegate->onMoveDone();
         }
     });
 }
 
-void BoardServicesImplementation::scan() {
-    std::thread(&BoardServicesImplementation::awaitService, this, "scan", [=](EventData data){
+void BoardServices::scan() {
+    std::thread(&BoardServices::awaitService, this, "scan", [=](EventData data){
         if (this->gDelegate) {
             gDelegate->onScanDone(data);
         }
     });
 }
 
-void BoardServicesImplementation::display(int line, std::string string) {
+void BoardServices::display(int line, std::string string) {
     callService("display," + std::to_string(line) + "," + string);
 }
 
-void BoardServicesImplementation::clearScreen() {
+void BoardServices::clearScreen() {
     callService("clear_screen");
 }
 
-void BoardServicesImplementation::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {
+void BoardServices::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {
     sDelegate = s_delegate;
 }
 
-void BoardServicesImplementation::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) {
+void BoardServices::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) {
     gDelegate = g_delegate;
 }
 
-void BoardServicesImplementation::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
+void BoardServices::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
     kDelegate = k_delegate;
 }

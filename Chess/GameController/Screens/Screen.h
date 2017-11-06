@@ -16,6 +16,7 @@
 
 class Screen {
 public:
+    static void runScreen(Screen* screen);
     static void pushScreen(Screen* screen);
     static void popScreen();
     static void replaceScreen(Screen* screen);

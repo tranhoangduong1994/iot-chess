@@ -29,8 +29,6 @@ public:
     void onLoseGame(const EventData& data) override;
     void onDrawGame(const EventData& data) override;
     
-    void initWithGame(OfflineGame* game);
-    
 private:
     OfflineGame* game;
     std::string getInput();

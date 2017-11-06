@@ -9,6 +9,8 @@
 #ifndef BoardIngameEventsProtocol_h
 #define BoardIngameEventsProtocol_h
 
+#include "BaseTypes.h"
+
 class BoardIngameEventsProtocol {
 public:
     virtual void onMoveDone() = 0;

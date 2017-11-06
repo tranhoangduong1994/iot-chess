@@ -1,18 +1,18 @@
 //
-//  BoardServicesImplementation.h
+//  BoardServices.h
 //  Chess
 //
 //  Created by macbook on 11/4/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#ifndef BoardServicesImplementation_h
-#define BoardServicesImplementation_h
+#ifndef BoardServices_h
+#define BoardServices_h
 
-#include "BoardServicesProtocol.h"
+#include "IBoardServices.h"
 #include <functional>
 
-class BoardServicesImplementation : public BoardServicesProtocol {
+class BoardServices : public IBoardServices {
 public:
     void resetGame() override;
     void move(BaseTypes::Move move) override;
@@ -26,14 +26,14 @@ public:
     void setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) override;
     void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) override;
     
-    static BoardServicesImplementation* getInstance();
+    static BoardServices* getInstance();
     
     bool isReady();
     
 private:
     int fileDescription;
     bool ready;
-    static BoardServicesImplementation* instance;
+    static BoardServices* instance;
     
     BoardSystemEventsProtocol* sDelegate;
     BoardIngameEventsProtocol* gDelegate;
@@ -45,4 +45,4 @@ private:
 };
 
 
-#endif /* BoardServicesImplementation_h */
+#endif /* BoardServices_h */

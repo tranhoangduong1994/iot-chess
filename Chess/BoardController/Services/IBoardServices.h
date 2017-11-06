@@ -1,13 +1,13 @@
 //
-//  BoardServicesProtocol.h
+//  IBoardServices.h
 //  Chess
 //
 //  Created by macbook on 11/4/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#ifndef BoardServicesProtocol_h
-#define BoardServicesProtocol_h
+#ifndef IBoardServices_h
+#define IBoardServices_h
 
 #include "BaseTypes.h"
 
@@ -15,7 +15,7 @@
 #include "BoardIngameEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
-class BoardServicesProtocol {
+class IBoardServices {
 public:
     virtual void resetGame() = 0;
     virtual void move(BaseTypes::Move move) = 0;
@@ -30,4 +30,4 @@ public:
     virtual void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) = 0;
 };
 
-#endif /* BoardServicesProtocol_h */
+#endif /* IBoardServices_h */

@@ -17,15 +17,10 @@ GameScreen* GameScreen::create(OfflineGame* game, int width, int height) {
     
     GameScreen* screen = new GameScreen();
     screen->game = game;
+    screen->game->setDelegate(screen);
     screen->width = width;
     screen->height = height;
     return screen;
-}
-
-void GameScreen::initWithGame(OfflineGame *game) {
-    this->game = game;
-    game->setDelegate(this);
-    game->start(BaseTypes::WHITE, 1);
 }
 
 std::string GameScreen::getInput() {

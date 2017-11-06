@@ -9,6 +9,8 @@
 #ifndef BoardSystemEventsProtocol_h
 #define BoardSystemEventsProtocol_h
 
+#include "BaseTypes.h"
+
 class BoardSystemEventsProtocol {
 public:
     virtual void onStartedUp(const EventData& data) = 0;
