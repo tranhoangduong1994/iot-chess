@@ -19,6 +19,7 @@ class GameScreen : public Screen, public GameEventsProtocol {
 public:
     static GameScreen* create(OfflineGame* game, int width, int height);
     
+    // GameEventsProtocol implementation
     void onGameStarted(const EventData& data) override;
     
     void onTurnBegan(const EventData& data) override;
@@ -31,7 +32,6 @@ public:
     
 private:
     OfflineGame* game;
-    std::string getInput();
 };
 
 #endif /* GameScreen_h */

@@ -13,9 +13,11 @@
 
 class BoardIngameEventsProtocol {
 public:
-    virtual void onMoveDone() = 0;
-    virtual void onScanDone(EventData data) = 0;
+    virtual void onMotorMoveDone() = 0;
+    virtual void onBoardStateChanged(const EventData& data) = 0;
     virtual void onGameReset() = 0;
+    
+    //    virtual void onScanDone(const EventData& data) = 0;
 };
 
 #endif /* BoardIngameEventsProtocol_h */

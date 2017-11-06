@@ -17,7 +17,7 @@ public:
     void resetGame() override;
     void move(BaseTypes::Move move) override;
     void capture(BaseTypes::Move move) override;
-    void scan() override;
+//    void scan() override;
     
     void display(int line, std::string string) override;
     void clearScreen() override;

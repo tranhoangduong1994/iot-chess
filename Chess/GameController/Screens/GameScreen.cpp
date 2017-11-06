@@ -23,12 +23,6 @@ GameScreen* GameScreen::create(OfflineGame* game, int width, int height) {
     return screen;
 }
 
-std::string GameScreen::getInput() {
-    std::string result;
-    std::cin >> result;
-    return result;
-}
-
 void GameScreen::onGameStarted(const EventData& data) {
     print(1, "Game started!!");
 }
@@ -42,10 +36,6 @@ void GameScreen::onTurnBegan(const EventData& data) {
     print(2, "It's your turn.");
     print(3, "You play: ");
     print(4, "");
-    
-    std::string move = getInput();
-    std::cout << "test move: " + move;
-    game->move(BaseTypes::Move(move));
 }
 
 void GameScreen::onTurnEnded(const EventData& data) {
@@ -56,8 +46,6 @@ void GameScreen::onTurnEnded(const EventData& data) {
 void GameScreen::onInvalidMove(const EventData& data) {
     print(3, "You play: " + data.at("your_move"));
     print(4, "Invalid move, please try again: ");
-    std::string move = getInput();
-    game->move(BaseTypes::Move(move));
 }
 
 void GameScreen::onWinGame(const EventData& data) {

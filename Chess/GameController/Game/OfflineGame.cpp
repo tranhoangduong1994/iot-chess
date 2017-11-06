@@ -10,12 +10,15 @@
 #include "GameEventsProtocol.h"
 #include "StockfishEngine.h"
 #include "PythonChessValidator.h"
+#include "BoardServices.h"
 
 #include "thread.h"
 
 void OfflineGame::start(BaseTypes::Side side, int difficulty) {
     engine = StockfishEngine::getInstance();
     validator = PythonChessValidator::getInstance();
+    
+    this->difficulty = difficulty;
     
     engine->start(difficulty);
     validator->start();
@@ -27,21 +30,6 @@ void OfflineGame::start(BaseTypes::Side side, int difficulty) {
         playerTurn();
     } else {
         computerTurn();
-    }
-}
-
-void OfflineGame::move(BaseTypes::Move move) {
-    if (validator->checkMove(move)) {
-        validator->move(move);
-        engine->move(move);
-        EventData turnEndedData;
-        turnEndedData["your_move"] = move.toString();
-        delegate->onTurnEnded(turnEndedData);
-        computerTurn();
-    } else {
-        EventData invalidMoveData;
-        invalidMoveData["your_move"] = move.toString();
-        delegate->onInvalidMove(invalidMoveData);
     }
 }
 
@@ -62,12 +50,63 @@ void OfflineGame::computerTurn() {
         engine->move(move);
         validator->move(move);
         moves.push_back(move);
+        BoardServices::getInstance()->move(move);
         hasComputerFinishedThinking = true;
     });
     Threads.main()->wait(hasComputerFinishedThinking);
-    playerTurn();
 }
 
 void OfflineGame::setDelegate(GameEventsProtocol* delegate) {
     this->delegate = delegate;
+}
+
+void OfflineGame::onBoardStateChanged(const EventData& data) {
+    if (!isPlayerTurn) {
+        //TODO: handle INVALID ACTION
+    } else {
+        if (playerMovesFrom == "") {
+            if (data.at("state") == "on") {
+                //TODO: handle INVALID ACTION
+                return;
+            }
+            
+            playerMovesFrom = data.at("square");
+        } else {
+            if (data.at("state") == "off") {
+                //TODO: handle INVALID ACTION
+                return;
+            }
+            
+            std::string playerMovesTo = data.at("square");
+            std::string move = playerMovesFrom + playerMovesTo;
+            playerMovesFrom = "";
+            if (!validator->checkMove(move)) {
+                //TODO: handle INVALID MOVE
+                return;
+            }
+            
+            validator->move(move);
+            engine->move(move);
+            moves.push_back(move);
+            EventData data;
+            delegate->onTurnEnded(data);
+            computerTurn();
+        }
+    }
+}
+
+void OfflineGame::onMotorMoveDone() {
+    playerTurn();
+}
+
+void OfflineGame::onGameReset() {
+    engine->start(this->difficulty);
+    validator->start();
+    
+    EventData gameStartedData;
+    delegate->onGameStarted(gameStartedData);
+}
+
+void OfflineGame::onKeyPressed(const EventData& data) {
+    
 }

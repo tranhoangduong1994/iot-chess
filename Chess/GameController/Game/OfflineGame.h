@@ -15,29 +15,42 @@
 #include "BaseTypes.h"
 #include "IEngine.h"
 #include "IValidator.h"
+#include "BoardIngameEventsProtocol.h"
+#include "BoardKeyEventsProtocol.h"
 #include <atomic>
 #include <vector>
 
 class GameEventsProtocol;
 
-class OfflineGame {
+class OfflineGame : public BoardIngameEventsProtocol, public BoardKeyEventsProtocol {
+public:
+    void start(BaseTypes::Side side, int difficulty);
+    void setDelegate(GameEventsProtocol* delegate);
+    
+    // BoardIngameEventsProtocol implementation
+    void onMotorMoveDone() override;
+    void onBoardStateChanged(const EventData& data) override;
+    void onGameReset() override;
+    
+    // BoardKeyEventsProtocol implementation
+    void onKeyPressed(const EventData& data) override;
+    
 private:
+    void playerTurn();
+    void computerTurn();
+    
     GameEventsProtocol* delegate;
     
     IEngine* engine;
     IValidator* validator;
     
+    int difficulty;
+    
     std::vector<BaseTypes::Move> moves;
     bool isPlayerTurn;
     std::atomic<bool> hasComputerFinishedThinking;
     
-    void playerTurn();
-    void computerTurn();
-    
-public:
-    void start(BaseTypes::Side side, int difficulty);
-    void move(BaseTypes::Move move);
-    void setDelegate(GameEventsProtocol* delegate);
+    std::string playerMovesFrom;
 };
 
 #endif /* OfflineGame_h */

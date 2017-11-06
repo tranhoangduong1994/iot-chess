@@ -83,7 +83,7 @@ void BoardServices::resetGame() {
 void BoardServices::move(BaseTypes::Move move) {
     std::thread(&BoardServices::awaitService, this, "move," + move.toString(), [=](EventData data){
         if (this->gDelegate) {
-            gDelegate->onMoveDone();
+            gDelegate->onMotorMoveDone();
         }
     });
 }
@@ -91,18 +91,18 @@ void BoardServices::move(BaseTypes::Move move) {
 void BoardServices::capture(BaseTypes::Move move) {
     std::thread(&BoardServices::awaitService, this, "capture," + move.toString(), [=](EventData data){
         if (this->gDelegate) {
-            gDelegate->onMoveDone();
+            gDelegate->onMotorMoveDone();
         }
     });
 }
 
-void BoardServices::scan() {
-    std::thread(&BoardServices::awaitService, this, "scan", [=](EventData data){
-        if (this->gDelegate) {
-            gDelegate->onScanDone(data);
-        }
-    });
-}
+//void BoardServices::scan() {
+//    std::thread(&BoardServices::awaitService, this, "scan", [=](EventData data){
+//        if (this->gDelegate) {
+//            gDelegate->onScanDone(data);
+//        }
+//    });
+//}
 
 void BoardServices::display(int line, std::string string) {
     callService("display," + std::to_string(line) + "," + string);
