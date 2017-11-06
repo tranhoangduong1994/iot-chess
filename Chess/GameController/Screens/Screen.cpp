@@ -9,7 +9,7 @@
 #include "Screen.h"
 
 std::vector<Screen*> Screen::screenStack;
-DisplayerProtocol* Screen::displayer = NULL;
+IDisplayer* Screen::displayer = NULL;
 Screen* Screen::currentScreen = NULL;
 
 void Screen::runScreen(Screen* screen) {

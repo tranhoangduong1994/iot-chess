@@ -9,9 +9,9 @@
 #ifndef DisplayerImplementation_h
 #define DisplayerImplementation_h
 
-#include "DisplayerProtocol.h"
+#include "IDisplayer.h"
 
-class DisplayerImplementation : public DisplayerProtocol {
+class DisplayerImplementation : public IDisplayer {
 public:
     static DisplayerImplementation* getInstance();
     

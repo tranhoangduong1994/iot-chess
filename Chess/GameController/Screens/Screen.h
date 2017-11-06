@@ -26,7 +26,7 @@ public:
     
 protected:
     static std::vector<Screen*> screenStack;
-    static DisplayerProtocol* displayer;
+    static IDisplayer* displayer;
     static Screen* currentScreen;
     
     int width, height;
