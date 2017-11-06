@@ -133,11 +133,9 @@
     
 //}
 
-#include "OfflineGame.h"
-#include "GameScreen.h"
+#include "MainMenuScreen.h"
 
 int main(int argc, char* argv[]) {
-    OfflineGame* game = new OfflineGame();
-    GameScreen::create(game, 20, 4);
+    Screen::replaceScreen(MainMenuScreen::create(20, 4));
 }
 
