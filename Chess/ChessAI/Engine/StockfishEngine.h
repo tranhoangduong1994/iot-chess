@@ -9,7 +9,7 @@
 #ifndef StockfishEngine_h
 #define StockfishEngine_h
 
-#include "EngineProtocol.h"
+#include "IEngine.h"
 #include <string>
 #include <map>
 
@@ -19,7 +19,7 @@ class ValidatorProtocol;
 class StockfishWrapper;
 class Position;
 
-class StockfishEngine : public EngineProtocol {
+class StockfishEngine : public IEngine {
 private:
     StockfishWrapper* wrapper;
     

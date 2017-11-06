@@ -13,18 +13,18 @@
 #define ONLINE
 
 #include "BaseTypes.h"
+#include "IEngine.h"
 #include <atomic>
 #include <vector>
 
 class GameEventsProtocol;
-class EngineProtocol;
 class ValidatorProtocol;
 
 class OfflineGame {
 private:
     GameEventsProtocol* delegate;
     
-    EngineProtocol* engine;
+    IEngine* engine;
     ValidatorProtocol* validator;
     
     std::vector<BaseTypes::Move> moves;
