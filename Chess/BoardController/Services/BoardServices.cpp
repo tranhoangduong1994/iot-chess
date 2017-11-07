@@ -56,6 +56,7 @@ void BoardServices::awaitService(std::string serviceRequest, std::function<void(
 
 void BoardServices::callService(std::string serviceRequest) {
     std::cout << "BoardServices::callService(" << serviceRequest << ")" << std::endl;
+    serviceRequest += "\0";
     if (!ready) {
         std::cout << "Not ready" << std::endl;
         return;
