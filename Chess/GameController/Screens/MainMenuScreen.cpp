@@ -20,17 +20,18 @@ MainMenuScreen* MainMenuScreen::create(int width, int height) {
     screen->width = width;
     screen->height = height;
     
-    screen->init();
-    
     return screen;
 }
 
 void MainMenuScreen::onEnter() {
+    std::cout << "MainMenuScreen - onEnter" << std::endl;
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
     setCursorPosition(1);
 }
 
 void MainMenuScreen::onExit() {
-    
+    std::cout << "MainMenuScreen - onExit" << std::endl;
+    delete this;
 }
 
 void MainMenuScreen::onKeyPressed(const EventData& data) {
@@ -70,7 +71,7 @@ void MainMenuScreen::onKeyPressed(const EventData& data) {
 }
 
 void MainMenuScreen::init() {
-    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
+    
 }
 
 void MainMenuScreen::setCursorPosition(int index) {
@@ -81,13 +82,13 @@ void MainMenuScreen::setCursorPosition(int index) {
     
     switch (index) {
         case 1:
-            displayer->print(2, "► Single game");
+            displayer->print(2, "* Single game");
             break;
         case 2:
-            displayer->print(3, "► Multiplayer game");
+            displayer->print(3, "* Multiplayer game");
             break;
         case 3:
-            displayer->print(4, "► Settings");
+            displayer->print(4, "* Settings");
             break;
         default:
             break;

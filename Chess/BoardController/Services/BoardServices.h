@@ -41,7 +41,7 @@ private:
     
     void awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished);
     void callService(std::string serviceRequest);
-    void awaitStartingUp();
+    void awaitSerialPortConnected();
 };
 
 

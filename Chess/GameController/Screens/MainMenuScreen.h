@@ -17,6 +17,10 @@ public:
     static MainMenuScreen* create(int width, int height);
     void onKeyPressed(const EventData& data) override;
     
+protected:
+    void onEnter() override;
+    void onExit() override;
+    
 private:
     int cursorPositionIndex;
     
@@ -24,9 +28,6 @@ private:
     void setCursorPosition(int index);
     
     ~MainMenuScreen() {}
-    
-    void onEnter() override;
-    void onExit() override;
 };
 
 #endif /* MainMenuScreen_h */

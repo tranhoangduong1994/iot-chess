@@ -13,11 +13,6 @@
 #include <wiringSerial.h>
 #endif
 
-#if defined(__APPLE__) || defined(__MACH__)
-#include "wiringPi.h"
-#include "wiringSerial.h"
-#endif
-
 #include <thread>
 
 const char* PORT = "/dev/ttyUSB0";
@@ -30,7 +25,7 @@ BoardServices* BoardServices::getInstance() {
         instance = new BoardServices();
         instance->fileDescription = -1;
         instance->ready = false;
-        instance->awaitStartingUp(); 
+        instance->awaitSerialPortConnected();
     }
     return instance;
 }
@@ -40,11 +35,19 @@ void BoardServices::awaitService(std::string serviceRequest, std::function<void(
         return;
     }
     ready = false;
+    
+#if defined(__linux) || defined(linux) || defined(__linux)
     serialPuts(fileDescription, serviceRequest.c_str());
     bool receivedData = false;
     while(!receivedData) {
         receivedData = serialDataAvail(fileDescription);
     }
+#endif
+    
+#if defined(__APPLE__) || defined(__MACH__)
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+#endif
+    
     EventData eventData;
     onFinished(eventData);
     ready = true;
@@ -54,23 +57,32 @@ void BoardServices::callService(std::string serviceRequest) {
     if (!ready) {
         return;
     }
+    
+#if defined(__linux) || defined(linux) || defined(__linux)
     serialPuts(fileDescription, serviceRequest.c_str());
+#endif
+
 }
 
-void BoardServices::awaitStartingUp() {
-    if (fileDescription > -1) {
-        return;
-    }
+void BoardServices::awaitSerialPortConnected() {
     std::thread([=]() {
+        
+#if defined(__linux) || defined(linux) || defined(__linux)
         while (fileDescription < 0) {
             fileDescription = serialOpen(PORT, BAUD);
         }
+#endif
+        
+#if defined(__APPLE__) || defined(__MACH__)
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+#endif
+        
         ready = true;
         if (sDelegate) {
             EventData data;
-            sDelegate->onStartedUp(data);
+            sDelegate->onSerialPortConnected(data);
         }
-    });
+    }).detach();
 }
 
 bool BoardServices::isReady() {
@@ -82,7 +94,7 @@ void BoardServices::resetGame() {
         if (this->gDelegate) {
             gDelegate->onGameReset();
         }
-    });
+    }).detach();
 }
 
 void BoardServices::move(BaseTypes::Move move) {
@@ -90,7 +102,7 @@ void BoardServices::move(BaseTypes::Move move) {
         if (this->gDelegate) {
             gDelegate->onMotorMoveDone();
         }
-    });
+    }).detach();
 }
 
 void BoardServices::capture(BaseTypes::Move move) {
@@ -98,7 +110,7 @@ void BoardServices::capture(BaseTypes::Move move) {
         if (this->gDelegate) {
             gDelegate->onMotorMoveDone();
         }
-    });
+    }).detach();
 }
 
 //void BoardServices::scan() {

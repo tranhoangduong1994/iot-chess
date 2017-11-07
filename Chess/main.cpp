@@ -91,7 +91,7 @@
 //    } catch (const std::exception &e) {
 //        std::cout << "Error exception: " << e.what() << std::endl;
 //    }
-    
+
 //    sio::client h;
 //    std::string name = "Duong H. Tran";
 //    h.connect("http://localhost:8080");
@@ -133,15 +133,28 @@
     
 //}
 
-#include <stdio.h>
+#include <iostream>
 #include <thread>
+#include "BoardSystemEventsProtocol.h"
+#include "BoardServices.h"
 #include "MainMenuScreen.h"
 
+class MainDelegation : public BoardSystemEventsProtocol {
+public:
+    void onSerialPortConnected(const EventData& data) {
+        Screen::pushScreen(MainMenuScreen::create(20, 4));
+    };
+};
+
 int main(int argc, char* argv[]) {
+    std::cout << "Start" << std::endl;
     std::thread([]() {
-        Screen::replaceScreen(MainMenuScreen::create(20, 4));
-    });
-    while (true) {}
+        BoardServices::getInstance()->setBoardSystemEventsDelegate(new MainDelegation());
+    }).detach();
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::cout << "running..." << std::endl;
+    }
     return 0;
 }
 

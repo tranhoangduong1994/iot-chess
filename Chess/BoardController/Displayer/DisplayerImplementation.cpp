@@ -7,6 +7,7 @@
 //
 
 #include "DisplayerImplementation.h"
+#include "BoardServices.h"
 
 DisplayerImplementation* DisplayerImplementation::instance = NULL;
 
@@ -18,7 +19,7 @@ DisplayerImplementation* DisplayerImplementation::getInstance() {
 }
 
 void DisplayerImplementation::print(int lineNumber, std::string content) {
-    
+    BoardServices::getInstance()->display(lineNumber, content);
 }
 
 void DisplayerImplementation::clear() {

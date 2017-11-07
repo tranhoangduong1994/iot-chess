@@ -13,7 +13,7 @@
 
 class BoardSystemEventsProtocol {
 public:
-    virtual void onStartedUp(const EventData& data) = 0;
+    virtual void onSerialPortConnected(const EventData& data) = 0;
 };
 
 #endif /* BoardSystemEventsProtocol_h */
