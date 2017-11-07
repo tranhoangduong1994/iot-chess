@@ -80,6 +80,7 @@ void BoardServices::awaitSerialPortConnected() {
         ready = true;
         if (sDelegate) {
             EventData data;
+            data["file_description"] = std::to_string(fileDescription);
             sDelegate->onSerialPortConnected(data);
         }
     }).detach();

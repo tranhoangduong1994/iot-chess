@@ -142,6 +142,7 @@
 class MainDelegation : public BoardSystemEventsProtocol {
 public:
     void onSerialPortConnected(const EventData& data) {
+        std::cout << "MainDelegation - onSerialPortConnected: " << data.at("file_description") << std::endl;
         Screen::pushScreen(MainMenuScreen::create(20, 4));
     };
 };
