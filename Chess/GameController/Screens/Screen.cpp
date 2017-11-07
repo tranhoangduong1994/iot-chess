@@ -13,8 +13,8 @@ IDisplayer* Screen::displayer = NULL;
 Screen* Screen::currentScreen = NULL;
 
 void Screen::runScreen(Screen* screen) {
-    screen->onEnter();
     displayer->clear();
+    screen->onEnter();
     if (screen) {
         for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
             displayer->print(i, currentScreen->screenBuffer[i]);
@@ -57,7 +57,6 @@ void Screen::replaceScreen(Screen* screen) {
         screenStack.pop_back();
     }
     
-    displayer->clear();
     Screen::pushScreen(screen);
 }
 
