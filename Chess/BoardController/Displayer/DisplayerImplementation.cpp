@@ -23,5 +23,5 @@ void DisplayerImplementation::print(int lineNumber, std::string content) {
 }
 
 void DisplayerImplementation::clear() {
-    
+    BoardServices::getInstance()->clearScreen();
 }

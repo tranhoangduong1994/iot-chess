@@ -123,11 +123,11 @@ void BoardServices::capture(BaseTypes::Move move) {
 //}
 
 void BoardServices::display(int line, std::string string) {
-    callService("display," + std::to_string(line) + "," + string);
+    callService("1" + std::to_string(line - 1) + "," + string);
 }
 
 void BoardServices::clearScreen() {
-    callService("clear_screen");
+    callService("0");
 }
 
 void BoardServices::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {

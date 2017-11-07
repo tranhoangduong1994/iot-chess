@@ -6,133 +6,6 @@
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-//#include <iostream>
-//#include "StockfishEngine.h"
-//#include "thread.h"
-//#include "NodeConnectorImplementation.h"
-
-//#include <cpprest/http_client.h>
-//#include <cpprest/filestream.h>
-
-//using namespace utility;                    // Common utilities like string conversions
-//using namespace web;                        // Common features like URIs.
-//using namespace web::http;                  // Common HTTP functionality
-//using namespace web::http::client;          // HTTP client features
-//using namespace concurrency::streams;       // Asynchronous streams
-
-//void playerTurn();
-//void computerTurn();
-//
-//std::atomic<bool> isPlayerTurn (false);
-//StockfishEngine* engine;
-
-//void playerTurn() {
-//    std::cout << "\nYou play: ";
-//    std::string input;
-//    std::cin >> input;
-//    bool result = engine->move(BaseTypes::Move(input));
-//    if (result) {
-//        engine->log();
-//        isPlayerTurn = false;
-//        computerTurn();
-//    } else {
-//        std::cout << "\nInvalid move!!!";
-//        playerTurn();
-//    }
-//}
-//
-//void computerTurn() {
-//    engine->calculate([=](BaseTypes::Move move) {
-//        std::cout << "\nCom play: " << move.fromPos.file << move.fromPos.rank << move.toPos.file << move.toPos.rank;
-//        engine->move(move);
-//        engine->log();
-//        isPlayerTurn = true;
-//    });
-//    Threads.main()->wait(isPlayerTurn);
-//    playerTurn();
-//}
-//
-//void startGame(bool playerGoFirst) {
-//    if (playerGoFirst) {
-//        playerTurn();
-//    } else {
-//        computerTurn();
-//    }
-//}
-//
-//void OnConnected() {
-//    std::cout << "On connect";
-//}
-
-//int main(int argc, const char * argv[]) {
-//    auto fileStream = std::make_shared<ostream>();
-//
-//    pplx::task<void> requestTask = fstream::open_ostream(U("result.html"))
-//    .then([=](ostream outFile) {
-//        *fileStream = outFile;
-//
-//        http_client client(U("http://www.bing.com"));
-//
-//        uri_builder builder(U("/search"));
-//        builder.append_query(U("q"), U("xvideos.com"));
-//        return client.request(methods::GET, builder.to_string());
-//    })
-//    .then([=](http_response response) {
-//        std::cout << "Received response status code: " << response.status_code();
-//
-//        return response.body().read_to_end(fileStream->streambuf());
-//    })
-//    .then([=](size_t) {
-//        return fileStream->close();
-//    });
-//
-//    try {
-//        requestTask.wait();
-//    } catch (const std::exception &e) {
-//        std::cout << "Error exception: " << e.what() << std::endl;
-//    }
-
-//    sio::client h;
-//    std::string name = "Duong H. Tran";
-//    h.connect("http://localhost:8080");
-//    h.set_socket_open_listener([&](std::string nsp) {
-//        std::cout << "On connect: " << nsp << std::endl;
-//        h.socket()->emit("hello", name);
-//    });
-//
-//    h.socket()->on("hello", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
-//        std::cout << "On hello" << std::endl;
-//
-//        std::string username = message->get_map()["id"]->get_string();
-//
-//        std::cout << "Message: " << message->get_map()["message"]->get_string() << std::endl;
-//        std::cout << "User id: " << username << std::endl;
-//
-//        auto msg = sio::object_message::create();
-//        msg->get_map()["name"] = sio::string_message::create(name);
-//
-//        h.socket()->emit("createGame", msg);
-//    });
-//
-//    h.socket()->on("joinGameSucceeded", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
-//        std::cout << "On joinGameSucceeded" << std::endl;
-//    });
-//
-//    h.socket()->on("joinGameFailed", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
-//        std::cout << "On joinGameFailed" << std::endl;
-//        std::cout << "Message: " << message->get_map()["message"]->get_string() << std::endl;
-//    });
-    
-//    engine = StockfishEngine::getInstance();
-//    engine->start(1);
-//    std::cout << "\nGame started!!!";
-//    engine->log();
-//
-//    startGame(true);
-    
-    
-//}
-
 #include <iostream>
 #include <thread>
 #include "BoardSystemEventsProtocol.h"
@@ -158,4 +31,52 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+
+//#include <stdio.h>
+//#include <iostream>
+//
+//const int CMD_BUFFER_LENGTH = 102;
+//const int STRING_LENGTH = 100;
+//
+//char commandBuffer[CMD_BUFFER_LENGTH];
+//
+//void tryPerformingCommand() {
+//    if (commandBuffer[0] == '0') {
+//        //clear screen
+//        std::cout << "lcd.clear();" << std::endl;
+//    } else if (commandBuffer[0] == '1') {
+//        //print
+//        char line = commandBuffer[1] - 48;
+//        std::cout << "lcd.setCursor(0, " + std::to_string(line) + ");" << std::endl;
+//        char stringBuffer[STRING_LENGTH] = "";
+//        int i = 2;
+//        while(true) {
+//            char character = commandBuffer[i];
+//            if (character == 0) break;
+//            stringBuffer[i - 2] = character;
+//            i++;
+//        }
+//        std::cout << stringBuffer << std::endl;
+//    }
+//}
+//
+//void clearCommandBuffer() {
+//    for (int i = 0; i < CMD_BUFFER_LENGTH; i++) {
+//        commandBuffer[i] = 0;
+//    }
+//}
+//
+//int main(int argc, char* argv[]) {
+//    clearCommandBuffer();
+////    std::cout << commandBuffer << std::endl;
+//    strncpy(commandBuffer, "0", 100);
+//    tryPerformingCommand();
+//
+//    clearCommandBuffer();
+////    std::cout << commandBuffer << std::endl;
+//    strncpy(commandBuffer, "10Hello, world", 100);
+//    tryPerformingCommand();
+//
+//    return 0;
+//}
 
