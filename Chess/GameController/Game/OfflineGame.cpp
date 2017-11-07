@@ -18,6 +18,7 @@ void OfflineGame::start(BaseTypes::Side side, int difficulty) {
     engine = StockfishEngine::getInstance();
     validator = PythonChessValidator::getInstance();
     
+    this->side = side;
     this->difficulty = difficulty;
     
     engine->start(difficulty);
@@ -105,6 +106,12 @@ void OfflineGame::onGameReset() {
     
     EventData gameStartedData;
     delegate->onGameStarted(gameStartedData);
+    
+    if (side == BaseTypes::Side::WHITE) {
+        playerTurn();
+    } else {
+        computerTurn();
+    }
 }
 
 void OfflineGame::onKeyPressed(const EventData& data) {

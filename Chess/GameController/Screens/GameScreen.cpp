@@ -23,6 +23,14 @@ GameScreen* GameScreen::create(OfflineGame* game, int width, int height) {
     return screen;
 }
 
+void GameScreen::onEnter() {
+    game->start(BaseTypes::Side::WHITE, 1);
+}
+
+void GameScreen::onExit() {
+    delete game;
+}
+
 void GameScreen::onGameStarted(const EventData& data) {
     print(1, "Game started!!");
 }

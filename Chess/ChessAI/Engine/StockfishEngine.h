@@ -27,6 +27,8 @@ private:
     
     void init();
     
+    ~StockfishEngine() {};
+    
 public:
     virtual void start(int difficulty) override;
     virtual bool move(const BaseTypes::Move& move) override;

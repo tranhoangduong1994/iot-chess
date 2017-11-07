@@ -25,6 +25,14 @@ MainMenuScreen* MainMenuScreen::create(int width, int height) {
     return screen;
 }
 
+void MainMenuScreen::onEnter() {
+    setCursorPosition(1);
+}
+
+void MainMenuScreen::onExit() {
+    
+}
+
 void MainMenuScreen::onKeyPressed(const EventData& data) {
     std::string keyIndex = data.at("key_index");
     if (keyIndex == "up") {
@@ -63,7 +71,6 @@ void MainMenuScreen::onKeyPressed(const EventData& data) {
 
 void MainMenuScreen::init() {
     BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
-    setCursorPosition(1);
 }
 
 void MainMenuScreen::setCursorPosition(int index) {

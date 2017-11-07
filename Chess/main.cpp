@@ -133,9 +133,15 @@
     
 //}
 
+#include <stdio.h>
+#include <thread>
 #include "MainMenuScreen.h"
 
 int main(int argc, char* argv[]) {
-    Screen::replaceScreen(MainMenuScreen::create(20, 4));
+    std::thread([]() {
+        Screen::replaceScreen(MainMenuScreen::create(20, 4));
+    });
+    while (true) {}
+    return 0;
 }
 

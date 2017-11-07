@@ -30,7 +30,12 @@ public:
     void onLoseGame(const EventData& data) override;
     void onDrawGame(const EventData& data) override;
     
+protected:
+    void onEnter() override;
+    void onExit() override;
+    
 private:
+    ~GameScreen() {}
     OfflineGame* game;
 };
 

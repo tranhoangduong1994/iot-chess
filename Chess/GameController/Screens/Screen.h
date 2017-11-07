@@ -16,7 +16,6 @@
 
 class Screen {
 public:
-    static void runScreen(Screen* screen);
     static void pushScreen(Screen* screen);
     static void popScreen();
     static void replaceScreen(Screen* screen);
@@ -33,6 +32,12 @@ protected:
     std::vector<std::string> screenBuffer;
     
     Screen() {};
+    virtual ~Screen() {};
+    
+    virtual void onEnter() {};
+    virtual void onExit() {};
+private:
+    static void runScreen(Screen* screen);
 };
 
 #endif /* Screen_h */

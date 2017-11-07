@@ -35,6 +35,8 @@ public:
     // BoardKeyEventsProtocol implementation
     void onKeyPressed(const EventData& data) override;
     
+    ~OfflineGame() {}
+    
 private:
     void playerTurn();
     void computerTurn();
@@ -44,6 +46,7 @@ private:
     IEngine* engine;
     IValidator* validator;
     
+    BaseTypes::Side side;
     int difficulty;
     
     std::vector<BaseTypes::Move> moves;

@@ -22,6 +22,11 @@ private:
     
     void init();
     void setCursorPosition(int index);
+    
+    ~MainMenuScreen() {}
+    
+    void onEnter() override;
+    void onExit() override;
 };
 
 #endif /* MainMenuScreen_h */
