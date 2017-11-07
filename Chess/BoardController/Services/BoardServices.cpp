@@ -15,7 +15,7 @@
 
 #include <thread>
 
-const char* PORT = "/dev/ttyUSB0";
+const char* PORT = "/dev/ttyUSB1";
 const int BAUD = 9600;
 
 BoardServices* BoardServices::instance = NULL;
@@ -56,7 +56,7 @@ void BoardServices::awaitService(std::string serviceRequest, std::function<void(
 
 void BoardServices::callService(std::string serviceRequest) {
     std::cout << "BoardServices::callService(" << serviceRequest << ")" << std::endl;
-    serviceRequest += "\0";
+    serviceRequest += "|";
     if (!ready) {
         std::cout << "Not ready" << std::endl;
         return;
