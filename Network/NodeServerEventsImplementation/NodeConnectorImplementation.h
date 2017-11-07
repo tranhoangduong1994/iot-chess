@@ -12,7 +12,7 @@
 #include "BaseTypes.h"
 #include "BaseConnectorProtocol.h"
 #include "ConnectingEventsProtocol.h"
-#include "GameEventsProtocol.h"
+//#include "GameEventsProtocol.h"
 #include "RoomEventsProtocol.h"
 
 #include "sio_client.h"
@@ -21,7 +21,7 @@ class NodeConnectorImplementation : public BaseConnectorProtocol {
 private:
     ConnectingEventsProtocol* connectingDelegate = NULL;
     RoomEventsProtocol* roomDelegate = NULL;
-    GameEventsProtocol* gameDelegate = NULL;
+//    GameEventsProtocol* gameDelegate = NULL;
     
     sio::client* client;
     void init();

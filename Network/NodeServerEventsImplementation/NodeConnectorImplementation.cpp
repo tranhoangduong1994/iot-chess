@@ -124,23 +124,23 @@ void NodeConnectorImplementation::init() {
     //GAME EVENTS
     client->socket()->on("gameStarted", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onGameStarted(data);
+//        gameDelegate->onGameStarted(data);
     });
     
     client->socket()->on("turnBegan", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["lastMove"] = message->get_map()["lastMove"]->get_string();
-        gameDelegate->onTurnBegan(data);
+//        gameDelegate->onTurnBegan(data);
     });
     
     client->socket()->on("turnEnded", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onTurnEnded(data);
+//        gameDelegate->onTurnEnded(data);
     });
     
     client->socket()->on("invalidMove", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onInvalidMove(data);
+//        gameDelegate->onInvalidMove(data);
     });
     
     client->socket()->on("drawGameOffered", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
@@ -155,17 +155,17 @@ void NodeConnectorImplementation::init() {
     
     client->socket()->on("winGame", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onWinGame(data);
+//        gameDelegate->onWinGame(data);
     });
     
     client->socket()->on("loseGame", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onLoseGame(data);
+//        gameDelegate->onLoseGame(data);
     });
     
     client->socket()->on("drawGame", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        gameDelegate->onDrawGame(data);
+//        gameDelegate->onDrawGame(data);
     });
 }
 
