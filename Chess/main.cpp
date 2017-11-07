@@ -133,11 +133,15 @@
     
 //}
 
-#include "OfflineGame.h"
-#include "GameScreen.h"
+#include <stdio.h>
+#include <thread>
+#include "MainMenuScreen.h"
 
 int main(int argc, char* argv[]) {
-    OfflineGame* game = new OfflineGame();
-    GameScreen::create(game, 20, 4);
+    std::thread([]() {
+        Screen::replaceScreen(MainMenuScreen::create(20, 4));
+    });
+    while (true) {}
+    return 0;
 }
 

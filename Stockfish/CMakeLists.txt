@@ -4,7 +4,7 @@ set(CMAKE_BUILD_TYPE Release)
 
 include_directories(
 	../Common/
-	../Chess/GameLogicProcessor/EngineWrapper/
+	../Chess/ChessAI/EngineWrapper/
 	../Stockfish/syzygy/ 
 )
 

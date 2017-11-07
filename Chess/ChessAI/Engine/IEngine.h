@@ -1,18 +1,18 @@
 //
-//  EngineProtocol.h
+//  IEngine.h
 //  Chess
 //
 //  Created by Tran Hoang Duong on 9/17/17.
 //  Copyright © 2017 Tran Hoang Duong. All rights reserved.
 //
 
-#ifndef EngineProtocol_h
-#define EngineProtocol_h
+#ifndef IEngine_h
+#define IEngine_h
 
 #include "BaseTypes.h"
 #include <functional>
 
-class EngineProtocol {
+class IEngine {
 public:
     virtual void start(int difficulty) = 0;
     virtual bool move(const BaseTypes::Move& move) = 0;
@@ -20,4 +20,4 @@ public:
     virtual void log() = 0;
 };
 
-#endif /* EngineProtocol_h */
+#endif /* IEngine_h */
