@@ -8,10 +8,15 @@
 
 #include "BoardServices.h"
 
-//#include <wiringPi.h>
-//#include <wiringSerial.h>
+#if defined(__linux) || defined(linux) || defined(__linux)
+#include <wiringPi.h>
+#include <wiringSerial.h>
+#endif
+
+#if defined(__APPLE__) || defined(__MACH__)
 #include "wiringPi.h"
 #include "wiringSerial.h"
+#endif
 
 #include <thread>
 
