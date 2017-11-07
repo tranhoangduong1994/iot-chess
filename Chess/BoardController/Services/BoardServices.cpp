@@ -38,6 +38,7 @@ void BoardServices::awaitService(std::string serviceRequest, std::function<void(
     
 #if defined(__linux) || defined(linux) || defined(__linux)
     serialPuts(fileDescription, serviceRequest.c_str());
+    serialFlush(fileDescription);
     bool receivedData = false;
     while(!receivedData) {
         receivedData = serialDataAvail(fileDescription);
@@ -63,6 +64,7 @@ void BoardServices::callService(std::string serviceRequest) {
 #if defined(__linux) || defined(linux) || defined(__linux)
     std::cout << "Calling..." << std::endl;
     serialPuts(fileDescription, serviceRequest.c_str());
+    serialFlush(fileDescription);
 #endif
 
 }
@@ -126,7 +128,7 @@ void BoardServices::capture(BaseTypes::Move move) {
 //}
 
 void BoardServices::display(int line, std::string string) {
-    callService("1" + std::to_string(line - 1) + "," + string);
+    callService("1" + std::to_string(line - 1) + string);
 }
 
 void BoardServices::clearScreen() {
