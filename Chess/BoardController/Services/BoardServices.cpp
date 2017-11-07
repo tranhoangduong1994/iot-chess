@@ -54,11 +54,14 @@ void BoardServices::awaitService(std::string serviceRequest, std::function<void(
 }
 
 void BoardServices::callService(std::string serviceRequest) {
+    std::cout << "BoardServices::callService(" << serviceRequest << ")" << std::endl;
     if (!ready) {
+        std::cout << "Not ready" << std::endl;
         return;
     }
     
 #if defined(__linux) || defined(linux) || defined(__linux)
+    std::cout << "Calling..." << std::endl;
     serialPuts(fileDescription, serviceRequest.c_str());
 #endif
 
