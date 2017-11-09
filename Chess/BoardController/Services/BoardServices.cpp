@@ -75,9 +75,11 @@ void BoardServices::awaitSerialPortConnected() {
         
 #if defined(__linux) || defined(linux) || defined(__linux)
         int valueToTry = 0;
+        std::string portToTry = "";
         while (fileDescription < 0) {
             valueToTry = (valueToTry + 1) % 255;
-            std::string portToTry = PORT_PREFIX + valueToTry;
+            portToTry = std::string(PORT_PREFIX) + std::to_string(valueToTry);
+            std::cout << portToTry << std::endl;
             fileDescription = serialOpen(portToTry.c_str(), BAUD);
         }
 #endif
