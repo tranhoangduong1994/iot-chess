@@ -15,7 +15,7 @@
 
 #include <thread>
 
-const char* PORT = "/dev/ttyUSB1";
+const char* PORT_PREFIX = "/dev/ttyUSB";
 const int BAUD = 9600;
 
 BoardServices* BoardServices::instance = NULL;
@@ -74,8 +74,11 @@ void BoardServices::awaitSerialPortConnected() {
     std::thread([=]() {
         
 #if defined(__linux) || defined(linux) || defined(__linux)
+        int valueToTry = 0;
         while (fileDescription < 0) {
-            fileDescription = serialOpen(PORT, BAUD);
+            valueToTry = (valueToTry + 1) % 255;
+            std::string portToTry = PORT_PREFIX + valueToTry;
+            fileDescription = serialOpen(portToTry.c_str(), BAUD);
         }
 #endif
         
