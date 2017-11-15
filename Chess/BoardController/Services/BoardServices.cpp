@@ -100,7 +100,7 @@ bool BoardServices::isReady() {
 }
 
 void BoardServices::clearScreen() {
-    callService(std::to_string(SERVICE_PREFIX_CLEAR_SCREEN));
+    callService(std::to_string(SERVICE_PREFIX_CLEAR_SCREEN - 48));
 }
                 
 void BoardServices::display(int line, std::string string) {
@@ -116,11 +116,11 @@ void BoardServices::capture(BaseTypes::Move move) {
 }
 
 void BoardServices::scan() {
-    callService(std::to_string(SERVICE_PREFIX_SCAN_BOARD));
+    callService(std::to_string(SERVICE_PREFIX_SCAN_BOARD - 48));
 }
 
 void BoardServices::resetBoard() {
-    callService(std::to_string(SERVICE_PREFIX_RESET_BOARD));
+    callService(std::to_string(SERVICE_PREFIX_RESET_BOARD - 48));
 }
 
 void BoardServices::loop() {
