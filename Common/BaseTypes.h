@@ -10,6 +10,7 @@
 #define BaseTypes_h
 
 #include <string>
+#include <vector>
 #include <map>
 #include <iostream>
 

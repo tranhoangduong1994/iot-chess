@@ -43,7 +43,7 @@ std::vector<BaseTypes::Position> OfflineGame::getBoardStateMisplacedPositions(co
             }
         }
     }
-    return misplacedPosition;
+    return misplacedPositions;
 }
 
 void OfflineGame::start(BaseTypes::Side side, int difficulty) {
@@ -149,11 +149,6 @@ void OfflineGame::onScanDone(const std::string& boardState) {
                 startOpponentTurn();
             }
         } else {
-            for (int i = 0; i < BOARD_INIT_STATE.size(); i++) {
-                if (BOARD_INIT_STATE.at(i) == '1' && boardState.at(i) == '0') {
-                    misplacedPositions.push_back(BaseTypes::Position(BOARD[i]));
-                }
-            }
             delegate->onBoardInitStateInvalid(misplacedPositions);
         }
     }
