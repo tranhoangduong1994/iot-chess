@@ -14,10 +14,10 @@
 
 class BoardServices : public IBoardServices {
 public:
-    void resetGame() override;
+    void resetBoard() override;
     void move(BaseTypes::Move move) override;
     void capture(BaseTypes::Move move) override;
-//    void scan() override;
+    void scan() override;
     
     void display(int line, std::string string) override;
     void clearScreen() override;
@@ -35,13 +35,18 @@ private:
     bool ready;
     static BoardServices* instance;
     
+    std::string messageBuffer;
+    
     BoardSystemEventsProtocol* sDelegate;
     BoardIngameEventsProtocol* gDelegate;
     BoardKeyEventsProtocol* kDelegate;
     
-    void awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished);
+//    void awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished);
     void callService(std::string serviceRequest);
     void awaitSerialPortConnected();
+    
+    void loop();
+    void processMessageBuffer();
 };
 
 

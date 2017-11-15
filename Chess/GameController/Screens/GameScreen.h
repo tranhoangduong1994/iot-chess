@@ -20,15 +20,18 @@ public:
     static GameScreen* create(OfflineGame* game, int width, int height);
     
     // GameEventsProtocol implementation
-    void onGameStarted(const EventData& data) override;
+    void onBoardInitStateInvalid(const std::vector<BaseTypes::Position>& misplacedPositions) override;
+    void onGameStarted(const GameStartedData& data) override;
     
-    void onTurnBegan(const EventData& data) override;
-    void onTurnEnded(const EventData& data) override;
-    void onInvalidMove(const EventData& data) override;
+    void onTurnBegan(const TurnBeganData& data) override;
+    void onTurnEnded(const TurnEndedData& data) override;
+    void onInvalidMove(const InvalidMoveData& data) override;
     
-    void onWinGame(const EventData& data) override;
-    void onLoseGame(const EventData& data) override;
-    void onDrawGame(const EventData& data) override;
+    void onWinGame(const WinGameData& data) override;
+    void onLoseGame(const LoseGameData& data) override;
+    void onDrawGame(const DrawGameData& data) override;
+    
+    void onInvalidAction(const InvalidActionData& data) override;
     
 protected:
     void onEnter() override;

@@ -25,24 +25,12 @@ StockfishEngine* StockfishEngine::getInstance() {
 }
 
 void StockfishEngine::start(int difficulty) {
-    
-    //ucinewgame
     wrapper = StockfishWrapper::getInstance();
     wrapper->start(difficulty);
-    
-    //new validator
-//    validator = PythonChessValidator::getInstance();
-//    validator->start();
 }
 
 bool StockfishEngine::move(const BaseTypes::Move& move) {
-//    bool isValidMove = validator->checkMove(move);
-//    if (!isValidMove) {
-//        return false;
-//    }
-    
     wrapper->move(move);
-//    validator->move(move);
     
     return true;
 }

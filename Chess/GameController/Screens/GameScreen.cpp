@@ -34,39 +34,54 @@ void GameScreen::onExit() {
     delete this;
 }
 
-void GameScreen::onGameStarted(const EventData& data) {
-    print(1, "Game started!!");
+void GameScreen::onBoardInitStateInvalid(const std::vector<BaseTypes::Position>& misplacedPositions) {
+    print(1, "Pieces are misplaced: ");
+    std::string positions = "";
+    std::vector<BaseTypes::Position> misplacedPositions_ = misplacedPositions;
+    for (int i = 0; i < misplacedPositions_.size(); i++) {
+        positions += misplacedPositions_.at(i).toString();
+        positions += " ";
+    }
+    print(2, positions);
 }
 
-void GameScreen::onTurnBegan(const EventData& data) {
-    if (data.find("opponent_move") != data.end()) {
-        std::string opponentMove = data.at("opponent_move");
-        print(1, "Opponent move: " + opponentMove);
+void GameScreen::onGameStarted(const GameStartedData& data) {
+    clearScreen();
+    print(1, "Game started");
+}
+
+void GameScreen::onTurnBegan(const TurnBeganData& data) {
+    if (data.opponent_move != "") {
+        print(1, "Opponent move: " + data.opponent_move);
     }
     
     print(2, "It's your turn.");
-    print(3, "You play: ");
+    print(3, "Please make your move...");
     print(4, "");
 }
 
-void GameScreen::onTurnEnded(const EventData& data) {
-    print(3, "You play: " + data.at("your_move"));
+void GameScreen::onTurnEnded(const TurnEndedData& data) {
+    print(3, "You played: " + data.player_move);
     print(4, "Please wait for opponent move...");
 }
 
-void GameScreen::onInvalidMove(const EventData& data) {
-    print(3, "You play: " + data.at("your_move"));
+void GameScreen::onInvalidMove(const InvalidMoveData& data) {
+    print(3, "You play: " + data.player_move);
     print(4, "Invalid move, please try again: ");
 }
 
-void GameScreen::onWinGame(const EventData& data) {
+void GameScreen::onWinGame(const WinGameData& data) {
     
 }
 
-void GameScreen::onLoseGame(const EventData& data) {
+void GameScreen::onLoseGame(const LoseGameData& data) {
     
 }
 
-void GameScreen::onDrawGame(const EventData& data) {
+void GameScreen::onDrawGame(const DrawGameData& data) {
+    
+}
+
+void GameScreen::onInvalidAction(const InvalidActionData& data) {
     
 }

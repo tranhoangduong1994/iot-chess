@@ -43,23 +43,35 @@ namespace BaseTypes {
     struct Move {
         Position fromPos;
         Position toPos;
+        char promotionType;
         Move() {};
         Move(Position fromPos, Position toPos) {
             this->fromPos = fromPos;
             this->toPos = toPos;
+            this->promotionType = 0;
+        }
+        Move(Position fromPos, Position toPos, char pt) {
+            this->fromPos = fromPos;
+            this->toPos = toPos;
+            this->promotionType = pt;
         }
         Move(std::string fromPosToPos) {
             char fromPosFile = fromPosToPos[0];
             int fromPosRank = atoi(&fromPosToPos[1]);
             char toPosFile = fromPosToPos[2];
             int toPosRank = atoi(&fromPosToPos[3]);
+            char promotionType = 0;
+            if (fromPosToPos.size() == 5) {
+                promotionType = fromPosToPos[4];
+            }
             Position fromPos = Position(fromPosFile, fromPosRank);
             Position toPos = Position(toPosFile, toPosRank);
             this->fromPos = fromPos;
             this->toPos = toPos;
+            this->promotionType = promotionType;
         }
         const std::string toString() {
-            return fromPos.toString() + toPos.toString();
+            return fromPos.toString() + toPos.toString() + promotionType;
         }
     };
 }

@@ -15,6 +15,8 @@ class IValidator {
 public:
     virtual void start() = 0;
     virtual bool checkMove(const BaseTypes::Move& move) = 0;
+    virtual bool checkGameOver() = 0;
+    virtual bool checkDraw() = 0;
     virtual void move(const BaseTypes::Move& move) = 0;
 };
 

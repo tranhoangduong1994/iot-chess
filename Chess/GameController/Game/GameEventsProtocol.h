@@ -11,20 +11,91 @@
 
 #include "BaseTypes.h"
 
+enum DrawGameType {
+    STALE_MATE,
+    INSUFFICENT_MATERIAL
+};
+
+struct GameStartedData {
+    BaseTypes::Side side;
+    GameStartedData(BaseTypes::Side s) {
+        side = s;
+    }
+};
+
+struct TurnBeganData {
+    std::string opponent_move;
+    TurnBeganData() {};
+    TurnBeganData(std::string om) {
+        opponent_move = om;
+    }
+};
+
+struct TurnEndedData {
+    std::string player_move;
+    TurnEndedData(std::string pm) {
+        player_move = pm;
+    }
+};
+
+struct InvalidMoveData {
+    std::string player_move;
+    InvalidMoveData(std::string pm) {
+        player_move = pm;
+    }
+};
+
+struct WinGameData {
+    std::string player_move;
+    WinGameData(std::string pm) {
+        player_move = pm;
+    }
+};
+
+struct LoseGameData {
+    std::string opponent_move;
+    LoseGameData(std::string om) {
+        opponent_move = om;
+    }
+};
+
+struct DrawGameData {
+    std::string final_move;
+    DrawGameData(std::string fm) {
+        final_move = fm;
+    }
+};
+
+struct InvalidActionData {
+    
+};
+
+struct DrawGameOfferedData {
+    
+};
+
+struct OpponentSurrenderedData {
+    
+};
+
 class GameEventsProtocol {
 public:
-    virtual void onGameStarted(const EventData& data) = 0;
+    virtual void onBoardInitStateValid() {};
+    virtual void onBoardInitStateInvalid(const std::vector<BaseTypes::Position>& misplacedPositions) = 0;
+    virtual void onGameStarted(const GameStartedData& data) = 0;
     
-    virtual void onTurnBegan(const EventData& data) = 0;
-    virtual void onTurnEnded(const EventData& data) = 0;
-    virtual void onInvalidMove(const EventData& data) = 0;
+    virtual void onTurnBegan(const TurnBeganData& data) = 0;
+    virtual void onTurnEnded(const TurnEndedData& data) = 0;
+    virtual void onInvalidMove(const InvalidMoveData& data) = 0;
     
-    virtual void onWinGame(const EventData& data) = 0;
-    virtual void onLoseGame(const EventData& data) = 0;
-    virtual void onDrawGame(const EventData& data) = 0;
+    virtual void onWinGame(const WinGameData& data) = 0;
+    virtual void onLoseGame(const LoseGameData& data) = 0;
+    virtual void onDrawGame(const DrawGameData& data) = 0;
     
-    //    virtual void onDrawGameOffered(const EventData& data) = 0;
-    //    virtual void onOpponentSurrendered(const EventData& data) = 0;
+    virtual void onInvalidAction(const InvalidActionData& data) = 0;
+    
+    virtual void onDrawGameOffered(const DrawGameData& data) {};
+    virtual void onOpponentSurrendered(const OpponentSurrenderedData& data) {};
 };
 
 #endif /* GameEventsProtocol_h */

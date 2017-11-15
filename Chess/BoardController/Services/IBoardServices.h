@@ -17,10 +17,10 @@
 
 class IBoardServices {
 public:
-    virtual void resetGame() = 0;
+    virtual void resetBoard() = 0;
     virtual void move(BaseTypes::Move move) = 0;
     virtual void capture(BaseTypes::Move move) = 0;
-//    virtual void scan() = 0;
+    virtual void scan() = 0;
     
     virtual void display(int line, std::string string) = 0;
     virtual void clearScreen() = 0;

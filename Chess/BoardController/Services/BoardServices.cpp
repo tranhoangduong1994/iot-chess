@@ -13,10 +13,29 @@
 #include <wiringSerial.h>
 #endif
 
+#if defined(__APPLE__) || defined(__MACH__)
+#include "wiringPi.h"
+#include "wiringSerial.h"
+#endif
+
 #include <thread>
 
 const char* PORT_PREFIX = "/dev/ttyUSB";
 const int BAUD = 9600;
+
+const char SERVICE_PREFIX_CLEAR_SCREEN = '0';
+const char SERVICE_PREFIX_PRINT = '1';
+const char SERVICE_PREFIX_MOVE = '2';
+const char SERVICE_PREFIX_CAPTURE = '3';
+const char SERVICE_PREFIX_SCAN_BOARD = '4';
+const char SERVICE_PREFIX_RESET_BOARD = '5';
+
+const char MESSAGE_PREFIX_PLAYER_FINISHED_MOVE = '0';
+const char MESSAGE_PREFIX_OPPONENT_FINISHED_MOVE = '1';
+const char MESSAGE_PREFIX_KEY_PRESSED = '2';
+const char MESSAGE_PREFIX_PLAYER_CHANGED_BOARD_STATE = '3';
+const char MESSAGE_PREFIX_BOARD_SCANNED = '4';
+const char MESSAGE_PREFIX_BOARD_RESETTED = '5';
 
 BoardServices* BoardServices::instance = NULL;
 
@@ -30,30 +49,6 @@ BoardServices* BoardServices::getInstance() {
     return instance;
 }
 
-void BoardServices::awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished) {
-    if (!ready) {
-        return;
-    }
-    ready = false;
-    
-#if defined(__linux) || defined(linux) || defined(__linux)
-    serialPuts(fileDescription, serviceRequest.c_str());
-    serialFlush(fileDescription);
-    bool receivedData = false;
-    while(!receivedData) {
-        receivedData = serialDataAvail(fileDescription);
-    }
-#endif
-    
-#if defined(__APPLE__) || defined(__MACH__)
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-#endif
-    
-    EventData eventData;
-    onFinished(eventData);
-    ready = true;
-}
-
 void BoardServices::callService(std::string serviceRequest) {
     std::cout << "BoardServices::callService(" << serviceRequest << ")" << std::endl;
     serviceRequest += "|";
@@ -62,18 +57,13 @@ void BoardServices::callService(std::string serviceRequest) {
         return;
     }
     
-#if defined(__linux) || defined(linux) || defined(__linux)
-    std::cout << "Calling..." << std::endl;
     serialPuts(fileDescription, serviceRequest.c_str());
     serialFlush(fileDescription);
-#endif
 
 }
 
 void BoardServices::awaitSerialPortConnected() {
     std::thread([=]() {
-        
-#if defined(__linux) || defined(linux) || defined(__linux)
         int valueToTry = 0;
         std::string portToTry = "";
         while (fileDescription < 0) {
@@ -82,17 +72,22 @@ void BoardServices::awaitSerialPortConnected() {
             std::cout << portToTry << std::endl;
             fileDescription = serialOpen(portToTry.c_str(), BAUD);
         }
-#endif
-        
-#if defined(__APPLE__) || defined(__MACH__)
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-#endif
         
         ready = true;
         if (sDelegate) {
-            EventData data;
-            data["file_description"] = std::to_string(fileDescription);
+            SerialPortConnectedData data(fileDescription);
             sDelegate->onSerialPortConnected(data);
+        }
+        
+        while(true) {
+            if (fileDescription != serialOpen(portToTry.c_str(), BAUD)) {
+                break;
+            }
+            loop();
+        }
+        
+        if (sDelegate) {
+            sDelegate->onSerialPortDisconnected();
         }
     }).detach();
 }
@@ -101,44 +96,91 @@ bool BoardServices::isReady() {
     return ready;
 }
 
-void BoardServices::resetGame() {
-    std::thread(&BoardServices::awaitService, this, "reset_game", [=](EventData data){
-        if (this->gDelegate) {
-            gDelegate->onGameReset();
-        }
-    }).detach();
+void BoardServices::clearScreen() {
+    callService(std::to_string(SERVICE_PREFIX_CLEAR_SCREEN));
+}
+                
+void BoardServices::display(int line, std::string string) {
+    callService(SERVICE_PREFIX_PRINT + std::to_string(line - 1) + string);
 }
 
 void BoardServices::move(BaseTypes::Move move) {
-    std::thread(&BoardServices::awaitService, this, "move," + move.toString(), [=](EventData data){
-        if (this->gDelegate) {
-            gDelegate->onMotorMoveDone();
-        }
-    }).detach();
+    callService(SERVICE_PREFIX_MOVE + move.toString());
 }
 
 void BoardServices::capture(BaseTypes::Move move) {
-    std::thread(&BoardServices::awaitService, this, "capture," + move.toString(), [=](EventData data){
-        if (this->gDelegate) {
-            gDelegate->onMotorMoveDone();
+    callService(SERVICE_PREFIX_CAPTURE + move.toString());
+}
+
+void BoardServices::scan() {
+    callService(std::to_string(SERVICE_PREFIX_SCAN_BOARD));
+}
+
+void BoardServices::resetBoard() {
+    callService(std::to_string(SERVICE_PREFIX_RESET_BOARD));
+}
+
+void BoardServices::loop() {
+    char c = serialGetchar(fileDescription);
+    if (c == '|') {
+        processMessageBuffer();
+        messageBuffer = "";
+        return;
+    }
+    messageBuffer += c;
+}
+
+void BoardServices::processMessageBuffer() {
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_PLAYER_FINISHED_MOVE) {
+        if (gDelegate) {
+            gDelegate->onPlayerFinishedMove(messageBuffer.substr(1));
         }
-    }).detach();
-}
-
-//void BoardServices::scan() {
-//    std::thread(&BoardServices::awaitService, this, "scan", [=](EventData data){
-//        if (this->gDelegate) {
-//            gDelegate->onScanDone(data);
-//        }
-//    });
-//}
-
-void BoardServices::display(int line, std::string string) {
-    callService("1" + std::to_string(line - 1) + string);
-}
-
-void BoardServices::clearScreen() {
-    callService("0");
+        return;
+    }
+    
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_OPPONENT_FINISHED_MOVE) {
+        if (gDelegate) {
+            gDelegate->onOpponentFinishedMove(messageBuffer.substr(1));
+        }
+        return;
+    }
+    
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_KEY_PRESSED) {
+        if (kDelegate) {
+            BoardKey key;
+            if (messageBuffer.at(1) == '0') {
+                key = BoardKey::UP;
+            } else if (messageBuffer.at(1) == '1') {
+                key = BoardKey::DOWN;
+            } else if (messageBuffer.at(1) == '2') {
+                key = BoardKey::MENU;
+            } else {
+                key = BoardKey::OK;
+            }
+            KeyPressedData data(key);
+            kDelegate->onKeyPressed(data);
+        }
+        return;
+    }
+    
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_PLAYER_CHANGED_BOARD_STATE) {
+        if (gDelegate) {
+            gDelegate->onPlayerChangedBoardState(messageBuffer.substr(1));
+        }
+    }
+    
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_BOARD_SCANNED) {
+        if (gDelegate) {
+            gDelegate->onScanDone(messageBuffer.substr(1));
+        }
+    }
+    
+    if (messageBuffer.at(0) == MESSAGE_PREFIX_BOARD_RESETTED) {
+        if (gDelegate) {
+            gDelegate->onBoardResetted();
+        }
+        return;
+    }
 }
 
 void BoardServices::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {
@@ -152,3 +194,22 @@ void BoardServices::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_de
 void BoardServices::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
     kDelegate = k_delegate;
 }
+
+
+//void BoardServices::awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished) {
+//    if (!ready) {
+//        return;
+//    }
+//    ready = false;
+//
+//    serialPuts(fileDescription, serviceRequest.c_str());
+//    serialFlush(fileDescription);
+//    bool receivedData = false;
+//    while(!receivedData) {
+//        receivedData = serialDataAvail(fileDescription);
+//    }
+//
+//    EventData eventData;
+//    onFinished(eventData);
+//    ready = true;
+//}

@@ -11,9 +11,17 @@
 
 #include "BaseTypes.h"
 
+struct SerialPortConnectedData {
+    int file_description;
+    SerialPortConnectedData(int fd) {
+        file_description = fd;
+    }
+};
+
 class BoardSystemEventsProtocol {
 public:
-    virtual void onSerialPortConnected(const EventData& data) = 0;
+    virtual void onSerialPortConnected(const SerialPortConnectedData& data) = 0;
+    virtual void onSerialPortDisconnected() = 0;
 };
 
 #endif /* BoardSystemEventsProtocol_h */

@@ -47,6 +47,28 @@ bool PythonChessValidator::checkMove(const BaseTypes::Move& move) {
     return result;
 }
 
+bool PythonChessValidator::checkGameOver() {
+    bool result;
+    try {
+        result = python::extract<bool>(validator.attr("isGameOver"));
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        result = false;
+    }
+    return result;
+}
+
+bool PythonChessValidator::checkDraw() {
+    bool result;
+    try {
+        result = python::extract<bool>(validator.attr("isDrawGame"));
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        result = false;
+    }
+    return result;
+}
+
 void PythonChessValidator::move(const BaseTypes::Move& move) {
     if (!checkMove(move)) {
         return;

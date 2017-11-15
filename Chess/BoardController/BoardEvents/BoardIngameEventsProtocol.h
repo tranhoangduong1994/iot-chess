@@ -13,11 +13,11 @@
 
 class BoardIngameEventsProtocol {
 public:
-    virtual void onMotorMoveDone() = 0;
-    virtual void onBoardStateChanged(const EventData& data) = 0;
-    virtual void onGameReset() = 0;
-    
-    //    virtual void onScanDone(const EventData& data) = 0;
+    virtual void onPlayerFinishedMove(const std::string& data) = 0;
+    virtual void onOpponentFinishedMove(const std::string& data) = 0;
+    virtual void onPlayerChangedBoardState(const std::string& boardState) = 0;
+    virtual void onScanDone(const std::string& boardState) = 0;
+    virtual void onBoardResetted() = 0;
 };
 
 #endif /* BoardIngameEventsProtocol_h */

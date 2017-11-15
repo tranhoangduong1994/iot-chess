@@ -15,7 +15,7 @@
 class MainMenuScreen : public Screen, public BoardKeyEventsProtocol {
 public:
     static MainMenuScreen* create(int width, int height);
-    void onKeyPressed(const EventData& data) override;
+    void onKeyPressed(const KeyPressedData& data) override;
     
 protected:
     void onEnter() override;

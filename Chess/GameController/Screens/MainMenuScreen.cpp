@@ -34,21 +34,21 @@ void MainMenuScreen::onExit() {
     delete this;
 }
 
-void MainMenuScreen::onKeyPressed(const EventData& data) {
-    std::string keyIndex = data.at("key_index");
-    if (keyIndex == "up") {
+void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
+    BoardKey key = data.key;
+    if (key == BoardKey::UP) {
         int index = cursorPositionIndex - 1;
         if (index == 0) {
             index = 3;
             setCursorPosition(index);
         }
-    } else if (keyIndex == "down") {
+    } else if (key == BoardKey::DOWN) {
         int index = cursorPositionIndex + 1;
         if (index == 4) {
             index = 1;
             setCursorPosition(index);
         }
-    } else if (keyIndex == "ok") {
+    } else if (key == BoardKey::OK) {
         switch (cursorPositionIndex) {
             case 1:
             {
@@ -65,7 +65,7 @@ void MainMenuScreen::onKeyPressed(const EventData& data) {
             default:
                 break;
         }
-    } else if (keyIndex == "cancel") {
+    } else if (key == BoardKey::MENU) {
         
     }
 }
