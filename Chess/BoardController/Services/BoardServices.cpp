@@ -70,8 +70,11 @@ void BoardServices::awaitSerialPortConnected() {
         while (fileDescription < 0) {
             portToTry = std::string(PORT_PREFIX) + std::to_string(valueToTry);
             valueToTry = (valueToTry + 1) % (MAX_PORT_INDEX + 1);
+            std::cout << "Trying port " << portToTry << std::endl;
             fileDescription = serialOpen(portToTry.c_str(), BAUD);
         }
+
+	std::cout << "SerialPortConnected. Port id = " << portToTry << std::endl;
         
         ready = true;
         if (sDelegate) {
@@ -80,7 +83,7 @@ void BoardServices::awaitSerialPortConnected() {
         }
         
         while(true) {
-            if (fileDescription != serialOpen(portToTry.c_str(), BAUD)) {
+            if ((fileDescription = serialOpen(portToTry.c_str(), BAUD)) < 0) {
                 break;
             }
             loop();
