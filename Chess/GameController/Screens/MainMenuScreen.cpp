@@ -37,18 +37,21 @@ void MainMenuScreen::onExit() {
 void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
     BoardKey key = data.key;
     if (key == BoardKey::UP) {
+	std::cout << "Up pressed" << std::endl;
         int index = cursorPositionIndex - 1;
         if (index == 0) {
             index = 3;
             setCursorPosition(index);
         }
     } else if (key == BoardKey::DOWN) {
+	std::cout << "Down pressed" << std::endl;
         int index = cursorPositionIndex + 1;
         if (index == 4) {
             index = 1;
             setCursorPosition(index);
         }
     } else if (key == BoardKey::OK) {
+	std::cout << "OK pressed" << std::endl;
         switch (cursorPositionIndex) {
             case 1:
             {
@@ -66,7 +69,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
                 break;
         }
     } else if (key == BoardKey::MENU) {
-        
+        std::cout << "Menu pressed" << std::endl;
     }
 }
 
