@@ -61,7 +61,12 @@ void Screen::replaceScreen(Screen* screen) {
 }
 
 void Screen::print(int lineNumber, std::string content) {
+    
     if (lineNumber > this->height) {
+        return;
+    }
+    
+    if (screenBuffer[lineNumber] == content) {
         return;
     }
     
