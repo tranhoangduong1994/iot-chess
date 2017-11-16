@@ -13,7 +13,7 @@ class Validator():
         return self.board.is_game_over();
 
     def isDrawGame(self):
-        return self.board.is_stalemate() || board.is_insufficient_material()
+        return self.board.is_stalemate() or board.is_insufficient_material()
 
 #    def legalMoves(self):
 #        print "Legal moves are {}".format(self.board.legal_moves)
