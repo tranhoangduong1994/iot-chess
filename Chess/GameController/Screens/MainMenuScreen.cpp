@@ -67,13 +67,15 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
             case 2:
                 break;
             case 3:
+            {
+                system("reboot");
                 break;
+            }
             default:
                 break;
         }
     } else if (key == BoardKey::MENU) {
         std::cout << "Menu pressed" << std::endl;
-        system("reboot");
     }
 }
 
@@ -86,7 +88,7 @@ void MainMenuScreen::setCursorPosition(int index) {
     displayer->print(1, "MENU");
     displayer->print(2, "  Single game");
     displayer->print(3, "  Multiplayer game");
-    displayer->print(4, "  Settings");
+    displayer->print(4, "  Restart");
     
     switch (index) {
         case 1:
@@ -96,7 +98,7 @@ void MainMenuScreen::setCursorPosition(int index) {
             displayer->print(3, "* Multiplayer game");
             break;
         case 3:
-            displayer->print(4, "* Settings");
+            displayer->print(4, "* Restart");
             break;
         default:
             break;
