@@ -70,6 +70,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         }
     } else if (key == BoardKey::MENU) {
         std::cout << "Menu pressed" << std::endl;
+        system("reboot");
     }
 }
 
