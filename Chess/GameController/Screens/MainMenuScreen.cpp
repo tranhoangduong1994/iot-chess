@@ -26,6 +26,7 @@ MainMenuScreen* MainMenuScreen::create(int width, int height) {
 void MainMenuScreen::onEnter() {
     std::cout << "MainMenuScreen - onEnter" << std::endl;
     BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
+    cursorPositionIndex = 1;	
     setCursorPosition(1);
 }
 
@@ -41,15 +42,17 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         int index = cursorPositionIndex - 1;
         if (index == 0) {
             index = 3;
-            setCursorPosition(index);
         }
+	cursorPositionIndex = index;
+	setCursorPosition(index);
     } else if (key == BoardKey::DOWN) {
 	std::cout << "Down pressed" << std::endl;
         int index = cursorPositionIndex + 1;
         if (index == 4) {
             index = 1;
-            setCursorPosition(index);
         }
+	cursorPositionIndex = index;
+	setCursorPosition(index);
     } else if (key == BoardKey::OK) {
 	std::cout << "OK pressed" << std::endl;
         switch (cursorPositionIndex) {
@@ -79,6 +82,7 @@ void MainMenuScreen::init() {
 }
 
 void MainMenuScreen::setCursorPosition(int index) {
+    std::cout << "[MainMenuScreen] setCursorPosition(" << index << ")" << std::endl;
     displayer->print(1, "MENU");
     displayer->print(2, "  Single game");
     displayer->print(3, "  Multiplayer game");
