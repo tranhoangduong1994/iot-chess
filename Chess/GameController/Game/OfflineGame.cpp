@@ -128,12 +128,6 @@ void OfflineGame::onKeyPressed(const KeyPressedData& data) {
     
 }
 
-void OfflineGame::onPlayerChangedBoardState(const std::string &boardState) {
-    if (initValidatingState == InitValidatingState::VALIDATING) {
-        onScanDone(boardState);
-    }
-}
-
 void OfflineGame::onScanDone(const std::string& boardState) {
     if (initValidatingState == InitValidatingState::VALIDATING) {
         const std::vector<BaseTypes::Position>& misplacedPositions = getBoardStateMisplacedPositions(boardState);
@@ -153,38 +147,3 @@ void OfflineGame::onScanDone(const std::string& boardState) {
         }
     }
 }
-
-//void OfflineGame::onPlayerChangedBoardState(const PlayerChangedBoardData& data) {
-//    if (!isPlayerTurn) {
-//        //TODO: handle INVALID ACTION
-//    } else {
-//        if (playerMovesFrom == "") {
-////            if (data.at("state") == "on") {
-////                //TODO: handle INVALID ACTION
-////                return;
-////            }
-////
-////            playerMovesFrom = data.at("square");
-//        } else {
-////            if (data.at("state") == "off") {
-////                //TODO: handle INVALID ACTION
-////                return;
-////            }
-////
-////            std::string playerMovesTo = data.at("square");
-////            std::string move = playerMovesFrom + playerMovesTo;
-////            playerMovesFrom = "";
-////            if (!validator->checkMove(move)) {
-////                //TODO: handle INVALID MOVE
-////                return;
-////            }
-//
-////            validator->move(move);
-////            engine->move(move);
-////            moves.push_back(move);
-////            EventData data;
-////            delegate->onTurnEnded(data);
-////            startOpponentTurn();
-//        }
-//    }
-//}

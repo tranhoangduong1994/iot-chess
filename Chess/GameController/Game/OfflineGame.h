@@ -36,7 +36,6 @@ public:
     // BoardIngameEventsProtocol implementation
     void onPlayerFinishedMove(const std::string& data) override;
     void onOpponentFinishedMove(const std::string& data) override;
-    void onPlayerChangedBoardState(const std::string& boardState) override;
     void onScanDone(const std::string& boardState) override;
     void onBoardResetted() override;
     

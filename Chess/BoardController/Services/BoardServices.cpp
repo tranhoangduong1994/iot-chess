@@ -51,3 +51,7 @@ void BoardServices::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_de
 void BoardServices::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
     MessageController::getInstance()->setBoardKeyEventsDelegate(k_delegate);
 }
+
+void BoardServices::init() {
+    
+}

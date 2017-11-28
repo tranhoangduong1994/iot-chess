@@ -159,3 +159,15 @@ void MessageController::awaitSerialPortConnected() {
         }
     }).detach();
 }
+
+void MessageController::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {
+    sDelegate = s_delegate;
+}
+
+void MessageController::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) {
+    gDelegate = g_delegate;
+}
+
+void MessageController::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
+    kDelegate = k_delegate;
+}
