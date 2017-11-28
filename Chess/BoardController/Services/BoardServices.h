@@ -12,11 +12,14 @@
 #include "IBoardServices.h"
 #include <functional>
 
+#include "BoardSystemEventsProtocol.h"
+#include "BoardIngameEventsProtocol.h"
+#include "BoardKeyEventsProtocol.h"
+
 class BoardServices : public IBoardServices {
 public:
     void resetBoard() override;
     void move(BaseTypes::Move move) override;
-    void capture(BaseTypes::Move move) override;
     void scan() override;
     
     void display(int line, std::string string) override;
@@ -28,25 +31,10 @@ public:
     
     static BoardServices* getInstance();
     
-    bool isReady();
-    
 private:
-    int fileDescription;
-    bool ready;
     static BoardServices* instance;
     
-    std::string messageBuffer;
-    
-    BoardSystemEventsProtocol* sDelegate;
-    BoardIngameEventsProtocol* gDelegate;
-    BoardKeyEventsProtocol* kDelegate;
-    
-//    void awaitService(std::string serviceRequest, std::function<void(EventData)> onFinished);
-    void callService(std::string serviceRequest);
-    void awaitSerialPortConnected();
-    
-    void loop();
-    void processMessageBuffer();
+    void init();
 };
 
 
