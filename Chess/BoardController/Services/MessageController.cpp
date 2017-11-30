@@ -81,13 +81,11 @@ void MessageController::processMessageBuffer() {
             
         }
     } else if (messageBuffer.at(0) == MessageType::Event) {
-        if (messageBuffer.at(1) == EventType::SYSTEM_READY) {
-            if (sDelegate) {
-                SerialPortConnectedData data(fileDescription);
-                sDelegate->onSerialPortConnected(data);
-            }
-        }
-        
+//        if (messageBuffer.at(1) == EventType::SYSTEM_READY) {
+//            if (sDelegate) {
+//
+//            }
+//        }
         if (messageBuffer.at(1) == EventType::BOARD_CHANGED) {
             if (gDelegate) {
                 gDelegate->onBoardStateChanged(messageBuffer.substr(2));
@@ -146,6 +144,9 @@ void MessageController::awaitSerialPortConnected() {
             std::cout << "Trying port " << portToTry << std::endl;
             fileDescription = serialOpen(portToTry.c_str(), BAUD);
         }
+        
+        SerialPortConnectedData data(fileDescription);
+        sDelegate->onSerialPortConnected(data);
         
         while (true) {
             if (fileDescription == serialOpen(portToTry.c_str(), BAUD) < 0) {
