@@ -29,7 +29,7 @@ const BaseTypes::Bitboard BOARD_INIT_STATE("111111111111111100000000000000000000
 
 OfflineGame::~OfflineGame() {    
     BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
-    BoardServices::getInstance()->setBoardKeyEventsDelegates(NULL);
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
 }
 
 void OfflineGame::start(BaseTypes::Side side, int difficulty) {
@@ -240,7 +240,9 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
     }
     
     if (popCount == 3) {//EN PASSANT CAPTURE
-        BaseTypes::Bitboard fromBoard = ((changedPositions << 8) | (changedPositions >> 8)) ^ changedPositions & changedPositions;
+        BaseTypes::Bitboard changedPositionShiftedDown = changedPositions << 8;
+        BaseTypes::Bitboard changedPositionShiftedUp = changedPositions >> 8;
+        BaseTypes::Bitboard fromBoard = (changedPositionShiftedDown | changedPositionShiftedUp) ^ changedPositions & changedPositions;
         BaseTypes::Bitboard toBoard = newState & changedPositions;
         int fromSquareIdx = fromBoard.getIndexOfSetBit(1);
         int toSquareIdx = toBoard.getIndexOfSetBit(1);

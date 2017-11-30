@@ -175,28 +175,35 @@ namespace BaseTypes {
             return this->first32 != other.first32 || this->last32 != other.last32;
         }
 
-        friend BaseTypes::Bitboard operator^(const Bitboard& l, const Bitboard& r) {
+        friend Bitboard operator^(const Bitboard& l, const Bitboard& r) {
             Bitboard result;
             result.first32 = l.first32 ^ r.first32;
             result.last32 = l.last32 ^ r.last32;
             return result;
         }
         
-        friend BaseTypes::Bitboard operator&(const Bitboard& l, const Bitboard& r) {
+        friend Bitboard operator&(const Bitboard& l, const Bitboard& r) {
             Bitboard result;
             result.first32 = l.first32 & r.first32;
             result.last32 = l.last32 & r.last32;
             return result;
         }
         
-        friend BaseTypes::Bitboard operator<< (const Bitboard& bitboard, int bit) {
+        friend Bitboard operator|(const Bitboard& l, const Bitboard& r) {
+            Bitboard result;
+            result.first32 = l.first32 | r.first32;
+            result.last32 = l.last32 | r.last32;
+            return result;
+        }
+        
+        friend Bitboard operator<< (const Bitboard& bitboard, int bit) {
             Bitboard result;
             result.first32 = bitboard.first32 << bit | bitboard.last32 >> (32 - bit);
             result.last32 = bitboard.last32 << bit;
             return result;
         }
         
-        friend BaseTypes::Bitboard operator>> (const Bitboard& bitboard, int bit) {
+        friend Bitboard operator>> (const Bitboard& bitboard, int bit) {
             Bitboard result;
             result.first32 = bitboard.first32 >> bit;
             result.last32 = bitboard.last32 >> bit | bitboard.first32 << (32 - bit);
