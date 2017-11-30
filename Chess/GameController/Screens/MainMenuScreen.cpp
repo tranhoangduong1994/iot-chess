@@ -72,16 +72,16 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
                 break;
             case 3:
             {
-                std::vector<Entry> entries;
+                std::vector<OptionScreenEntry> entries;
                 for (int i = 0; i < 20; i++) {
-                    Entry entry;
+                    OptionScreenEntry entry;
                     entry.name = "Test " + std::to_string(i);
                     entry.onSelected = [=](std::string content) {
                         std::cout << "You selected: " + content;
                     };
                     entries.push_back(entry);
                 }
-                Entry cancelEntry;
+                OptionScreenEntry cancelEntry;
                 cancelEntry.name = "CANCEL";
                 cancelEntry.onSelected = [=](std::string content) {
                     std::cout << "Cancelled";

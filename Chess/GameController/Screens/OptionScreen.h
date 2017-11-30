@@ -15,14 +15,14 @@
 
 #include "BoardKeyEventsProtocol.h"
 
-struct Entry {
+struct OptionScreenEntry {
     std::string name;
     std::function<void(std::string content)> onSelected;
 };
 
 class OptionScreen : public Screen, public BoardKeyEventsProtocol {
 public:
-    static OptionScreen* create(std::string header, std::vector<Entry> entries);
+    static OptionScreen* create(std::string header, std::vector<OptionScreenEntry> entries);
     void onKeyPressed(const KeyPressedData& data) override;
     
 protected:
@@ -38,7 +38,7 @@ private:
     
     void updateScreen();
     
-    std::vector<Entry> entries;
+    std::vector<OptionScreenEntry> entries;
     int minEntryIndex;
     int maxEntryIndex;
     

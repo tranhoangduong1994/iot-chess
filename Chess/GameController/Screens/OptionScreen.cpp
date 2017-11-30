@@ -10,7 +10,7 @@
 
 #include "BoardServices.h"
 
-OptionScreen* OptionScreen::create(std::string header, std::vector<Entry> entries) {
+OptionScreen* OptionScreen::create(std::string header, std::vector<OptionScreenEntry> entries) {
     if (!displayer) {
         displayer = DisplayerImplementation::getInstance();
     }
@@ -50,7 +50,7 @@ void OptionScreen::updateScreen() {
 
 void OptionScreen::onKeyPressed(const KeyPressedData& data) {
     if (data.key == BoardKey::OK) {
-        Entry& entry = entries.at(cursorPositionIndex);
+        OptionScreenEntry& entry = entries.at(cursorPositionIndex);
 //        entry.onSelected(BaseTypes::Move(entry.name));
         entry.onSelected(entry.name);
         Screen::popScreen();

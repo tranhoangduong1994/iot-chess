@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "OfflineGame.h"
+
 #include "OptionScreen.h"
 
 GameScreen* GameScreen::create(OfflineGame* game) {
@@ -83,16 +84,16 @@ void GameScreen::onInvalidMove(const InvalidMoveData& data) {
 }
 
 void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function<void(bool, BaseTypes::Move)> onSelected) {
-    std::vector<Entry> entries;
+    std::vector<OptionScreenEntry> entries;
     for (int i = 0; i < moves.size(); i++) {
-        Entry entry;
+        OptionScreenEntry entry;
         entry.name = moves.at(i).toString();
         entry.onSelected = [=](std::string content) {
             onSelected(true, BaseTypes::Move(content));
         };
         entries.push_back(entry);
     }
-    Entry cancelEntry;
+    OptionScreenEntry cancelEntry;
     cancelEntry.name = "CANCEL";
     cancelEntry.onSelected = [=](BaseTypes::Move move) {
         onSelected(false, BaseTypes::Move());
