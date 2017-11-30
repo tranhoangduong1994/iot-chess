@@ -11,23 +11,27 @@
 #include "OfflineGame.h"
 #include "BoardServices.h"
 
-MainMenuScreen* MainMenuScreen::create(int width, int height) {
+#include "OptionScreen.h"
+
+MainMenuScreen* MainMenuScreen::create() {
     if (!displayer) {
         displayer = DisplayerImplementation::getInstance();
     }
     
     MainMenuScreen* screen = new MainMenuScreen();
-    screen->width = width;
-    screen->height = height;
-    
     return screen;
 }
 
 void MainMenuScreen::onEnter() {
     std::cout << "MainMenuScreen - onEnter" << std::endl;
+    
+    if (!entered) {
+        entered = true;
+        cursorPositionIndex = 1;
+        setCursorPosition(1);
+    }
+    
     BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
-    cursorPositionIndex = 1;	
-    setCursorPosition(1);
 }
 
 void MainMenuScreen::onExit() {
@@ -38,37 +42,54 @@ void MainMenuScreen::onExit() {
 void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
     BoardKey key = data.key;
     if (key == BoardKey::UP) {
-	std::cout << "Up pressed" << std::endl;
+        std::cout << "Up pressed" << std::endl;
         int index = cursorPositionIndex - 1;
         if (index == 0) {
             index = 3;
         }
-	cursorPositionIndex = index;
-	setCursorPosition(index);
+        cursorPositionIndex = index;
+        setCursorPosition(index);
     } else if (key == BoardKey::DOWN) {
-	std::cout << "Down pressed" << std::endl;
+        std::cout << "Down pressed" << std::endl;
         int index = cursorPositionIndex + 1;
         if (index == 4) {
             index = 1;
         }
-	cursorPositionIndex = index;
-	setCursorPosition(index);
+        cursorPositionIndex = index;
+        setCursorPosition(index);
     } else if (key == BoardKey::OK) {
-	std::cout << "OK pressed" << std::endl;
+        std::cout << "OK pressed" << std::endl;
         switch (cursorPositionIndex) {
             case 1:
             {
-                OfflineGame* game = new OfflineGame();
-                GameScreen* gameScreen = GameScreen::create(game, 20, 4);
-                game->start(BaseTypes::WHITE, 1);
-                Screen::replaceScreen(gameScreen);
+//                OfflineGame* game = new OfflineGame();
+//                GameScreen* gameScreen = GameScreen::create(game);
+//                game->start(BaseTypes::WHITE, 1);
+//                Screen::replaceScreen(gameScreen);
                 break;
             }
             case 2:
                 break;
             case 3:
             {
-                system("reboot");
+                std::vector<Entry> entries;
+                for (int i = 0; i < 20; i++) {
+                    Entry entry;
+                    entry.name = "Test " + std::to_string(i);
+                    entry.onSelected = [=](std::string content) {
+                        std::cout << "You selected: " + content;
+                    };
+                    entries.push_back(entry);
+                }
+                Entry cancelEntry;
+                cancelEntry.name = "CANCEL";
+                cancelEntry.onSelected = [=](std::string content) {
+                    std::cout << "Cancelled";
+                };
+                entries.push_back(cancelEntry);
+                
+                OptionScreen* screen = OptionScreen::create("Test option screen", entries);
+                Screen::pushScreen(screen);
                 break;
             }
             default:
@@ -80,7 +101,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
 }
 
 void MainMenuScreen::init() {
-    
+    entered = false;
 }
 
 void MainMenuScreen::setCursorPosition(int index) {
@@ -98,7 +119,7 @@ void MainMenuScreen::setCursorPosition(int index) {
             displayer->print(3, "* Multiplayer game");
             break;
         case 3:
-            displayer->print(4, "* Restart");
+            displayer->print(4, "* Test");
             break;
         default:
             break;

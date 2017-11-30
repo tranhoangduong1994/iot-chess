@@ -14,6 +14,9 @@
 
 #include "DisplayerImplementation.h"
 
+const int SCREEN_WIDTH = 20;
+const int SCREEN_HEIGHT = 4;
+
 class Screen {
 public:
     static void pushScreen(Screen* screen);
@@ -27,8 +30,7 @@ protected:
     static std::vector<Screen*> screenStack;
     static IDisplayer* displayer;
     static Screen* currentScreen;
-    
-    int width, height;
+
     std::vector<std::string> screenBuffer;
     
     Screen() {};

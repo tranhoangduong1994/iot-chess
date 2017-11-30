@@ -62,7 +62,7 @@ void Screen::replaceScreen(Screen* screen) {
 
 void Screen::print(int lineNumber, std::string content) {
     
-    if (lineNumber > this->height) {
+    if (lineNumber > SCREEN_HEIGHT) {
         return;
     }
     
@@ -70,8 +70,8 @@ void Screen::print(int lineNumber, std::string content) {
         return;
     }
     
-    if (content.size() > this->width) {
-        content = content.substr(this->width);
+    if (content.size() > SCREEN_WIDTH) {
+        content = content.substr(SCREEN_WIDTH);
     }
     
     displayer->print(lineNumber, content);

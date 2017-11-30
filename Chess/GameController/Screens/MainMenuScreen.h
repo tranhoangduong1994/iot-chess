@@ -14,7 +14,7 @@
 
 class MainMenuScreen : public Screen, public BoardKeyEventsProtocol {
 public:
-    static MainMenuScreen* create(int width, int height);
+    static MainMenuScreen* create();
     void onKeyPressed(const KeyPressedData& data) override;
     
 protected:
@@ -23,6 +23,7 @@ protected:
     
 private:
     int cursorPositionIndex;
+    bool entered;
     
     void init();
     void setCursorPosition(int index);
