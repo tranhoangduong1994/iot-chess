@@ -7,25 +7,31 @@
 //
 
 #include "GameScreen.h"
-#include "OfflineGame.h"
+
 #include <iostream>
 
-GameScreen* GameScreen::create(OfflineGame* game, int width, int height) {
+#include "OfflineGame.h"
+#include "OptionScreen.h"
+
+GameScreen* GameScreen::create(OfflineGame* game) {
     if (!displayer) {
         displayer = DisplayerImplementation::getInstance();
     }
     
     GameScreen* screen = new GameScreen();
     screen->game = game;
-    screen->game->setDelegate(screen);
-    screen->width = width;
-    screen->height = height;
+    screen->init();
+    
     return screen;
 }
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
-    game->start(BaseTypes::Side::WHITE, 1);
+    if (!entered) {
+        entered = true;
+        game->start(BaseTypes::Side::WHITE, 1);
+    }
+    game->setDelegate(this);
 }
 
 void GameScreen::onExit() {
@@ -34,13 +40,19 @@ void GameScreen::onExit() {
     delete this;
 }
 
-void GameScreen::onBoardInitStateInvalid(const std::vector<BaseTypes::Position>& misplacedPositions) {
+void GameScreen::init() {
+    entered = false;
+}
+
+void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPositions) {
     print(1, "Pieces are misplaced: ");
     std::string positions = "";
-    std::vector<BaseTypes::Position> misplacedPositions_ = misplacedPositions;
-    for (int i = 0; i < misplacedPositions_.size(); i++) {
-        positions += misplacedPositions_.at(i).toString();
-        positions += " ";
+    for (int i = 0; i < 64; i++) {
+        if (misplacedPositions.get(i)) {
+            positions += (char)((i % 8) + 97);
+            positions += ((i / 8) + 1);
+            positions += " ";
+        }
     }
     print(2, positions);
 }
@@ -69,6 +81,28 @@ void GameScreen::onInvalidMove(const InvalidMoveData& data) {
     print(3, "You play: " + data.player_move);
     print(4, "Invalid move, please try again: ");
 }
+
+void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function<void(bool, BaseTypes::Move)> onSelected) {
+    std::vector<Entry> entries;
+    for (int i = 0; i < moves.size(); i++) {
+        Entry entry;
+        entry.name = moves.at(i).toString();
+        entry.onSelected = [=](std::string content) {
+            onSelected(true, BaseTypes::Move(content));
+        };
+        entries.push_back(entry);
+    }
+    Entry cancelEntry;
+    cancelEntry.name = "CANCEL";
+    cancelEntry.onSelected = [=](BaseTypes::Move move) {
+        onSelected(false, BaseTypes::Move());
+    };
+    entries.push_back(cancelEntry);
+    
+    OptionScreen* screen = OptionScreen::create("Which is your move?", entries);
+    Screen::pushScreen(screen);
+}
+
 
 void GameScreen::onWinGame(const WinGameData& data) {
     

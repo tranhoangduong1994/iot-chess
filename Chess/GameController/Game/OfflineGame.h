@@ -20,10 +20,12 @@
 #include <atomic>
 #include <vector>
 
-enum InitValidatingState {
-    NOT_VALIDATED,
-    VALIDATING,
-    VALIDATED
+enum GameState {
+    NONE,
+    INIT_STATE_VALIDATING,
+    INIT_STATE_VALIDATED,
+    MOVE_VALIDATING,
+    MOVE_VALIDATED
 };
 
 class GameEventsProtocol;
@@ -34,22 +36,25 @@ public:
     void setDelegate(GameEventsProtocol* delegate);
     
     // BoardIngameEventsProtocol implementation
-    void onPlayerFinishedMove(const std::string& data) override;
     void onOpponentFinishedMove(const std::string& data) override;
     void onScanDone(const std::string& boardState) override;
+    void onBoardStateChanged(const std::string& boardState) override;
     void onBoardResetted() override;
     
     // BoardKeyEventsProtocol implementation
     void onKeyPressed(const KeyPressedData& data) override;
     
-    ~OfflineGame() {}
+    ~OfflineGame();
     
 private:
-    void validateInitState();
     std::vector<BaseTypes::Position> getBoardStateMisplacedPositions(const std::string& boardState);
     
     void startPlayerTurn();
     void startOpponentTurn();
+    
+    std::vector<BaseTypes::Move> readMove(const BaseTypes::Bitboard& newState);
+    
+    void onPlayerFinishedMove(BaseTypes::Move move);
     
     GameEventsProtocol* delegate;
     
@@ -65,7 +70,8 @@ private:
     
     std::string playerMovesFrom;
     
-    InitValidatingState initValidatingState;
+    GameState gameState;
+    BaseTypes::Bitboard currentBitboard;
 };
 
 #endif /* OfflineGame_h */

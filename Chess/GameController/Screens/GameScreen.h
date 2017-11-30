@@ -17,15 +17,17 @@ class OfflineGame;
 
 class GameScreen : public Screen, public GameEventsProtocol {
 public:
-    static GameScreen* create(OfflineGame* game, int width, int height);
+    static GameScreen* create(OfflineGame* game);
     
     // GameEventsProtocol implementation
-    void onBoardInitStateInvalid(const std::vector<BaseTypes::Position>& misplacedPositions) override;
+    void onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPositions) override;
     void onGameStarted(const GameStartedData& data) override;
     
     void onTurnBegan(const TurnBeganData& data) override;
     void onTurnEnded(const TurnEndedData& data) override;
     void onInvalidMove(const InvalidMoveData& data) override;
+    
+    void onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function<void(bool, BaseTypes::Move)>) override;
     
     void onWinGame(const WinGameData& data) override;
     void onLoseGame(const LoseGameData& data) override;
@@ -38,8 +40,12 @@ protected:
     void onExit() override;
     
 private:
+    void init();
+    
     ~GameScreen() {}
     OfflineGame* game;
+    
+    bool entered;
 };
 
 #endif /* GameScreen_h */
