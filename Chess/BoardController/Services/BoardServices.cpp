@@ -25,7 +25,7 @@ void BoardServices::clearScreen() {
 }
                 
 void BoardServices::display(int line, std::string string) {
-    MessageController::getInstance()->send(ServiceRequestType::PRINT, string);
+    MessageController::getInstance()->send(ServiceRequestType::PRINT, std::to_string(line) + string);
 }
 
 void BoardServices::move(BaseTypes::Move move) {
