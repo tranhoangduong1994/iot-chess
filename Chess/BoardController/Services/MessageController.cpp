@@ -90,7 +90,7 @@ void MessageController::processMessageBuffer() {
         
         if (messageBuffer.at(1) == EventType::BOARD_CHANGED) {
             if (gDelegate) {
-                gDelegate->onPlayerChangedBoardState(messageBuffer.substr(2));
+                gDelegate->onBoardStateChanged(messageBuffer.substr(2));
             }
         }
 
