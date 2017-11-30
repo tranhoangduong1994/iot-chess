@@ -29,7 +29,7 @@ const BaseTypes::Bitboard BOARD_INIT_STATE("111111111111111100000000000000000000
 
 OfflineGame::~OfflineGame() {    
     BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
-    BoardServices::getInstance()-setBoardKeyEventsDelegates(NULL);
+    BoardServices::getInstance()->setBoardKeyEventsDelegates(NULL);
 }
 
 void OfflineGame::start(BaseTypes::Side side, int difficulty) {
@@ -176,10 +176,12 @@ void OfflineGame::onScanDone(const std::string& boardState) {
             return;
         }
         
-        delegate->onMultipleMovesAvailable(moves, [=](BaseTypes::Move move) {
-            engine->move(move);
-            validator->move(move);
-            this->onPlayerFinishedMove(move);
+        delegate->onMultipleMovesAvailable(moves, [=](bool moveSelected, BaseTypes::Move move) {
+            if (moveSelected) {
+                engine->move(move);
+                validator->move(move);
+                this->onPlayerFinishedMove(move);
+            }
         });
     }
 }

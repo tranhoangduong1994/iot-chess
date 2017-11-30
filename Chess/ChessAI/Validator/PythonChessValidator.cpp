@@ -84,6 +84,7 @@ void PythonChessValidator::move(const BaseTypes::Move& move) {
 BaseTypes::Bitboard PythonChessValidator::getAttackedSquares(int attackerSquareIndex) {
     try {
         BaseTypes::Bitboard result(python::extract<std::string>(validator.attr("getAttackedSquares")(attackerSquareIndex)));
+        return result;
     } catch (const python::error_already_set) {
         PyErr_Print();
         assert(false);
