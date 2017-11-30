@@ -22,7 +22,11 @@ public:
     virtual bool checkDraw() override;
     virtual void move(const BaseTypes::Move& move) override;
     
+    virtual BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) override;
+    
     static PythonChessValidator* getInstance();
+    
+    ~PythonChessValidator() {};
     
 private:
     python::object validator;

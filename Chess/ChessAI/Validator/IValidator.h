@@ -18,6 +18,7 @@ public:
     virtual bool checkGameOver() = 0;
     virtual bool checkDraw() = 0;
     virtual void move(const BaseTypes::Move& move) = 0;
+    virtual BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) = 0;
 };
 
 #endif /* IValidator_h */
