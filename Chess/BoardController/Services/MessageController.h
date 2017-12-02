@@ -59,6 +59,7 @@ public:
     
 private:
     int fileDescription;
+    std::string usbPortNumber;
     std::string messageBuffer;
     
     BoardSystemEventsProtocol* sDelegate;
@@ -68,6 +69,8 @@ private:
     void init();
     
     void awaitSerialPortConnected();
+    
+    void startLoop();
     
     void checkMessage();
     void processMessageBuffer();

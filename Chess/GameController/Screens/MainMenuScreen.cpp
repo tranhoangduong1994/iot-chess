@@ -62,10 +62,10 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         switch (cursorPositionIndex) {
             case 1:
             {
-//                OfflineGame* game = new OfflineGame();
-//                GameScreen* gameScreen = GameScreen::create(game);
-//                game->start(BaseTypes::WHITE, 1);
-//                Screen::replaceScreen(gameScreen);
+                OfflineGame* game = new OfflineGame();
+                GameScreen* gameScreen = GameScreen::create(game);
+                game->start(BaseTypes::WHITE, 1);
+                Screen::replaceScreen(gameScreen);
                 break;
             }
             case 2:

@@ -85,7 +85,8 @@ void MessageController::processMessageBuffer() {
     } else if (messageType == MessageType::Event) {
         if (messageHeader == EventType::SYSTEM_READY) {
             if (sDelegate) {
-                 SerialPortConnectedData data(fileDescription);
+                startLoop();
+                SerialPortConnectedData data(fileDescription);
                 sDelegate->onSerialPortConnected(data);
             }
         }
@@ -108,7 +109,6 @@ void MessageController::processMessageBuffer() {
                 kDelegate->onKeyPressed(data);
             }
         }
-
         
         if (messageHeader == EventType::MENU_PRESSED) {
             if (kDelegate) {
@@ -140,16 +140,20 @@ void MessageController::init() {
 void MessageController::awaitSerialPortConnected() {
     std::thread([=]() {
         int valueToTry = 0;
-        std::string portToTry = "";
+        usbPortNumber = "";
         while (fileDescription < 0) {
-            portToTry = std::string(PORT_PREFIX) + std::to_string(valueToTry);
+            usbPortNumber = std::string(PORT_PREFIX) + std::to_string(valueToTry);
             valueToTry = (valueToTry + 1) % (MAX_PORT_INDEX + 1);
             //std::cout << "Trying port " << portToTry << std::endl;
-            fileDescription = serialOpen(portToTry.c_str(), BAUD);
-        }      
+            fileDescription = serialOpen(usbPortNumber.c_str(), BAUD);
+        }
+    }).detach();
+}
 
+void MessageController::startLoop() {
+    std::thread([=]() {
         while (true) {
-            if (fileDescription == serialOpen(portToTry.c_str(), BAUD) < 0) {
+            if (fileDescription == serialOpen(usbPortNumber.c_str(), BAUD) < 0) {
                 break;
             }
             checkMessage();
