@@ -20,7 +20,7 @@
 #include "wiringSerial.h"
 #endif
 
-const char* PORT_PREFIX = "/dev/ttyUSB";
+const char* PORT_PREFIX = "/dev/ttyAMA";
 const int MAX_PORT_INDEX = 254;
 const int BAUD = 9600;
 
