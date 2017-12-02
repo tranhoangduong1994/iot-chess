@@ -7,7 +7,7 @@
 //
 
 #include "MessageController.h"
-
+#include "BoardServices.h"
 #include <thread>
 
 #if defined(__linux) || defined(linux) || defined(__linux)
@@ -20,7 +20,7 @@
 #include "wiringSerial.h"
 #endif
 
-const char* PORT_PREFIX = "/dev/ttyAMA";
+const char* PORT_PREFIX = "/dev/ttyUSB";
 const int MAX_PORT_INDEX = 254;
 const int BAUD = 9600;
 
@@ -51,55 +51,58 @@ void MessageController::checkMessage() {
 }
 
 void MessageController::processMessageBuffer() {
-    if (messageBuffer.at(0) == MessageType::ServiceResponse) {
-        if (messageBuffer.at(1) == ServiceResponseType::MOVE_DONE) {
+    int messageType = messageBuffer.at(0) - 48;
+    int messageHeader = messageBuffer.at(1) - 48;
+    if (messageType == MessageType::ServiceResponse) {
+        if (messageHeader == ServiceResponseType::MOVE_DONE) {
             if (gDelegate) {
                 gDelegate->onOpponentFinishedMove(messageBuffer.substr(1));
             }
             return;
         }
         
-        if (messageBuffer.at(1) == ServiceResponseType::SCAN_DONE) {
+        if (messageHeader == ServiceResponseType::SCAN_DONE) {
             if (gDelegate) {
                 gDelegate->onScanDone(messageBuffer.substr(1));
             }
             return;
         }
         
-        if (messageBuffer.at(1) == ServiceResponseType::RESET_DONE) {
+        if (messageHeader == ServiceResponseType::RESET_DONE) {
             if (gDelegate) {
                 gDelegate->onBoardResetted();
             }
             return;
         }
         
-        if (messageBuffer.at(1) == ServiceResponseType::PRINT_DONE) {
+        if (messageHeader == ServiceResponseType::PRINT_DONE) {
             
         }
         
-        if (messageBuffer.at(1) == ServiceResponseType::CLEAR_SCREEN_DONE) {
+        if (messageHeader == ServiceResponseType::CLEAR_SCREEN_DONE) {
             
         }
-    } else if (messageBuffer.at(0) == MessageType::Event) {
-//        if (messageBuffer.at(1) == EventType::SYSTEM_READY) {
-//            if (sDelegate) {
-//
-//            }
-//        }
-        if (messageBuffer.at(1) == EventType::BOARD_CHANGED) {
+    } else if (messageType == MessageType::Event) {
+        if (messageHeader == EventType::SYSTEM_READY) {
+            if (sDelegate) {
+                 SerialPortConnectedData data(fileDescription);
+                sDelegate->onSerialPortConnected(data);
+            }
+        }
+        if (messageHeader == EventType::BOARD_CHANGED) {
             if (gDelegate) {
                 gDelegate->onBoardStateChanged(messageBuffer.substr(2));
             }
         }
 
-        if (messageBuffer.at(1) == EventType::DOWN_PRESSED) {
+        if (messageHeader == EventType::DOWN_PRESSED) {
             if (kDelegate) {
                 KeyPressedData data(BoardKey::DOWN);
                 kDelegate->onKeyPressed(data);
             }
         }
         
-        if (messageBuffer.at(1) == EventType::UP_PRESSED) {
+        if (messageHeader == EventType::UP_PRESSED) {
             if (kDelegate) {
                 KeyPressedData data(BoardKey::UP);
                 kDelegate->onKeyPressed(data);
@@ -107,14 +110,14 @@ void MessageController::processMessageBuffer() {
         }
 
         
-        if (messageBuffer.at(1) == EventType::MENU_PRESSED) {
+        if (messageHeader == EventType::MENU_PRESSED) {
             if (kDelegate) {
                 KeyPressedData data(BoardKey::MENU);
                 kDelegate->onKeyPressed(data);
             }
         }
         
-        if (messageBuffer.at(1) == EventType::OK_PRESSED) {
+        if (messageHeader == EventType::OK_PRESSED) {
             if (kDelegate) {
                 KeyPressedData data(BoardKey::OK);
                 kDelegate->onKeyPressed(data);
@@ -141,13 +144,10 @@ void MessageController::awaitSerialPortConnected() {
         while (fileDescription < 0) {
             portToTry = std::string(PORT_PREFIX) + std::to_string(valueToTry);
             valueToTry = (valueToTry + 1) % (MAX_PORT_INDEX + 1);
-            std::cout << "Trying port " << portToTry << std::endl;
+            //std::cout << "Trying port " << portToTry << std::endl;
             fileDescription = serialOpen(portToTry.c_str(), BAUD);
-        }
-        
-        SerialPortConnectedData data(fileDescription);
-        sDelegate->onSerialPortConnected(data);
-        
+        }      
+
         while (true) {
             if (fileDescription == serialOpen(portToTry.c_str(), BAUD) < 0) {
                 break;
