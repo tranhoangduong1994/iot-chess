@@ -28,7 +28,11 @@ void MainMenuScreen::onEnter() {
     if (!entered) {
         entered = true;
         cursorPositionIndex = 1;
-        setCursorPosition(1);
+        displayer->print(1, "MENU");	
+        displayer->print(2, "->Single game");
+        displayer->print(3, "  Multiplayer game");
+        displayer->print(4, "  Settings");
+        //setCursorPosition(1);
     }
     
     BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
@@ -47,7 +51,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         if (index == 0) {
             index = 3;
         }
-        cursorPositionIndex = index;
+        //cursorPositionIndex = index;
         setCursorPosition(index);
     } else if (key == BoardKey::DOWN) {
         std::cout << "Down pressed" << std::endl;
@@ -55,7 +59,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         if (index == 4) {
             index = 1;
         }
-        cursorPositionIndex = index;
+        //cursorPositionIndex = index;
         setCursorPosition(index);
     } else if (key == BoardKey::OK) {
         std::cout << "OK pressed" << std::endl;
@@ -107,21 +111,32 @@ void MainMenuScreen::init() {
 void MainMenuScreen::setCursorPosition(int index) {
     std::cout << "[MainMenuScreen] setCursorPosition(" << index << ")" << std::endl;
     displayer->print(1, "MENU");
-    displayer->print(2, "  Single game");
-    displayer->print(3, "  Multiplayer game");
-    displayer->print(4, "  Restart");
-    
-    switch (index) {
+
+    switch(cursorPositionIndex) {
         case 1:
-            displayer->print(2, "* Single game");
+            displayer->print(1, "  Single game");
             break;
         case 2:
-            displayer->print(3, "* Multiplayer game");
+            displayer->print(2, "  Multiplayer game");
             break;
         case 3:
-            displayer->print(4, "* Test");
+            displayer->print(3, "  Settings");
+            break;	
+    }
+
+    switch (index) {
+        case 1:		
+            displayer->print(2, "->Single game");
+            break;
+        case 2:
+            displayer->print(3, "->Multiplayer game");
+            break;
+        case 3:
+            displayer->print(4, "->Settings");
             break;
         default:
             break;
     }
+
+    cursorPositionIndex = index;
 }
