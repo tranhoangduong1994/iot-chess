@@ -36,6 +36,7 @@ MessageController* MessageController::getInstance() {
 }
 
 void MessageController::send(ServiceRequestType type, std::string content) {
+	std::cout << "[MessageController] send(" << type << ", " << content << ")" << std::endl;
     serialPuts(fileDescription, (std::to_string(type) + content + "|").c_str());
     serialFlush(fileDescription);
 }
@@ -51,6 +52,7 @@ void MessageController::checkMessage() {
 }
 
 void MessageController::processMessageBuffer() {
+	std::cout << "[MessageController] processMessageBuffer: <--" << messageBuffer <<  "-->" << std::endl;
     int messageType = messageBuffer.at(0) - 48;
     int messageHeader = messageBuffer.at(1) - 48;
     if (messageType == MessageType::ServiceResponse) {
@@ -85,7 +87,6 @@ void MessageController::processMessageBuffer() {
     } else if (messageType == MessageType::Event) {
         if (messageHeader == EventType::SYSTEM_READY) {
             if (sDelegate) {
-                startLoop();
                 SerialPortConnectedData data(fileDescription);
                 sDelegate->onSerialPortConnected(data);
             }
@@ -144,25 +145,24 @@ void MessageController::awaitSerialPortConnected() {
         while (fileDescription < 0) {
             usbPortNumber = std::string(PORT_PREFIX) + std::to_string(valueToTry);
             valueToTry = (valueToTry + 1) % (MAX_PORT_INDEX + 1);
-            //std::cout << "Trying port " << portToTry << std::endl;
+            std::cout << "Trying port " << usbPortNumber << std::endl;
             fileDescription = serialOpen(usbPortNumber.c_str(), BAUD);
         }
+	startLoop();
     }).detach();
 }
 
 void MessageController::startLoop() {
-    std::thread([=]() {
-        while (true) {
-            if (fileDescription == serialOpen(usbPortNumber.c_str(), BAUD) < 0) {
-                break;
-            }
-            checkMessage();
+    while (true) {
+        if (fileDescription == serialOpen(usbPortNumber.c_str(), BAUD) < 0) {
+            break;
         }
+        checkMessage();
+    }
         
-        if (sDelegate) {
-            sDelegate->onSerialPortDisconnected();
-        }
-    }).detach();
+    if (sDelegate) {
+        sDelegate->onSerialPortDisconnected();
+    }
 }
 
 void MessageController::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {
