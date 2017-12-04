@@ -10,8 +10,6 @@
 
 #include "MessageController.h"
 
-const char* PYTHONPATH = ".";
-
 BoardServices* BoardServices::instance = NULL;
 
 BoardServices* BoardServices::getInstance() {

@@ -18,6 +18,8 @@
 #include "BoardIngameEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
+namespace python = boost::python;
+
 class BoardServices : public IBoardServices {
 public:
     void resetBoard() override;

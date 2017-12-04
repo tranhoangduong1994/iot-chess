@@ -14,6 +14,8 @@
 #include <map>
 #include <iostream>
 
+const char* PYTHONPATH = ".";
+
 typedef std::map<std::string, std::string> EventData;
 
 namespace BaseTypes {

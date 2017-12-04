@@ -8,8 +8,6 @@
 
 #include "PythonChessValidator.h"
 
-const char* PYTHONPATH = ".";
-
 PythonChessValidator* PythonChessValidator::instance = NULL;
 
 PythonChessValidator* PythonChessValidator::getInstance() {
