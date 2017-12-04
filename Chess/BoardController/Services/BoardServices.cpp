@@ -10,6 +10,8 @@
 
 #include "MessageController.h"
 
+const char* PYTHONPATH = ".";
+
 BoardServices* BoardServices::instance = NULL;
 
 BoardServices* BoardServices::getInstance() {
@@ -20,12 +22,31 @@ BoardServices* BoardServices::getInstance() {
     return instance;
 }
 
+void BoardServices::init() {
+    setenv("PYTHONPATH", PYTHONPATH, 1);
+    Py_Initialize();
+    try {
+        python::object my_python_class_module = python::import("I2C_LCD_driver");
+        lcd = my_python_class_module.attr("lcd")();
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        assert(false);
+    }
+}
+
 void BoardServices::clearScreen() {
-    MessageController::getInstance()->send(ServiceRequestType::CLEAR_SCREEN);
+//    MessageController::getInstance()->send(ServiceRequestType::CLEAR_SCREEN);
+	lcd.attr("lcd_clear")();
 }
                 
 void BoardServices::display(int line, std::string string) {
-    MessageController::getInstance()->send(ServiceRequestType::PRINT, std::to_string(line - 1) + string);
+//    MessageController::getInstance()->send(ServiceRequestType::PRINT_LINE, std::to_string(line - 1) + string);
+	lcd.attr("lcd_display_string")(line, string);
+}
+
+void BoardServices::display(int line, int position, std::string string) {
+	//MessageController::getInstance()->send(ServiceRequestType::PRINT, std::to_string(line - 1) + std::to_string(position - 1) + string);
+	lcd.attr("lcd_display_string")(line, position, string);
 }
 
 void BoardServices::move(BaseTypes::Move move) {
@@ -50,8 +71,4 @@ void BoardServices::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_de
 
 void BoardServices::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {
     MessageController::getInstance()->setBoardKeyEventsDelegate(k_delegate);
-}
-
-void BoardServices::init() {
-    
 }

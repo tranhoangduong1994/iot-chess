@@ -16,6 +16,7 @@ public:
     static DisplayerImplementation* getInstance();
     
     void print(int lineNumber, std::string content) override;
+    void print(int lineNumber, int position, std::string content) override;
     void clear() override;
     
 private:

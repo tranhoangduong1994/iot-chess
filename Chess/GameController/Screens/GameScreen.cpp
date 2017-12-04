@@ -14,11 +14,7 @@
 
 #include "OptionScreen.h"
 
-GameScreen* GameScreen::create(OfflineGame* game) {
-    if (!displayer) {
-        displayer = DisplayerImplementation::getInstance();
-    }
-    
+GameScreen* GameScreen::create(OfflineGame* game) {    
     GameScreen* screen = new GameScreen();
     screen->game = game;
     screen->init();
@@ -59,7 +55,7 @@ void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPos
 }
 
 void GameScreen::onGameStarted(const GameStartedData& data) {
-    clearScreen();
+    clear();
     print(1, "Game started");
 }
 
@@ -93,6 +89,7 @@ void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& mo
         };
         entries.push_back(entry);
     }
+    
     OptionScreenEntry cancelEntry;
     cancelEntry.name = "CANCEL";
     cancelEntry.onSelected = [=](BaseTypes::Move move) {
@@ -106,17 +103,64 @@ void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& mo
 
 
 void GameScreen::onWinGame(const WinGameData& data) {
+    std::vector<OptionScreenEntry> entries;
     
+    OptionScreenEntry newGameEntry;
+    newGameEntry.name = "Play new game";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
+
+    OptionScreenEntry mainMenuEntry;
+    newGameEntry.name = "Go to Main menu";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
+
+    OptionScreen* screen = OptionScreen::create("YOU WIN!!!", entries);
+    Screen::pushScreen(screen);
 }
 
 void GameScreen::onLoseGame(const LoseGameData& data) {
+    std::vector<OptionScreenEntry> entries;
     
+    OptionScreenEntry newGameEntry;
+    newGameEntry.name = "Play new game";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
+
+    OptionScreenEntry mainMenuEntry;
+    newGameEntry.name = "Go to Main menu";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
+
+    OptionScreen* screen = OptionScreen::create("YOU LOSE", entries);
+    Screen::pushScreen(screen);    
 }
 
 void GameScreen::onDrawGame(const DrawGameData& data) {
+    std::vector<OptionScreenEntry> entries;
     
-}
+    OptionScreenEntry newGameEntry;
+    newGameEntry.name = "Play new game";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
 
-void GameScreen::onInvalidAction(const InvalidActionData& data) {
-    
+    OptionScreenEntry mainMenuEntry;
+    newGameEntry.name = "Go to Main menu";
+    newGameEntry.onSelected = [=](std::string content) {
+		
+	};
+	entries.push_back(newGameEntry);
+
+    OptionScreen* screen = OptionScreen::create("DRAW GAME", entries);
+    Screen::pushScreen(screen);        
 }

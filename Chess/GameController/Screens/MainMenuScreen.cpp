@@ -14,32 +14,27 @@
 #include "OptionScreen.h"
 
 MainMenuScreen* MainMenuScreen::create() {
-    if (!displayer) {
-        displayer = DisplayerImplementation::getInstance();
-    }
-    
     MainMenuScreen* screen = new MainMenuScreen();
     return screen;
 }
 
 void MainMenuScreen::onEnter() {
     std::cout << "MainMenuScreen - onEnter" << std::endl;
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
     
     if (!entered) {
         entered = true;
         cursorPositionIndex = 1;
-        displayer->print(1, "MENU");	
-        displayer->print(2, "->Single game");
-        displayer->print(3, "  Multiplayer game");
-        displayer->print(4, "  Settings");
-        //setCursorPosition(1);
+        print(1, "MENU");	
+        print(2, "->Single game");
+        print(3, "  Multiplayer game");
+        print(4, "  Settings");
     }
-    
-    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
 }
 
 void MainMenuScreen::onExit() {
     std::cout << "MainMenuScreen - onExit" << std::endl;
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
     delete this;
 }
 
@@ -69,7 +64,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
                 OfflineGame* game = new OfflineGame();
                 GameScreen* gameScreen = GameScreen::create(game);
                 game->start(BaseTypes::WHITE, 1);
-                Screen::replaceScreen(gameScreen);
+                Screen::runScreen(gameScreen);
                 break;
             }
             case 2:
@@ -110,29 +105,29 @@ void MainMenuScreen::init() {
 
 void MainMenuScreen::setCursorPosition(int index) {
     std::cout << "[MainMenuScreen] setCursorPosition(" << index << ")" << std::endl;
-    displayer->print(1, "MENU");
+    print(1, "MENU");
 
     switch(cursorPositionIndex) {
         case 1:
-            displayer->print(1, "  Single game");
+            print(2, "  Single game");
             break;
         case 2:
-            displayer->print(2, "  Multiplayer game");
+            print(3, "  Multiplayer game");
             break;
         case 3:
-            displayer->print(3, "  Settings");
+            print(4, "  Settings");
             break;	
     }
 
     switch (index) {
         case 1:		
-            displayer->print(2, "->Single game");
+            print(2, "->Single game");
             break;
         case 2:
-            displayer->print(3, "->Multiplayer game");
+            print(3, "->Multiplayer game");
             break;
         case 3:
-            displayer->print(4, "->Settings");
+            print(4, "->Settings");
             break;
         default:
             break;

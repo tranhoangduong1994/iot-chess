@@ -10,12 +10,11 @@
 
 #include "BoardServices.h"
 
-OptionScreen* OptionScreen::create(std::string header, std::vector<OptionScreenEntry> entries) {
-    if (!displayer) {
-        displayer = DisplayerImplementation::getInstance();
-    }
-    
+#include <thread>
+
+OptionScreen* OptionScreen::create(std::string header, std::vector<OptionScreenEntry> entries) {    
     OptionScreen* screen = new OptionScreen();
+    screen->header = header;
     screen->entries = entries;
     screen->init();
     
@@ -31,27 +30,39 @@ void OptionScreen::init() {
 
 void OptionScreen::onEnter() {
     BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
+    print(1, header);
+    updateScreen();
 }
 
 void OptionScreen::onExit() {
+	std::cout << "[OptionScreen] onExit" << std::endl;
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
 }
 
 void OptionScreen::updateScreen() {
     int iMax = maxEntryIndex < entries.size() - 1 ? maxEntryIndex : entries.size() - 1;
     for (int i = minEntryIndex; i <= iMax; i++) {
+		std::string printedString;
         if (i == cursorPositionIndex) {
-            print(i - minEntryIndex + 2, "* " + entries.at(i).name);
+			printedString = "* " + entries.at(i).name;
         } else {
-            print(i - minEntryIndex + 2, "  " + entries.at(i).name);
+			printedString = "  " + entries.at(i).name;
         }
+			
+		if (0 < i && i < entries.size() - 1) {
+			if (i == minEntryIndex) {
+				printedString += "<";
+			} else if (i == iMax) {
+				printedString += ">";
+			}
+		}
+		print(i - minEntryIndex + 2, printedString);
     }
 }
 
 void OptionScreen::onKeyPressed(const KeyPressedData& data) {
     if (data.key == BoardKey::OK) {
         OptionScreenEntry& entry = entries.at(cursorPositionIndex);
-//        entry.onSelected(BaseTypes::Move(entry.name));
         entry.onSelected(entry.name);
         Screen::popScreen();
     }

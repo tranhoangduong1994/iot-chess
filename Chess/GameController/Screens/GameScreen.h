@@ -33,8 +33,6 @@ public:
     void onLoseGame(const LoseGameData& data) override;
     void onDrawGame(const DrawGameData& data) override;
     
-    void onInvalidAction(const InvalidActionData& data) override;
-    
 protected:
     void onEnter() override;
     void onExit() override;

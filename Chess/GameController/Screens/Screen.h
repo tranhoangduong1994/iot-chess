@@ -12,8 +12,6 @@
 #include <string>
 #include <vector>
 
-#include "DisplayerImplementation.h"
-
 const int SCREEN_WIDTH = 20;
 const int SCREEN_HEIGHT = 4;
 
@@ -21,25 +19,21 @@ class Screen {
 public:
     static void pushScreen(Screen* screen);
     static void popScreen();
-    static void replaceScreen(Screen* screen);
-    
-    void print(int lineNumber, std::string content);
-    void clearScreen();
+    static void runScreen(Screen* screen);
     
 protected:
     static std::vector<Screen*> screenStack;
-    static IDisplayer* displayer;
-    static Screen* currentScreen;
 
     std::vector<std::string> screenBuffer;
     
-    Screen() {};
+    Screen();
     virtual ~Screen() {};
+    
+    void print(int lineNumber, std::string content);
+    void clear();
     
     virtual void onEnter() {};
     virtual void onExit() {};
-private:
-    static void runScreen(Screen* screen);
 };
 
 #endif /* Screen_h */

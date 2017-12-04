@@ -12,6 +12,8 @@
 #include "IBoardServices.h"
 #include <functional>
 
+#include <boost/python.hpp>
+
 #include "BoardSystemEventsProtocol.h"
 #include "BoardIngameEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
@@ -23,6 +25,7 @@ public:
     void scan() override;
     
     void display(int line, std::string string) override;
+    void display(int line, int position, std::string string) override;
     void clearScreen() override;
     
     void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) override;
@@ -33,6 +36,8 @@ public:
     
 private:
     static BoardServices* instance;
+    
+    python::object lcd;
     
     void init();
 };

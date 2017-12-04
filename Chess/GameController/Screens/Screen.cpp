@@ -8,65 +8,61 @@
 
 #include "Screen.h"
 
+#include <iostream>
+
+#include "DisplayerImplementation.h"
+
 std::vector<Screen*> Screen::screenStack;
-IDisplayer* Screen::displayer = NULL;
-Screen* Screen::currentScreen = NULL;
+
+Screen::Screen() {
+	screenBuffer.resize(SCREEN_HEIGHT);
+}
 
 void Screen::runScreen(Screen* screen) {
-    displayer->clear();
-    screen->onEnter();
-    if (screen) {
-        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
-            displayer->print(i, currentScreen->screenBuffer[i]);
-        }
-    }
+	if (screenStack.size() > 0) {
+		screenStack.back()->onExit();
+		delete screenStack.back();
+		screenStack.pop_back();
+	}
+	
+	pushScreen(screen);
 }
 
 void Screen::pushScreen(Screen* screen) {
-    if (currentScreen) {
-        screenStack.push_back(currentScreen);
-    }
-    currentScreen = screen;
-    runScreen(currentScreen);
+	IDisplayer* displayer = DisplayerImplementation::getInstance();
+	screenStack.push_back(screen);
+	displayer->clear();
+	screen->onEnter();
+	for (int i = 0; i < screen->screenBuffer.size(); i++) {
+		displayer->print(i, screen->screenBuffer[i]);
+	}
 }
 
 void Screen::popScreen() {
+	IDisplayer* displayer = DisplayerImplementation::getInstance();
     if (screenStack.size() == 0) {
         return;
     }
     
     screenStack.back()->onExit();
-    //TODO:
     delete screenStack.back();
     screenStack.pop_back();
     
-    if (screenStack.size() > 0) {
-        currentScreen = screenStack.back();
-        runScreen(currentScreen);
-    } else {
-        currentScreen = NULL;
-        displayer->clear();
-    }
-}
-
-void Screen::replaceScreen(Screen* screen) {
-    if (screenStack.size() > 0) {
-        screenStack.back()->onExit();
-        //TODO: 
-        delete screenStack.back();
-        screenStack.pop_back();
-    }
+    displayer->clear();
     
-    Screen::pushScreen(screen);
+    if (screenStack.size() > 0) {
+		Screen* currentScreen = screenStack.back();
+        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
+			displayer->print(i, currentScreen->screenBuffer[i]);
+		}
+    }
 }
 
 void Screen::print(int lineNumber, std::string content) {
+	std::cout << "[Screen] print(" << lineNumber << ", " << content << ")" << std::endl; 
+    IDisplayer* displayer = DisplayerImplementation::getInstance();
     
     if (lineNumber > SCREEN_HEIGHT) {
-        return;
-    }
-    
-    if (screenBuffer[lineNumber] == content) {
         return;
     }
     
@@ -74,9 +70,17 @@ void Screen::print(int lineNumber, std::string content) {
         content = content.substr(SCREEN_WIDTH);
     }
     
+    if (screenBuffer[lineNumber - 1] == content) {
+        return;
+    }
+    
+    screenBuffer[lineNumber - 1] = content;
+    
     displayer->print(lineNumber, content);
 }
 
-void Screen::clearScreen() {
+void Screen::clear() {
+	IDisplayer* displayer = DisplayerImplementation::getInstance();
+	
     displayer->clear();
 }

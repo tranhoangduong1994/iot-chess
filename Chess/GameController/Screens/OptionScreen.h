@@ -32,6 +32,7 @@ protected:
 private:
     int cursorPositionIndex;
     bool entered;
+    std::string header;
     
     void init();
     void setCursorPosition(int index);

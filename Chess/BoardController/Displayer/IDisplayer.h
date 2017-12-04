@@ -14,6 +14,7 @@
 class IDisplayer {
 public:
     virtual void print(int line, std::string content) = 0;
+    virtual void print(int line, int position, std::string content) = 0;
     virtual void clear() = 0;
 };
 

@@ -68,10 +68,6 @@ struct DrawGameData {
     }
 };
 
-struct InvalidActionData {
-    
-};
-
 struct DrawGameOfferedData {
     
 };
@@ -95,8 +91,6 @@ public:
     virtual void onWinGame(const WinGameData& data) = 0;
     virtual void onLoseGame(const LoseGameData& data) = 0;
     virtual void onDrawGame(const DrawGameData& data) = 0;
-    
-    virtual void onInvalidAction(const InvalidActionData& data) = 0;
     
     virtual void onDrawGameOffered(const DrawGameData& data) {};
     virtual void onOpponentSurrendered(const OpponentSurrenderedData& data) {};

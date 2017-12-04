@@ -23,6 +23,11 @@ void DisplayerImplementation::print(int lineNumber, std::string content) {
     BoardServices::getInstance()->display(lineNumber, content);
 }
 
+void DisplayerImplementation::print(int lineNumber, int position, std::string content) {
+	std::cout << "[DisplayerImplementation] print(" << lineNumber << ", " << content << ")" << std::endl;
+    BoardServices::getInstance()->display(lineNumber, position, content);	
+}
+
 void DisplayerImplementation::clear() {
     BoardServices::getInstance()->clearScreen();
 }

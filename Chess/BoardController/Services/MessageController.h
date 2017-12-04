@@ -23,6 +23,7 @@ enum MessageType {
 
 enum ServiceRequestType {
     CLEAR_SCREEN,
+    PRINT_LINE,
     PRINT,
     MOVE,
     SCAN_BOARD,

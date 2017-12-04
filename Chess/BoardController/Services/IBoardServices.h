@@ -22,6 +22,7 @@ public:
     virtual void scan() = 0;
     
     virtual void display(int line, std::string string) = 0;
+    virtual void display(int line, int position, std::string string) = 0;
     virtual void clearScreen() = 0;
     
     virtual void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) = 0;
