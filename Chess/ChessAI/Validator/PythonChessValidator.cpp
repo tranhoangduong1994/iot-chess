@@ -19,15 +19,7 @@ PythonChessValidator* PythonChessValidator::getInstance() {
 }
 
 void PythonChessValidator::init() {
-    setenv("PYTHONPATH", PYTHONPATH, 1);
-    Py_Initialize();
-    try {
-        python::object my_python_class_module = python::import("ChessValidator");
-        validator = my_python_class_module.attr("Validator")();
-    } catch (const python::error_already_set) {
-        PyErr_Print();
-        assert(false);
-    }
+    validator = PythonWrapper::getInstance()->createObject("ChessValidator", "Validator");
 }
 
 void PythonChessValidator::start() {

@@ -12,13 +12,9 @@
 #include "IBoardServices.h"
 #include <functional>
 
-#include <boost/python.hpp>
-
 #include "BoardSystemEventsProtocol.h"
 #include "BoardIngameEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
-
-namespace python = boost::python;
 
 class BoardServices : public IBoardServices {
 public:

@@ -14,6 +14,10 @@
 #include <map>
 #include <iostream>
 
+#include <boost/python.hpp>
+
+namespace python = boost::python;
+
 const char* PYTHONPATH = ".";
 
 typedef std::map<std::string, std::string> EventData;
@@ -250,5 +254,33 @@ namespace BaseTypes {
         }
     };
 }
+
+class PythonWrapper {
+private:
+    static PythonWrapper* instance;
+    void init() {
+        setenv("PYTHONPATH", PYTHONPATH, 1);
+        Py_Initialize();
+    }
+
+public:
+    static PythonWrapper* getInstance() {
+        if (!instance) {
+            instance = new PythonWrapper();
+            instance->init();
+        }
+        return instance;
+    }
+
+    python::object createObject(std::string moduleName, std::string className) {
+        try {
+            python::object module = python::import(moduleName);
+            return module.attr(className);
+        } catch (const python::error_already_set) {
+            PyErr_Print();
+            assert(false);
+        }
+    }
+};
 
 #endif /* BaseTypes_h */

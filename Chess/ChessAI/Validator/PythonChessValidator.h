@@ -10,9 +10,6 @@
 #define PythonChessValidator_h
 
 #include "IValidator.h"
-#include <boost/python.hpp>
-
-namespace python = boost::python;
 
 class PythonChessValidator : public IValidator {
 public:

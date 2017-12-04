@@ -21,15 +21,7 @@ BoardServices* BoardServices::getInstance() {
 }
 
 void BoardServices::init() {
-    setenv("PYTHONPATH", PYTHONPATH, 1);
-    Py_Initialize();
-    try {
-        python::object my_python_class_module = python::import("I2C_LCD_driver");
-        lcd = my_python_class_module.attr("lcd")();
-    } catch (const python::error_already_set) {
-        PyErr_Print();
-        assert(false);
-    }
+    lcd = PythonWrapper::getInstance()->createObject("I2C_LCD_driver", "lcd");
 }
 
 void BoardServices::clearScreen() {
