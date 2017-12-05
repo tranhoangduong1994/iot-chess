@@ -28,6 +28,7 @@ add_executable(iot-chess ${SOURCES})
 
 include_directories(
 					../Common/
+					./
 					BoardController/BoardEvents
 					BoardController/Displayer
 					BoardController/Services
