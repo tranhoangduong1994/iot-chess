@@ -21,22 +21,20 @@ BoardServices* BoardServices::getInstance() {
 }
 
 void BoardServices::init() {
+	std::cout << "[BoardServices] init" << std::endl;
     lcd = PythonWrapper::getInstance()->createObject("I2C_LCD_driver", "lcd");
 }
 
 void BoardServices::clearScreen() {
-//    MessageController::getInstance()->send(ServiceRequestType::CLEAR_SCREEN);
 	lcd.attr("lcd_clear")();
 }
                 
 void BoardServices::display(int line, std::string string) {
-//    MessageController::getInstance()->send(ServiceRequestType::PRINT_LINE, std::to_string(line - 1) + string);
-	lcd.attr("lcd_display_string")(line, string);
+	lcd.attr("lcd_display_string")(string, line);
 }
 
 void BoardServices::display(int line, int position, std::string string) {
-	//MessageController::getInstance()->send(ServiceRequestType::PRINT, std::to_string(line - 1) + std::to_string(position - 1) + string);
-	lcd.attr("lcd_display_string")(line, position, string);
+	lcd.attr("lcd_display_string")(string, line, position);
 }
 
 void BoardServices::move(BaseTypes::Move move) {

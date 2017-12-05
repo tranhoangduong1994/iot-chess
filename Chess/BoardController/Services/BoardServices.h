@@ -16,6 +16,8 @@
 #include "BoardIngameEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
+#include "PythonWrapper.h"
+
 class BoardServices : public IBoardServices {
 public:
     void resetBoard() override;
