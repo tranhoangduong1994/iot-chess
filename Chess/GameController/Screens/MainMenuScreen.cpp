@@ -35,7 +35,6 @@ void MainMenuScreen::onEnter() {
 void MainMenuScreen::onExit() {
     std::cout << "MainMenuScreen - onExit" << std::endl;
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
-    delete this;
 }
 
 void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {

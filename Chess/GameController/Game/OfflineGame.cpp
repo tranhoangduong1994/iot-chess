@@ -25,14 +25,11 @@ void OfflineGame::start(BaseTypes::Side side, int difficulty) {
     engine = StockfishEngine::getInstance();
     validator = PythonChessValidator::getInstance();
     
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(this);
-    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
-    
     this->side = side;
     this->difficulty = difficulty;
     
-    engine->start(difficulty);
-    validator->start();
+    BoardServices::getInstance()->setBoardIngameEventsDelegate(this);
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
     
     BoardServices::getInstance()->resetBoard();
 }
@@ -92,20 +89,12 @@ void OfflineGame::onBoardStateChanged(const std::string& boardState) {
     onScanDone(boardState);
 }
 
-void OfflineGame::onBoardResetted() {	
-    engine->start(this->difficulty);
+void OfflineGame::onBoardResetted() {
+    engine->start(difficulty);
     validator->start();
-    
-    delegate->onGameStarted(GameStartedData(side));
     
     gameState = GameState::INIT_STATE_VALIDATING;
     BoardServices::getInstance()->scan();
-    
-    if (side == BaseTypes::Side::WHITE) {
-        startPlayerTurn();
-    } else {
-        startOpponentTurn();
-    }
 }
 
 void OfflineGame::onKeyPressed(const KeyPressedData& data) {
