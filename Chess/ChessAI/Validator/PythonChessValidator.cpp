@@ -19,6 +19,7 @@ PythonChessValidator* PythonChessValidator::getInstance() {
 }
 
 void PythonChessValidator::init() {
+	std::cout << "[PythonChessValidator] init" << std::endl;
     validator = PythonWrapper::getInstance()->createObject("ChessValidator", "Validator");
 }
 

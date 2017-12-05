@@ -11,6 +11,8 @@
 
 #include "IValidator.h"
 
+#include "PythonWrapper.h"
+
 class PythonChessValidator : public IValidator {
 public:
     virtual void start() override;
