@@ -41,7 +41,6 @@ void MainMenuScreen::onExit() {
 void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
     BoardKey key = data.key;
     if (key == BoardKey::UP) {
-        std::cout << "Up pressed" << std::endl;
         int index = cursorPositionIndex - 1;
         if (index == 0) {
             index = 3;
@@ -49,7 +48,6 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         //cursorPositionIndex = index;
         setCursorPosition(index);
     } else if (key == BoardKey::DOWN) {
-        std::cout << "Down pressed" << std::endl;
         int index = cursorPositionIndex + 1;
         if (index == 4) {
             index = 1;
@@ -57,7 +55,6 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         //cursorPositionIndex = index;
         setCursorPosition(index);
     } else if (key == BoardKey::OK) {
-        std::cout << "OK pressed" << std::endl;
         switch (cursorPositionIndex) {
             case 1:
             {
@@ -76,7 +73,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
                     OptionScreenEntry entry;
                     entry.name = "Test " + std::to_string(i);
                     entry.onSelected = [=](std::string content) {
-                        std::cout << "You selected: " + content;
+                        std::cout << "You selected: " + content << std::endl;
                     };
                     entries.push_back(entry);
                 }
@@ -95,7 +92,7 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
                 break;
         }
     } else if (key == BoardKey::MENU) {
-        std::cout << "Menu pressed" << std::endl;
+		
     }
 }
 
@@ -104,7 +101,6 @@ void MainMenuScreen::init() {
 }
 
 void MainMenuScreen::setCursorPosition(int index) {
-    std::cout << "[MainMenuScreen] setCursorPosition(" << index << ")" << std::endl;
     print(1, "MENU");
 
     switch(cursorPositionIndex) {

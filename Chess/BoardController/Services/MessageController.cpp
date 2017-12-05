@@ -76,14 +76,6 @@ void MessageController::processMessageBuffer() {
             }
             return;
         }
-        
-        if (messageHeader == ServiceResponseType::PRINT_DONE) {
-            
-        }
-        
-        if (messageHeader == ServiceResponseType::CLEAR_SCREEN_DONE) {
-            
-        }
     } else if (messageType == MessageType::Event) {
         if (messageHeader == EventType::SYSTEM_READY) {
             if (sDelegate) {
@@ -94,34 +86,6 @@ void MessageController::processMessageBuffer() {
         if (messageHeader == EventType::BOARD_CHANGED) {
             if (gDelegate) {
                 gDelegate->onBoardStateChanged(messageBuffer.substr(2));
-            }
-        }
-
-        if (messageHeader == EventType::DOWN_PRESSED) {
-            if (kDelegate) {
-                KeyPressedData data(BoardKey::DOWN);
-                kDelegate->onKeyPressed(data);
-            }
-        }
-        
-        if (messageHeader == EventType::UP_PRESSED) {
-            if (kDelegate) {
-                KeyPressedData data(BoardKey::UP);
-                kDelegate->onKeyPressed(data);
-            }
-        }
-        
-        if (messageHeader == EventType::MENU_PRESSED) {
-            if (kDelegate) {
-                KeyPressedData data(BoardKey::MENU);
-                kDelegate->onKeyPressed(data);
-            }
-        }
-        
-        if (messageHeader == EventType::OK_PRESSED) {
-            if (kDelegate) {
-                KeyPressedData data(BoardKey::OK);
-                kDelegate->onKeyPressed(data);
             }
         }
     }
@@ -135,7 +99,21 @@ void MessageController::init() {
     gDelegate = NULL;
     kDelegate = NULL;
     
+    wiringPiSetup();
+    wiringPiSetupGpio();
+    
+    upPressed = false;
+    downPressed = false;
+    menuPressed = false;
+    okPressed = false;
+    
+    pullUpDnControl(6, PUD_UP);
+    pullUpDnControl(13, PUD_UP);
+    pullUpDnControl(19, PUD_UP);
+    pullUpDnControl(26, PUD_UP);
+    
     awaitSerialPortConnected();
+    startKeyboardScanning();
 }
 
 void MessageController::awaitSerialPortConnected() {
@@ -148,13 +126,13 @@ void MessageController::awaitSerialPortConnected() {
             std::cout << "Trying port " << usbPortNumber << std::endl;
             fileDescription = serialOpen(usbPortNumber.c_str(), BAUD);
         }
-	startLoop();
+		startLoop();
     }).detach();
 }
 
 void MessageController::startLoop() {
     while (true) {
-        if (fileDescription == serialOpen(usbPortNumber.c_str(), BAUD) < 0) {
+        if ((fileDescription = serialOpen(usbPortNumber.c_str(), BAUD)) < 0) {
             break;
         }
         checkMessage();
@@ -163,6 +141,76 @@ void MessageController::startLoop() {
     if (sDelegate) {
         sDelegate->onSerialPortDisconnected();
     }
+}
+
+void MessageController::startKeyboardScanning() {
+	std::thread([=]() {
+		while(true) {
+			if (!digitalRead(6) && !upPressed && !downPressed && !okPressed && !menuPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (!digitalRead(6)) {
+					upPressed = true;
+					if (kDelegate) {
+						kDelegate->onKeyPressed(KeyPressedData(BoardKey::UP));
+					}
+				}
+			}
+			if (digitalRead(6) && upPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (digitalRead(6)) {
+					upPressed = false;
+				}
+			}
+			
+			if (!digitalRead(13) && !upPressed && !downPressed && !okPressed && !menuPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (!digitalRead(13)) {
+					downPressed = true;
+					if (kDelegate) {
+						kDelegate->onKeyPressed(KeyPressedData(BoardKey::DOWN));
+					}
+				}
+			}
+			if (digitalRead(13) && downPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (digitalRead(13)) {
+					downPressed = false;
+				}
+			}
+			
+			if (!digitalRead(19) && !upPressed && !downPressed && !okPressed && !menuPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (!digitalRead(19)) {
+					menuPressed = true;
+					if (kDelegate) {
+						kDelegate->onKeyPressed(KeyPressedData(BoardKey::MENU));
+					}
+				}
+			}
+			if (digitalRead(19) && menuPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (digitalRead(19)) {
+					menuPressed = false;
+				}
+			}			
+			
+			if (!digitalRead(26) && !upPressed && !downPressed && !okPressed && !menuPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (!digitalRead(26)) {
+					okPressed = true;
+					if (kDelegate) {
+						kDelegate->onKeyPressed(KeyPressedData(BoardKey::OK));
+					}
+				}
+			}
+			if (digitalRead(26) && okPressed) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				if (digitalRead(26)) {
+					okPressed = false;
+				}
+			}
+		}
+	}).detach();
 }
 
 void MessageController::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) {

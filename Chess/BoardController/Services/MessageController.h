@@ -22,17 +22,12 @@ enum MessageType {
 };
 
 enum ServiceRequestType {
-    CLEAR_SCREEN,
-    PRINT_LINE,
-    PRINT,
     MOVE,
     SCAN_BOARD,
     RESET_BOARD
 };
 
 enum ServiceResponseType {
-    CLEAR_SCREEN_DONE,
-    PRINT_DONE,
     MOVE_FAILED,
     MOVE_DONE,
     SCAN_DONE,
@@ -41,11 +36,7 @@ enum ServiceResponseType {
 
 enum EventType {
     SYSTEM_READY,
-    BOARD_CHANGED,
-    UP_PRESSED,
-    DOWN_PRESSED,
-    MENU_PRESSED,
-    OK_PRESSED
+    BOARD_CHANGED
 };
 
 class MessageController {
@@ -67,11 +58,17 @@ private:
     BoardIngameEventsProtocol* gDelegate;
     BoardKeyEventsProtocol* kDelegate;
     
+    bool upPressed;
+    bool downPressed;
+    bool menuPressed;
+    bool okPressed;
+    
     void init();
     
     void awaitSerialPortConnected();
     
     void startLoop();
+    void startKeyboardScanning();
     
     void checkMessage();
     void processMessageBuffer();
