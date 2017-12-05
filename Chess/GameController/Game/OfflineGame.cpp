@@ -119,6 +119,9 @@ void OfflineGame::onScanDone(const std::string& boardState) {
     if (gameState == GameState::INIT_STATE_VALIDATING) {
         
         if (boardStateByBit != BOARD_INIT_STATE) {
+			BaseTypes::Bitboard temp = BOARD_INIT_STATE;
+			std::cout << "[OfflineGame] boardState: " << boardStateByBit.toString() << std::endl;
+			std::cout << "[OfflineGame] initBoardState: " << temp.toString() << std::endl;
             delegate->onBoardInitStateInvalid(BOARD_INIT_STATE.getMisplacedPositions(boardState));
             return;
         }

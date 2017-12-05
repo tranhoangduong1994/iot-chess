@@ -89,6 +89,10 @@ namespace BaseTypes {
             first32 = 0;
             last32 = 0;          
             
+            if (string.size() != 64) {
+				return;
+			}
+            
             for (int i = 0; i < 64; i++) {
                 if (string[i] == '0') {
                     set(i, 0);

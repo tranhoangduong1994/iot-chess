@@ -58,14 +58,14 @@ void MessageController::processMessageBuffer() {
     if (messageType == MessageType::ServiceResponse) {
         if (messageHeader == ServiceResponseType::MOVE_DONE) {
             if (gDelegate) {
-                gDelegate->onOpponentFinishedMove(messageBuffer.substr(1));
+                gDelegate->onOpponentFinishedMove(messageBuffer.substr(2));
             }
             return;
         }
         
         if (messageHeader == ServiceResponseType::SCAN_DONE) {
             if (gDelegate) {
-                gDelegate->onScanDone(messageBuffer.substr(1));
+                gDelegate->onScanDone(messageBuffer.substr(2));
             }
             return;
         }
