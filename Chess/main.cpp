@@ -33,9 +33,13 @@ int main(int argc, char* argv[]) {
     std::thread([]() {
         BoardServices::getInstance()->setBoardSystemEventsDelegate(new MainDelegation());
     }).detach();
+    std::string message = "";
     while (!shouldEnd) {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
-        std::cout << "[MAIN] Application is running..." << std::endl;
+        std::cin >> message;
+        if (message == "exit") {
+			break;
+		}
+		message = "";
     }
     std::cout << "[MAIN] Application has finished running." << std::endl;
     return 0;

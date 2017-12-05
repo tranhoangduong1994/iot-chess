@@ -42,15 +42,18 @@ void GameScreen::init() {
 }
 
 void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPositions) {
-    print(1, "Pieces are misplaced: ");
+	BaseTypes::Bitboard mp = misplacedPositions;
+	std::cout << "[GameScreen] onBoardInitStateInvalid" << std::endl;
+	std::cout << mp.toString() << std::endl;
+    print(1, "Pieces are misplaced");
     std::string positions = "";
     for (int i = 0; i < 64; i++) {
         if (misplacedPositions.get(i)) {
             positions += (char)((i % 8) + 97);
-            positions += ((i / 8) + 1);
-            positions += " ";
-        }
+            positions += std::to_string((i / 8) + 1);
+        } 
     }
+    std::cout << positions << std::endl;
     print(2, positions);
 }
 

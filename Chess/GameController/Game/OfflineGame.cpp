@@ -99,13 +99,13 @@ void OfflineGame::onBoardResetted() {
 
 void OfflineGame::onKeyPressed(const KeyPressedData& data) {
     if (data.key == BoardKey::OK) {
-        if (!isPlayerTurn) return;
         if (gameState == GameState::NONE || gameState == GameState::INIT_STATE_VALIDATING) {
             gameState = GameState::INIT_STATE_VALIDATING;
             BoardServices::getInstance()->scan();
         }
         
         if (gameState == GameState::MOVE_VALIDATING || gameState == GameState::MOVE_VALIDATED) {
+			if (!isPlayerTurn) return;
             gameState = GameState::MOVE_VALIDATING;
             BoardServices::getInstance()->scan();
         }
@@ -184,9 +184,9 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
             int toSquareIdx = toBoard.getIndexOfSetBit(i);
             std::string moveString = "";
             moveString += (char)((fromSquareIdx % 8) + 97);
-            moveString += (char)((fromSquareIdx / 8) + 1);
+            moveString += std::to_string((fromSquareIdx / 8) + 1);
             moveString += (char)((toSquareIdx % 8) + 97);
-            moveString += (char)((toSquareIdx / 8) + 1);
+            moveString += std::to_string((toSquareIdx / 8) + 1);
             
             BaseTypes::Move move(moveString);
             if (validator->checkMove(move)) {
@@ -205,9 +205,9 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
         
         std::string moveString = "";
         moveString += (char)((fromSquareIdx % 8) + 97);
-        moveString += (char)((fromSquareIdx / 8) + 1);
+        moveString += std::to_string((fromSquareIdx / 8) + 1);
         moveString += (char)((toSquareIdx % 8) + 97);
-        moveString += (char)((toSquareIdx / 8) + 1);
+        moveString += std::to_string((toSquareIdx / 8) + 1);
         
         
         
@@ -229,9 +229,9 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
 
         std::string moveString = "";
         moveString += (char)((fromSquareIdx % 8) + 97);
-        moveString += (char)((fromSquareIdx / 8) + 1);
+        moveString += std::to_string((fromSquareIdx / 8) + 1);
         moveString += (char)((toSquareIdx % 8) + 97);
-        moveString += (char)((toSquareIdx / 8) + 1);
+        moveString += std::to_string((toSquareIdx / 8) + 1);
         
         BaseTypes::Move move(moveString);
         if (validator->checkMove(move)) {

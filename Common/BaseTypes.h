@@ -87,15 +87,9 @@ namespace BaseTypes {
         
         Bitboard(std::string string) {
             first32 = 0;
-            last32 = 0;
+            last32 = 0;          
             
-            if (string.size() != 64) {
-                return;
-            }
-            
-            int iMax = (64 < string.size() ? 64 : string.size());
-            
-            for (int i = 0; i < iMax; i++) {
+            for (int i = 0; i < 64; i++) {
                 if (string[i] == '0') {
                     set(i, 0);
                     continue;
@@ -114,10 +108,10 @@ namespace BaseTypes {
         
         bool get(int index) const {
             if (index > 31) {
-                return last32 & (1 << (index - 1));
+                return last32 & (1 << (index - 32));
             }
             
-            return first32 & (1 << (index - 1));
+            return first32 & (1 << index);
         }
         
         void set(int index, unsigned long value) {
