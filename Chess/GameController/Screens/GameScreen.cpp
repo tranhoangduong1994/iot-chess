@@ -68,7 +68,7 @@ void GameScreen::onTurnBegan(const TurnBeganData& data) {
     }
     
     print(2, "It's your turn.");
-    print(3, "Please make your move...");
+    print(3, "Make your move...");
     print(4, "");
 }
 
