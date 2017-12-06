@@ -72,7 +72,10 @@ namespace BaseTypes {
             this->promotionType = promotionType;
         }
         const std::string toString() const {
-            return fromPos.toString() + toPos.toString() + promotionType;
+            if (promotionType) {
+                return fromPos.toString() + toPos.toString() + promotionType;
+            }
+            return fromPos.toString() + toPos.toString();
         }
     };
     
