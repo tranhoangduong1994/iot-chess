@@ -136,7 +136,7 @@ namespace BaseTypes {
         int popCount() {
             int first32Count = 0, last32Count = 0;
             unsigned long f32 = first32, l32 = last32;
-            while(f32 > 0 && l32 > 0) {
+            while(f32 > 0 || l32 > 0) {
                 if ((f32 & 1) == 1) {
                     first32Count++;
                 }
