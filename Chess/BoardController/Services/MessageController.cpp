@@ -36,8 +36,13 @@ MessageController* MessageController::getInstance() {
 }
 
 void MessageController::send(ServiceRequestType type, std::string content) {
-	std::cout << "[MessageController] send(" << type << ", " << content << ")" << std::endl;
-    serialPuts(fileDescription, (std::to_string(type) + content + "|").c_str());
+	std::string messageToSend = std::to_string(type) + content + "|";
+	std::cout << "[MessageController] send: " << messageToSend << std::endl;
+	std::cout << "[MessageController] message length = " << messageToSend.size() << std::endl;
+	for (int i = 0; i < messageToSend.size(); i++) {
+		std::cout << "Char " << i << ": " << messageToSend.at(i) << ", int value = " << std::to_string((int)messageToSend.at(i)) << std::endl;
+	}
+    serialPuts(fileDescription, messageToSend.c_str());
     serialFlush(fileDescription);
 }
 
@@ -52,7 +57,7 @@ void MessageController::checkMessage() {
 }
 
 void MessageController::processMessageBuffer() {
-	std::cout << "[MessageController] processMessageBuffer: <--" << messageBuffer <<  "-->" << std::endl;
+	std::cout << "[MessageController] processMessageBuffer: " << messageBuffer << std::endl;
     int messageType = messageBuffer.at(0) - 48;
     int messageHeader = messageBuffer.at(1) - 48;
     if (messageType == MessageType::ServiceResponse) {

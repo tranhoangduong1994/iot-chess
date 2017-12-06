@@ -28,9 +28,10 @@ void PythonChessValidator::start() {
 }
 
 bool PythonChessValidator::checkMove(const BaseTypes::Move& move) {
+	std::cout << "[PythonChessValidator] checkMove(" << BaseTypes::Move(move).toString() << ")" << std::endl;
     bool result;
     try {
-        result = python::extract<bool>(validator.attr("isMoveValid")(BaseTypes::Move(move).toString()));
+        result = python::extract<bool>(validator.attr("isMoveValid")(BaseTypes::Move(move).toString().c_str()));
     } catch (const python::error_already_set) {
         PyErr_Print();
         result = false;
@@ -39,9 +40,10 @@ bool PythonChessValidator::checkMove(const BaseTypes::Move& move) {
 }
 
 bool PythonChessValidator::checkGameOver() {
+	std::cout << "[PythonChessValidator] checkGameOver()" << std::endl;
     bool result;
     try {
-        result = python::extract<bool>(validator.attr("isGameOver"));
+        result = python::extract<bool>(validator.attr("isGameOver")());
     } catch (const python::error_already_set) {
         PyErr_Print();
         result = false;
@@ -50,9 +52,10 @@ bool PythonChessValidator::checkGameOver() {
 }
 
 bool PythonChessValidator::checkDraw() {
+	std::cout << "[PythonChessValidator] checkDraw()" << std::endl;
     bool result;
     try {
-        result = python::extract<bool>(validator.attr("isDrawGame"));
+        result = python::extract<bool>(validator.attr("isDrawGame")());
     } catch (const python::error_already_set) {
         PyErr_Print();
         result = false;
@@ -65,7 +68,7 @@ void PythonChessValidator::move(const BaseTypes::Move& move) {
         return;
     }
     try {
-        validator.attr("move")(BaseTypes::Move(move).toString());
+        validator.attr("move")(BaseTypes::Move(move).toString().c_str());
     } catch (const python::error_already_set) {
         PyErr_Print();
         assert(false);

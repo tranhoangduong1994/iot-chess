@@ -36,6 +36,7 @@ void OfflineGame::start(BaseTypes::Side side, int difficulty) {
 
 void OfflineGame::startPlayerTurn() {
     isPlayerTurn = true;
+    gameState = GameState::MOVE_VALIDATING;
     TurnBeganData data;
     if (moves.size() > 0) {
         BaseTypes::Move lastMove = moves.back();
@@ -119,9 +120,6 @@ void OfflineGame::onScanDone(const std::string& boardState) {
     if (gameState == GameState::INIT_STATE_VALIDATING) {
         
         if (boardStateByBit != BOARD_INIT_STATE) {
-			BaseTypes::Bitboard temp = BOARD_INIT_STATE;
-			std::cout << "[OfflineGame] boardState: " << boardStateByBit.toString() << std::endl;
-			std::cout << "[OfflineGame] initBoardState: " << temp.toString() << std::endl;
             delegate->onBoardInitStateInvalid(BOARD_INIT_STATE.getMisplacedPositions(boardState));
             return;
         }
@@ -170,11 +168,15 @@ void OfflineGame::onScanDone(const std::string& boardState) {
 }
 
 std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& newState) {
+	std::cout << "[OfflineGame] readMove.";
     std::vector<BaseTypes::Move> result;
     BaseTypes::Bitboard changedPositions = currentBitboard ^ newState;
     int popCount = changedPositions.popCount();
+    std::cout << " Changed positions = " << changedPositions.toString() << ",";
+    std::cout << " Pop count result = " << std::to_string(popCount) << ".";
     
     if (popCount == 1) {//NORMAL CAPTURE
+		std::cout << " Normal capture." << std::endl;
         BaseTypes::Bitboard fromBoard = currentBitboard & changedPositions;
         int fromSquareIdx = fromBoard.getIndexOfSetBit(1);
         
@@ -186,10 +188,10 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
         for (int i = 0; i < count; i++) {
             int toSquareIdx = toBoard.getIndexOfSetBit(i);
             std::string moveString = "";
-            moveString += (char)((fromSquareIdx % 8) + 97);
-            moveString += std::to_string((fromSquareIdx / 8) + 1);
-            moveString += (char)((toSquareIdx % 8) + 97);
-            moveString += std::to_string((toSquareIdx / 8) + 1);
+			moveString += (char)(7 - (fromSquareIdx % 8) + 97);
+			moveString += std::to_string(9 - ((fromSquareIdx / 8) + 1));
+			moveString += (char)(7 - (toSquareIdx % 8) + 97);
+			moveString += std::to_string(9 - ((toSquareIdx / 8) + 1));
             
             BaseTypes::Move move(moveString);
             if (validator->checkMove(move)) {
@@ -201,28 +203,33 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
     }
     
     if (popCount == 2) {//NORMAL MOVE
+		std::cout << " Normal move.";
         BaseTypes::Bitboard fromBoard = currentBitboard & changedPositions;
         BaseTypes::Bitboard toBoard = newState & changedPositions;
         int fromSquareIdx = fromBoard.getIndexOfSetBit(1);
         int toSquareIdx = toBoard.getIndexOfSetBit(1);
         
         std::string moveString = "";
-        moveString += (char)((fromSquareIdx % 8) + 97);
-        moveString += std::to_string((fromSquareIdx / 8) + 1);
-        moveString += (char)((toSquareIdx % 8) + 97);
-        moveString += std::to_string((toSquareIdx / 8) + 1);
+        moveString += (char)(7 - (fromSquareIdx % 8) + 97);
+        moveString += std::to_string(9 - ((fromSquareIdx / 8) + 1));
+        moveString += (char)(7 - (toSquareIdx % 8) + 97);
+        moveString += std::to_string(9 - ((toSquareIdx / 8) + 1));
         
-        
+        std::cout << " " << moveString << std::endl;
         
         BaseTypes::Move move(moveString);
         if (validator->checkMove(move)) {
+			std::cout << "[OfflineGame] move: " << moveString << " is valid" << std::endl;
             result.push_back(move);
-        }
+        } else {
+			std::cout << "[OfflineGame] move: " << moveString << " is NOT valid" << std::endl;
+		}
         
         return result;
     }
     
     if (popCount == 3) {//EN PASSANT CAPTURE
+		std::cout << " En passant capture." << std::endl;
         BaseTypes::Bitboard changedPositionShiftedDown = changedPositions << 8;
         BaseTypes::Bitboard changedPositionShiftedUp = changedPositions >> 8;
         BaseTypes::Bitboard fromBoard = ((changedPositionShiftedDown | changedPositionShiftedUp) ^ changedPositions) & changedPositions;
@@ -231,10 +238,10 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
         int toSquareIdx = toBoard.getIndexOfSetBit(1);
 
         std::string moveString = "";
-        moveString += (char)((fromSquareIdx % 8) + 97);
-        moveString += std::to_string((fromSquareIdx / 8) + 1);
-        moveString += (char)((toSquareIdx % 8) + 97);
-        moveString += std::to_string((toSquareIdx / 8) + 1);
+        moveString += (char)(7 - (fromSquareIdx % 8) + 97);
+        moveString += std::to_string(9 - ((fromSquareIdx / 8) + 1));
+        moveString += (char)(7 - (toSquareIdx % 8) + 97);
+        moveString += std::to_string(9 - ((toSquareIdx / 8) + 1));
         
         BaseTypes::Move move(moveString);
         if (validator->checkMove(move)) {
@@ -245,8 +252,11 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
     }
     
     if (popCount == 4) {//CASTLING
+		std::cout << " Castling." << std::endl;
         return result;
     }
+    
+    std::cout << " Move is not valid," << std::endl; 
     
     return result;
 }
