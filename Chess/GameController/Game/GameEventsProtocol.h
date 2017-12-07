@@ -79,9 +79,10 @@ struct OpponentSurrenderedData {
 class GameEventsProtocol {
 public:
     virtual void onBoardInitStateValid() {};
-    virtual void onBoardInitStateInvalid(const BaseTypes::Bitboard& offPiecePositions) = 0;
+    
     virtual void onGameStarted(const GameStartedData& data) = 0;
     
+    virtual void onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) = 0;
     virtual void onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function< void(bool, BaseTypes::Move)> onSelected) = 0;
     
     virtual void onTurnBegan(const TurnBeganData& data) = 0;

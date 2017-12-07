@@ -42,6 +42,12 @@ void ListScreen::updateScreen() {
     }
 }
 
+void ListScreen::updateList(const std::vector<std::string>& items) {
+    this->items = items;
+    currentPage = 0;
+    updateScreen();
+}
+
 void ListScreen::onKeyPressed(const KeyPressedData &data) {
     if (data.key == BoardKey::OK) {
         Screen::popScreen();

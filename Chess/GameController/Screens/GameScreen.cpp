@@ -14,7 +14,7 @@
 
 #include "OptionScreen.h"
 
-#include "ListScreen.h"
+#include "OffPositionScreen.h"
 
 #include "BoardServices.h"
 
@@ -49,25 +49,15 @@ void GameScreen::init() {
     entered = false;
 }
 
-void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& offPiecePositions) {
+void GameScreen::onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard &expectedState) {
 //    BaseTypes::Bitboard mp = offPiecePositions;
 //    std::cout << "[GameScreen] onBoardInitStateInvalid" << std::endl;
 //    std::cout << mp.toString() << std::endl;
 //    print(1, "Pieces are misplaced");
     
-    std::vector<std::string> items;
-    int itemCount = 0;
-    for (int i = 0; i < 64; i++) {
-        if (offPiecePositions.get(i)) {
-			itemCount++;
-			std::string position = std::to_string(itemCount) + ". ";
-            position += (char)((i % 8) + 97);
-            position += std::to_string((i / 8) + 1);
-            items.push_back(position);
-        } 
-    }
+//    ListScreen* screen = ListScreen::create("OFF POSITIONS:", items);
     
-    ListScreen* screen = ListScreen::create("OFF POSITIONS:", items);
+    OffPositionScreen::create(currentState, expectedState);
     Screen::pushScreen(screen);
 }
 

@@ -138,7 +138,8 @@ void OfflineGame::onScanDone(const std::string& boardState) {
     if (gameState == GameState::INIT_STATE_VALIDATING) {
         
         if (boardStateByBit != BOARD_INIT_STATE) {
-            delegate->onBoardInitStateInvalid(BOARD_INIT_STATE.getOffPiecePositions(boardState));
+//            delegate->onBoardInitStateInvalid(BOARD_INIT_STATE.getOffPiecePositions(boardState));
+            delegate->onPiecesOffPosition(boardStateByBit, BOARD_INIT_STATE);
             return;
         }
         

@@ -25,14 +25,15 @@ protected:
     void onEnter() override;
     void onExit() override;
     
+    void updateScreen();
+    void updateList(const std::vector<std::string>& items);
+    std::vector<std::string> items;
+    
 private:
     int currentPage;
     std::string header;
     
     void init();
-    void updateScreen();
-    
-    std::vector<std::string> items;
     ListScreen() {}
 };
 
