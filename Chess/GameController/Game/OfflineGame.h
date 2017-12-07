@@ -36,9 +36,8 @@ public:
     void setDelegate(GameEventsProtocol* delegate);
     
     // BoardIngameEventsProtocol implementation
-    void onOpponentFinishedMove(const std::string& data) override;
+    void onOpponentFinishedMove(const std::string& data, const std::string& newBoardState) override;
     void onScanDone(const std::string& boardState) override;
-    void onBoardStateChanged(const std::string& boardState) override;
     void onBoardResetted() override;
     
     // BoardKeyEventsProtocol implementation

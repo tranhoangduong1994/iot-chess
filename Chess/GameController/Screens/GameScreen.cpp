@@ -14,6 +14,8 @@
 
 #include "OptionScreen.h"
 
+#include "BoardServices.h"
+
 GameScreen* GameScreen::create(OfflineGame* game) {    
     GameScreen* screen = new GameScreen();
     screen->game = game;
@@ -24,6 +26,8 @@ GameScreen* GameScreen::create(OfflineGame* game) {
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
+    BoardServices::getInstance()->setBoardIngameEventsDelegate(game);
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(game);
     if (!entered) {
         entered = true;
         game->start(BaseTypes::Side::WHITE, 1);

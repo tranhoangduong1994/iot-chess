@@ -12,6 +12,8 @@
 #include "PythonChessValidator.h"
 #include "BoardServices.h"
 
+#include "OptionScreen.h"
+
 #include "thread.h"
 
 const BaseTypes::Bitboard BOARD_INIT_STATE("1111111111111111000000000000000000000000000000001111111111111111");
@@ -28,8 +30,7 @@ void OfflineGame::start(BaseTypes::Side side, int difficulty) {
     this->side = side;
     this->difficulty = difficulty;
     
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(this);
-    BoardServices::getInstance()->setBoardKeyEventsDelegate(this);
+    moves.clear();
     
     BoardServices::getInstance()->resetBoard();
 }
@@ -74,7 +75,7 @@ void OfflineGame::onPlayerFinishedMove(BaseTypes::Move move) {
     startOpponentTurn();
 }
 
-void OfflineGame::onOpponentFinishedMove(const std::string& data) {
+void OfflineGame::onOpponentFinishedMove(const std::string& data, const std::string& newBoardState) {
     if (validator->checkDraw()) {
         delegate->onDrawGame(data);
         return;
@@ -83,11 +84,11 @@ void OfflineGame::onOpponentFinishedMove(const std::string& data) {
         delegate->onLoseGame(data);
         return;
     }
+    
+    std::cout << "[OfflineGame] onOpponentFinishedMove: " << newBoardState << std::endl;
+    currentBitboard = newBoardState;
+    
     startPlayerTurn();
-}
-
-void OfflineGame::onBoardStateChanged(const std::string& boardState) {
-    onScanDone(boardState);
 }
 
 void OfflineGame::onBoardResetted() {
@@ -111,7 +112,24 @@ void OfflineGame::onKeyPressed(const KeyPressedData& data) {
             BoardServices::getInstance()->scan();
         }
     } else if (data.key == BoardKey::MENU) {
-        
+		if (!isPlayerTurn) return;
+		
+		std::vector<OptionScreenEntry> entries;
+		
+		OptionScreenEntry resetEntry;
+		resetEntry.name = "Reset game";
+		resetEntry.onSelected = [=](std::string content) {
+			start(side, difficulty);
+		};
+		entries.push_back(resetEntry);
+		
+		OptionScreenEntry cancelEntry;
+		cancelEntry.name = "Cancel";
+		cancelEntry.onSelected = [=](std::string content) {};
+		entries.push_back(cancelEntry);
+		
+		OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
+		Screen::pushScreen(gameMenuScreen);
     }
 }
 
@@ -140,8 +158,8 @@ void OfflineGame::onScanDone(const std::string& boardState) {
     }
     
     if (gameState == GameState::MOVE_VALIDATING) {
-        std::vector<BaseTypes::Move> moves = readMove(boardState);
-        if (moves.size() < 1) {
+        std::vector<BaseTypes::Move> availableMoves = readMove(boardState);
+        if (availableMoves.size() < 1) {
             InvalidMoveData data("");
             delegate->onInvalidMove(data);
             return;
@@ -149,15 +167,15 @@ void OfflineGame::onScanDone(const std::string& boardState) {
         
         gameState = GameState::MOVE_VALIDATED;
         
-        if (moves.size() == 1) {
-            BaseTypes::Move move = moves.at(0);
+        if (availableMoves.size() == 1) {
+            BaseTypes::Move move = availableMoves.at(0);
             engine->move(move);
             validator->move(move);
             this->onPlayerFinishedMove(move);
             return;
         }
         
-        delegate->onMultipleMovesAvailable(moves, [=](bool moveSelected, BaseTypes::Move move) {
+        delegate->onMultipleMovesAvailable(availableMoves, [=](bool moveSelected, BaseTypes::Move move) {
             if (moveSelected) {
                 engine->move(move);
                 validator->move(move);
@@ -176,17 +194,19 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
     std::cout << " Pop count result = " << std::to_string(popCount) << ".";
     
     if (popCount == 1) {//NORMAL CAPTURE
-		std::cout << " Normal capture." << std::endl;
+		std::cout << " Normal capture.";
         BaseTypes::Bitboard fromBoard = currentBitboard & changedPositions;
         int fromSquareIdx = fromBoard.getIndexOfSetBit(1);
-        
-        BaseTypes::Bitboard attackedPositionBoard(validator->getAttackedSquares(fromSquareIdx));
-        
+        std::cout << " Move from: " << fromSquareIdx << ".";        
+        BaseTypes::Bitboard attackedPositionBoard(validator->getAttackedSquares(63 - fromSquareIdx));
+		std::cout << " attackedPositionBoard: " << attackedPositionBoard.toString() << ".";
         BaseTypes::Bitboard toBoard = currentBitboard & attackedPositionBoard;
+        std::cout << " toBoard: " << toBoard.toString() << "." << std::endl;
         int count = toBoard.popCount();
         
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i <= count; i++) {
             int toSquareIdx = toBoard.getIndexOfSetBit(i);
+            std::cout << "To square idx = " << toSquareIdx << std::endl;
             std::string moveString = "";
 			moveString += (char)(7 - (fromSquareIdx % 8) + 97);
 			moveString += std::to_string(9 - ((fromSquareIdx / 8) + 1));
@@ -208,6 +228,9 @@ std::vector<BaseTypes::Move> OfflineGame::readMove(const BaseTypes::Bitboard& ne
         BaseTypes::Bitboard toBoard = newState & changedPositions;
         int fromSquareIdx = fromBoard.getIndexOfSetBit(1);
         int toSquareIdx = toBoard.getIndexOfSetBit(1);
+        
+        std::cout << " From square board = " << fromBoard.toString() << ". To square board = " << toBoard.toString() << ".";
+        std::cout << " From square idx = " << fromSquareIdx << ". To square idx = " << toSquareIdx;
         
         std::string moveString = "";
         moveString += (char)(7 - (fromSquareIdx % 8) + 97);
