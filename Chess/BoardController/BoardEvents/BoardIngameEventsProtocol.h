@@ -13,9 +13,8 @@
 
 class BoardIngameEventsProtocol {
 public:
-    virtual void onOpponentFinishedMove(const std::string& data) = 0;
+    virtual void onOpponentFinishedMove(const std::string& data, const std::string& newBoardState) = 0;
     virtual void onScanDone(const std::string& boardState) = 0;
-    virtual void onBoardStateChanged(const std::string& boardState) = 0;
     virtual void onBoardResetted() = 0;
 };
 
