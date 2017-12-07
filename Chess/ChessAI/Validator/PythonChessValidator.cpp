@@ -19,7 +19,6 @@ PythonChessValidator* PythonChessValidator::getInstance() {
 }
 
 void PythonChessValidator::init() {
-	std::cout << "[PythonChessValidator] init" << std::endl;
     validator = PythonWrapper::getInstance()->createObject("ChessValidator", "Validator");
 }
 
@@ -28,7 +27,6 @@ void PythonChessValidator::start() {
 }
 
 bool PythonChessValidator::checkMove(const BaseTypes::Move& move) {
-	std::cout << "[PythonChessValidator] checkMove(" << BaseTypes::Move(move).toString() << ")" << std::endl;
     bool result;
     try {
         result = python::extract<bool>(validator.attr("isMoveValid")(BaseTypes::Move(move).toString().c_str()));
@@ -40,7 +38,6 @@ bool PythonChessValidator::checkMove(const BaseTypes::Move& move) {
 }
 
 bool PythonChessValidator::checkGameOver() {
-	std::cout << "[PythonChessValidator] checkGameOver()" << std::endl;
     bool result;
     try {
         result = python::extract<bool>(validator.attr("isGameOver")());
@@ -52,7 +49,6 @@ bool PythonChessValidator::checkGameOver() {
 }
 
 bool PythonChessValidator::checkDraw() {
-	std::cout << "[PythonChessValidator] checkDraw()" << std::endl;
     bool result;
     try {
         result = python::extract<bool>(validator.attr("isDrawGame")());
@@ -77,7 +73,12 @@ void PythonChessValidator::move(const BaseTypes::Move& move) {
 
 BaseTypes::Bitboard PythonChessValidator::getAttackedSquares(int attackerSquareIndex) {
     try {
-        BaseTypes::Bitboard result(python::extract<std::string>(validator.attr("getAttackedSquares")(attackerSquareIndex)));
+		std::string attackedSquares = python::extract<std::string>(validator.attr("getAttackedSquares")(attackerSquareIndex));
+		int numberOfZeroesToAdd = 64 - attackedSquares.size();
+		for (int i = 0; i < numberOfZeroesToAdd; i++) {
+			attackedSquares += "0";
+		}
+        BaseTypes::Bitboard result(attackedSquares);
         return result;
     } catch (const python::error_already_set) {
         PyErr_Print();
