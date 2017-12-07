@@ -232,6 +232,8 @@ namespace BaseTypes {
                 f32 >>= 1;
             }
             
+            index = 31;
+            
             while(l32) {
                 index++;
                 if (l32 & 1) {
