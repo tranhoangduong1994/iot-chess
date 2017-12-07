@@ -58,12 +58,17 @@ void MessageController::checkMessage() {
 
 void MessageController::processMessageBuffer() {
 	std::cout << "[MessageController] processMessageBuffer: " << messageBuffer << std::endl;
+	if (messageBuffer.size() < 2) {
+		return;
+	}
     int messageType = messageBuffer.at(0) - 48;
     int messageHeader = messageBuffer.at(1) - 48;
     if (messageType == MessageType::ServiceResponse) {
         if (messageHeader == ServiceResponseType::MOVE_DONE) {
             if (gDelegate) {
-                gDelegate->onOpponentFinishedMove(messageBuffer.substr(2));
+				std::string move = messageBuffer.substr(2, 4);
+				std::string newState = messageBuffer.substr(6);
+                gDelegate->onOpponentFinishedMove(move, newState);
             }
             return;
         }
@@ -86,11 +91,6 @@ void MessageController::processMessageBuffer() {
             if (sDelegate) {
                 SerialPortConnectedData data(fileDescription);
                 sDelegate->onSerialPortConnected(data);
-            }
-        }
-        if (messageHeader == EventType::BOARD_CHANGED) {
-            if (gDelegate) {
-                gDelegate->onBoardStateChanged(messageBuffer.substr(2));
             }
         }
     }
