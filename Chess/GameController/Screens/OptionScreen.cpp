@@ -35,7 +35,6 @@ void OptionScreen::onEnter() {
 }
 
 void OptionScreen::onExit() {
-	std::cout << "[OptionScreen] onExit" << std::endl;
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
 }
 
@@ -65,6 +64,7 @@ void OptionScreen::onKeyPressed(const KeyPressedData& data) {
         OptionScreenEntry& entry = entries.at(cursorPositionIndex);
         entry.onSelected(entry.name);
         Screen::popScreen();
+        return;
     }
     
     if (data.key == BoardKey::DOWN) {
@@ -79,6 +79,7 @@ void OptionScreen::onKeyPressed(const KeyPressedData& data) {
         }
         
         updateScreen();
+        return;
     }
     
     if (data.key == BoardKey::UP) {
@@ -93,6 +94,7 @@ void OptionScreen::onKeyPressed(const KeyPressedData& data) {
         }
         
         updateScreen();
+        return;
     }
 }
 
