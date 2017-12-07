@@ -9,6 +9,8 @@
 #include "DisplayerImplementation.h"
 #include "BoardServices.h"
 
+const std::string CLEARING_STRING = "                    ";
+
 DisplayerImplementation* DisplayerImplementation::instance = NULL;
 
 DisplayerImplementation* DisplayerImplementation::getInstance() {
@@ -19,6 +21,7 @@ DisplayerImplementation* DisplayerImplementation::getInstance() {
 }
 
 void DisplayerImplementation::print(int lineNumber, std::string content) {
+    BoardServices::getInstance()->display(lineNumber, CLEARING_STRING);
     BoardServices::getInstance()->display(lineNumber, content);
 }
 
