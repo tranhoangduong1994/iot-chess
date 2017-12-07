@@ -14,6 +14,8 @@
 
 #include "OptionScreen.h"
 
+#include "ListScreen.h"
+
 #include "BoardServices.h"
 
 GameScreen* GameScreen::create(OfflineGame* game) {    
@@ -37,6 +39,8 @@ void GameScreen::onEnter() {
 
 void GameScreen::onExit() {
     std::cout << "GameScreen - onExit" << std::endl;
+    BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
     delete game;
     delete this;
 }
@@ -45,20 +49,24 @@ void GameScreen::init() {
     entered = false;
 }
 
-void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPositions) {
-	BaseTypes::Bitboard mp = misplacedPositions;
-	std::cout << "[GameScreen] onBoardInitStateInvalid" << std::endl;
-	std::cout << mp.toString() << std::endl;
-    print(1, "Pieces are misplaced");
+void GameScreen::onBoardInitStateInvalid(const BaseTypes::Bitboard& offPiecePositions) {
+//    BaseTypes::Bitboard mp = offPiecePositions;
+//    std::cout << "[GameScreen] onBoardInitStateInvalid" << std::endl;
+//    std::cout << mp.toString() << std::endl;
+//    print(1, "Pieces are misplaced");
     std::string positions = "";
+    
+    std::vector<std::string> items;
     for (int i = 0; i < 64; i++) {
-        if (misplacedPositions.get(i)) {
+        if (offPiecePositions.get(i)) {
             positions += (char)((i % 8) + 97);
             positions += std::to_string((i / 8) + 1);
+            items.push_back(positions);
         } 
     }
-    std::cout << positions << std::endl;
-    print(2, positions);
+    
+    ListScreen* screen = ListScreen::create("OFF POSITIONS:", items);
+    Screen::pushScreen(screen);
 }
 
 void GameScreen::onGameStarted(const GameStartedData& data) {

@@ -20,7 +20,7 @@ public:
     static GameScreen* create(OfflineGame* game);
     
     // GameEventsProtocol implementation
-    void onBoardInitStateInvalid(const BaseTypes::Bitboard& misplacedPositions) override;
+    void onBoardInitStateInvalid(const BaseTypes::Bitboard& offPiecePositions) override;
     void onGameStarted(const GameStartedData& data) override;
     
     void onTurnBegan(const TurnBeganData& data) override;
