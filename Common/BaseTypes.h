@@ -211,7 +211,7 @@ namespace BaseTypes {
             return result;
         }
         
-        Bitboard getMisplacedPositions(const Bitboard& other) const {
+        Bitboard getOffPiecePositions(const Bitboard& other) const {
             return *this & (*this ^ other);
         }
         
