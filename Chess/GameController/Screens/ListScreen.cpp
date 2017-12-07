@@ -32,21 +32,19 @@ void ListScreen::onExit() {
 }
 
 void ListScreen::updateScreen() {
-//    int totalPage = items.size() / (SCREEN_HEIGHT - 1) + ((items.size() % SCREEN_HEIGHT - 1) ? 1 : 0);
-    clear();
-    for (int i = 1; i < SCREEN_HEIGHT; i++) {
+    for (int i = 0; i < SCREEN_HEIGHT; i++) {
         int itemNumber = currentPage * (SCREEN_HEIGHT - 1) + i;
-        if (itemNumber > items.size()) {
-            break;
+        std::string string = "";
+        if (itemNumber < items.size()) {
+            string = items.at(itemNumber);
         }
-        print(i, items.at(itemNumber));
+        print(i + 2, string);
     }
 }
 
 void ListScreen::onKeyPressed(const KeyPressedData &data) {
     if (data.key == BoardKey::OK) {
         Screen::popScreen();
-        closeCallback();
         return;
     }
     
