@@ -13,11 +13,13 @@ class Validator():
         return self.board.is_game_over()
 
     def isDrawGame(self):
-        return self.board.is_stalemate() or board.is_insufficient_material()
+        return self.board.is_stalemate() or self.board.is_insufficient_material()
 
     def getAttackedSquares(self, attackerSquareIdx):
-        attackedSquares = list(board.attacks(attackerSquareIdx))
+        print("getAttackedSquares" + str(attackerSquareIdx));
+        attackedSquares = list(self.board.attacks(attackerSquareIdx))
         attackedSquareSet = chess.SquareSet()
         for square in attackedSquares:
             attackedSquareSet.add(square)
+        print("result: " + str(bin(attackedSquareSet)).replace("0b", "")[::-1]);
         return str(bin(attackedSquareSet)).replace("0b", "")[::-1]
