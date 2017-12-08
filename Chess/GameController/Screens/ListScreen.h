@@ -22,19 +22,25 @@ public:
     void onKeyPressed(const KeyPressedData& data) override;
     
 protected:
-    void onEnter() override;
-    void onExit() override;
+	ListScreen(std::string header, std::vector<std::string> items);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void updateScreen();
     void updateList(const std::vector<std::string>& items);
     std::vector<std::string> items;
     
+    virtual void onOKPressed();
+    virtual void onUpPressed();
+    virtual void onDownPressed();
+    
 private:
+	ListScreen() {}
+	void init();
+
     int currentPage;
     std::string header;
-    
-    void init();
-    ListScreen() {}
 };
 
 #endif /* ListScreen_h */

@@ -33,8 +33,8 @@ void GameScreen::onEnter() {
     if (!entered) {
         entered = true;
         game->start(BaseTypes::Side::WHITE, 1);
+        game->setDelegate(this);
     }
-    game->setDelegate(this);
 }
 
 void GameScreen::onExit() {
@@ -57,8 +57,9 @@ void GameScreen::onPiecesOffPosition(const BaseTypes::Bitboard& currentState, co
     
 //    ListScreen* screen = ListScreen::create("OFF POSITIONS:", items);
     
-    OffPositionScreen::create(currentState, expectedState);
+    OffPositionScreen* screen = OffPositionScreen::create(currentState, expectedState);
     Screen::pushScreen(screen);
+    std::cout << "[GameScreen] onPiecesOffPosition - done" << std::endl;
 }
 
 void GameScreen::onGameStarted(const GameStartedData& data) {

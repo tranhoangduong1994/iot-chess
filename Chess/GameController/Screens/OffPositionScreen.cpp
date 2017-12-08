@@ -10,7 +10,7 @@
 #include "BoardServices.h"
 
 OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) {
-    BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentState);
+	BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentState);
     
     std::vector<std::string> items;
     int itemCount = 0;
@@ -24,10 +24,12 @@ OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentS
         }
     }
 
-    OffPositionScreen* screen = static_cast<OffPositionScreen*>(ListScreen::create("OFF POSITIONS", items));
+    OffPositionScreen* screen = new OffPositionScreen("OFF POSITIONS", items);
     screen->expectedState = expectedState;
     return screen;
 }
+
+OffPositionScreen::OffPositionScreen(std::string header, std::vector<std::string> items) : ListScreen(header, items) {}
 
 void OffPositionScreen::onEnter() {
     ListScreen::onEnter();
@@ -59,5 +61,13 @@ void OffPositionScreen::onScanDone(const std::string &boardState) {
         }
     }
     
-    updateList(items);
+    if (items.size() > 0) {
+		updateList(items);
+		return;
+	} 
+	Screen::popScreen();
+}
+
+void OffPositionScreen::onOKPressed() {
+	BoardServices::getInstance()->scan();
 }

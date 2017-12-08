@@ -24,10 +24,13 @@ public:
     void onBoardResetted() override;
     
 private:
+	OffPositionScreen(std::string header, std::vector<std::string> items);
     void onEnter() override;
     void onExit() override;
     
+    void onOKPressed() override;
+    
     BaseTypes::Bitboard expectedState;
-}
+};
 
 #endif /* OffPositionScreen_h */

@@ -17,6 +17,12 @@ ListScreen* ListScreen::create(std::string header, std::vector<std::string> item
     return screen;
 }
 
+ListScreen::ListScreen(std::string header, std::vector<std::string> items) {
+	this->header = header;
+	this->items = items;
+	init();
+}
+
 void ListScreen::init() {
     currentPage = 0;
 }
@@ -33,6 +39,7 @@ void ListScreen::onExit() {
 
 void ListScreen::updateScreen() {
     for (int i = 0; i < SCREEN_HEIGHT; i++) {
+		std::cout << "i = " << i << std::endl;
         int itemNumber = currentPage * (SCREEN_HEIGHT - 1) + i;
         std::string string = "";
         if (itemNumber < items.size()) {
@@ -50,24 +57,36 @@ void ListScreen::updateList(const std::vector<std::string>& items) {
 
 void ListScreen::onKeyPressed(const KeyPressedData &data) {
     if (data.key == BoardKey::OK) {
-        Screen::popScreen();
-        return;
+		onOKPressed();
+		return;
     }
     
     if (data.key == BoardKey::UP) {
-        if (currentPage > 0) {
-            currentPage--;
-            updateScreen();
-        }
+		onUpPressed();
         return;
     }
     
     if (data.key == BoardKey::DOWN) {
-        int totalPage = items.size() / (SCREEN_HEIGHT - 1) + ((items.size() % SCREEN_HEIGHT - 1) ? 1 : 0);
-        if (currentPage < totalPage) {
-            currentPage++;
-            updateScreen();
-        }
+        onDownPressed();
         return;
     }
+}
+
+void ListScreen::onOKPressed() {
+	Screen::popScreen();
+}
+
+void ListScreen::onUpPressed() {
+	if (currentPage > 0) {
+		currentPage--;
+		updateScreen();
+	}
+}
+
+void ListScreen::onDownPressed() {
+	int totalPage = items.size() / (SCREEN_HEIGHT - 1) + ((items.size() % SCREEN_HEIGHT - 1) ? 1 : 0);
+	if (currentPage < totalPage) {
+		currentPage++;
+		updateScreen();
+	}
 }

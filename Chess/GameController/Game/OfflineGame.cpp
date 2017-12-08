@@ -100,6 +100,7 @@ void OfflineGame::onBoardResetted() {
 }
 
 void OfflineGame::onKeyPressed(const KeyPressedData& data) {
+	std::cout << "[OfflineGame] onKeyPressed" << std::endl;
     if (data.key == BoardKey::OK) {
         if (gameState == GameState::NONE || gameState == GameState::INIT_STATE_VALIDATING) {
             gameState = GameState::INIT_STATE_VALIDATING;
@@ -136,9 +137,8 @@ void OfflineGame::onKeyPressed(const KeyPressedData& data) {
 void OfflineGame::onScanDone(const std::string& boardState) {
     BaseTypes::Bitboard boardStateByBit(boardState);
     if (gameState == GameState::INIT_STATE_VALIDATING) {
-        
+        `
         if (boardStateByBit != BOARD_INIT_STATE) {
-//            delegate->onBoardInitStateInvalid(BOARD_INIT_STATE.getOffPiecePositions(boardState));
             delegate->onPiecesOffPosition(boardStateByBit, BOARD_INIT_STATE);
             return;
         }
