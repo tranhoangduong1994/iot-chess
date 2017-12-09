@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "OfflineGame.h"
+#include "GameController.h"
 
 #include "OptionScreen.h"
 
@@ -18,9 +18,9 @@
 
 #include "BoardServices.h"
 
-GameScreen* GameScreen::create(OfflineGame* game) {    
+GameScreen* GameScreen::create(GameController* gameController) {
     GameScreen* screen = new GameScreen();
-    screen->game = game;
+    screen->gameController = gameController;
     screen->init();
     
     return screen;
@@ -28,12 +28,18 @@ GameScreen* GameScreen::create(OfflineGame* game) {
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(game);
+    BoardServices::getInstance()->setBoardServicesEventsProtocol(gameController);
     BoardServices::getInstance()->setBoardKeyEventsDelegate(game);
     if (!entered) {
         entered = true;
         game->start(BaseTypes::Side::WHITE, 1);
         game->setDelegate(this);
+        return;
+    }
+    
+    if (awaitAdjustment) {
+        awaitAdjustment = false;
+        gameController->handleBackFromOffPositionScreen();
     }
 }
 
@@ -41,22 +47,17 @@ void GameScreen::onExit() {
     std::cout << "GameScreen - onExit" << std::endl;
     BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
-    delete game;
+    delete gameController;
     delete this;
 }
 
 void GameScreen::init() {
+    awaitAdjustment = false;
     entered = false;
 }
 
 void GameScreen::onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard &expectedState) {
-//    BaseTypes::Bitboard mp = offPiecePositions;
-//    std::cout << "[GameScreen] onBoardInitStateInvalid" << std::endl;
-//    std::cout << mp.toString() << std::endl;
-//    print(1, "Pieces are misplaced");
-    
-//    ListScreen* screen = ListScreen::create("OFF POSITIONS:", items);
-    
+    awaitAdjustment = true;
     OffPositionScreen* screen = OffPositionScreen::create(currentState, expectedState);
     Screen::pushScreen(screen);
     std::cout << "[GameScreen] onPiecesOffPosition - done" << std::endl;

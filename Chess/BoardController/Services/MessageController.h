@@ -12,7 +12,7 @@
 #include <string>
 
 #include "BoardSystemEventsProtocol.h"
-#include "BoardIngameEventsProtocol.h"
+#include "BoardServicesEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
 enum MessageType {
@@ -46,7 +46,7 @@ public:
     static MessageController* getInstance();
     
     void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate);
-    void setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate);
+    void setBoardServicesEventsDelegate(BoardServicesEventsProtocol* g_delegate);
     void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate);
     
 private:
@@ -55,7 +55,7 @@ private:
     std::string messageBuffer;
     
     BoardSystemEventsProtocol* sDelegate;
-    BoardIngameEventsProtocol* gDelegate;
+    BoardServicesEventsProtocol* gDelegate;
     BoardKeyEventsProtocol* kDelegate;
     
     bool upPressed;

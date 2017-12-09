@@ -15,13 +15,14 @@
 
 class PythonChessValidator : public IValidator {
 public:
-    virtual void start() override;
-    virtual bool checkMove(const BaseTypes::Move& move) override;
-    virtual bool checkGameOver() override;
-    virtual bool checkDraw() override;
-    virtual void move(const BaseTypes::Move& move) override;
+    void start() override;
+    bool checkMove(const BaseTypes::Move& move) override;
+    bool checkGameOver() override;
+    bool checkDraw() override;
+    void move(const BaseTypes::Move& move) override;
     
-    virtual BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) override;
+    BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) override;
+    BaseTypes::Bitboard getBitboard() override;
     
     static PythonChessValidator* getInstance();
     

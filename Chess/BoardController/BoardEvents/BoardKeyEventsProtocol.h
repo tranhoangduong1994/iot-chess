@@ -18,16 +18,9 @@ enum BoardKey {
     DOWN
 };
 
-struct KeyPressedData {
-    BoardKey key;
-    KeyPressedData(BoardKey k) {
-        key = k;
-    }
-};
-
 class BoardKeyEventsProtocol {
 public:
-    virtual void onKeyPressed(const KeyPressedData& data) = 0;
+    virtual void onKeyPressed(BoardKey key) = 0;
 };
 
 #endif /* BoardKeyEventsProtocol_h */

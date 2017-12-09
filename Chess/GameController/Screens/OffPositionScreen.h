@@ -9,7 +9,7 @@
 #ifndef OffPositionScreen_h
 #define OffPositionScreen_h
 
-#include "BoardIngameEventsProtocol.h"
+#include "BoardServicesEventsProtocol.h"
 
 #include "ListScreen.h"
 

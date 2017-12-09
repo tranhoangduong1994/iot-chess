@@ -85,3 +85,13 @@ BaseTypes::Bitboard PythonChessValidator::getAttackedSquares(int attackerSquareI
         assert(false);
     }
 }
+
+BaseTypes::Bitboard PythonChessValidator::getBitboard() {
+    try {
+        std::string bitboard = python::extract<std::string>(validator.attr("getBitboard")());
+        return BaseTypes::Bitboard(bitboard);
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        assert(false);
+    }
+}

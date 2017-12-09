@@ -12,7 +12,7 @@
 #include "BaseTypes.h"
 
 #include "BoardSystemEventsProtocol.h"
-#include "BoardIngameEventsProtocol.h"
+#include "BoardServicesEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
 class IBoardServices {
@@ -26,7 +26,7 @@ public:
     virtual void clearScreen() = 0;
     
     virtual void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) = 0;
-    virtual void setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) = 0;
+    virtual void setBoardServicesEventsProtocol(BoardIngameEventsProtocol* g_delegate) = 0;
     virtual void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) = 0;
 };
 

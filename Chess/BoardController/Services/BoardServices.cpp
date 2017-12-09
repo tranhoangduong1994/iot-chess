@@ -53,8 +53,8 @@ void BoardServices::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_de
     MessageController::getInstance()->setBoardSystemEventsDelegate(s_delegate);
 }
 
-void BoardServices::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) {
-    MessageController::getInstance()->setBoardIngameEventsDelegate(g_delegate);
+void BoardServices::setBoardServicesEventsProtocol(BoardServicesEventsProtocol* g_delegate) {
+    MessageController::getInstance()->setBoardServicesEventsProtocol(g_delegate);
 }
 
 void BoardServices::setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) {

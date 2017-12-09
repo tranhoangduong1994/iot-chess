@@ -222,7 +222,7 @@ void MessageController::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* 
     sDelegate = s_delegate;
 }
 
-void MessageController::setBoardIngameEventsDelegate(BoardIngameEventsProtocol* g_delegate) {
+void MessageController::setBoardServicesEventsDelegate(BoardServicesEventsProtocol *g_delegate) {
     gDelegate = g_delegate;
 }
 

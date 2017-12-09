@@ -13,11 +13,11 @@
 #include "Screen.h"
 #include <vector>
 
-class OfflineGame;
+class GameController;
 
 class GameScreen : public Screen, public GameEventsProtocol {
 public:
-    static GameScreen* create(OfflineGame* game);
+    static GameScreen* create(GameController* gameController);
     
     // GameEventsProtocol implementation
     void onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) override;
@@ -41,7 +41,9 @@ private:
     void init();
     
     ~GameScreen() {}
-    OfflineGame* game;
+    GameController gameController;
+    
+    bool awaitAdjustment;
     
     bool entered;
 };
