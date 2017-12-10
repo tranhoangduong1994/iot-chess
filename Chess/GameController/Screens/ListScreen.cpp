@@ -55,18 +55,18 @@ void ListScreen::updateList(const std::vector<std::string>& items) {
     updateScreen();
 }
 
-void ListScreen::onKeyPressed(const KeyPressedData &data) {
-    if (data.key == BoardKey::OK) {
+void ListScreen::onKeyPressed(BoardKey key) {
+    if (key == BoardKey::OK) {
 		onOKPressed();
 		return;
     }
     
-    if (data.key == BoardKey::UP) {
+    if (key == BoardKey::UP) {
 		onUpPressed();
         return;
     }
     
-    if (data.key == BoardKey::DOWN) {
+    if (key == BoardKey::DOWN) {
         onDownPressed();
         return;
     }

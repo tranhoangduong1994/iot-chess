@@ -59,15 +59,15 @@ void OptionScreen::updateScreen() {
     }
 }
 
-void OptionScreen::onKeyPressed(const KeyPressedData& data) {
-    if (data.key == BoardKey::OK) {
+void OptionScreen::onKeyPressed(BoardKey key) {
+    if (key == BoardKey::OK) {
         OptionScreenEntry& entry = entries.at(cursorPositionIndex);
         entry.onSelected(entry.name);
         Screen::popScreen();
         return;
     }
     
-    if (data.key == BoardKey::DOWN) {
+    if (key == BoardKey::DOWN) {
         cursorPositionIndex++;
         if (cursorPositionIndex >= entries.size() - 1) {
             cursorPositionIndex = entries.size() - 1;
@@ -82,7 +82,7 @@ void OptionScreen::onKeyPressed(const KeyPressedData& data) {
         return;
     }
     
-    if (data.key == BoardKey::UP) {
+    if (key == BoardKey::UP) {
         cursorPositionIndex--;
         if (cursorPositionIndex <= -1) {
             cursorPositionIndex = 0;

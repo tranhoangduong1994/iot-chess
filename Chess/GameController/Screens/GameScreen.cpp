@@ -28,12 +28,12 @@ GameScreen* GameScreen::create(GameController* gameController) {
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
-    BoardServices::getInstance()->setBoardServicesEventsProtocol(gameController);
-    BoardServices::getInstance()->setBoardKeyEventsDelegate(game);
+    BoardServices::getInstance()->setBoardServicesEventsDelegate(gameController);
+    BoardServices::getInstance()->setBoardKeyEventsDelegate(gameController);
     if (!entered) {
         entered = true;
-        game->start(BaseTypes::Side::WHITE, 1);
-        game->setDelegate(this);
+        gameController->start(BaseTypes::Side::WHITE, 1);
+        gameController->setDelegate(this);
         return;
     }
     
@@ -45,7 +45,7 @@ void GameScreen::onEnter() {
 
 void GameScreen::onExit() {
     std::cout << "GameScreen - onExit" << std::endl;
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
+    BoardServices::getInstance()->setBoardServicesEventsDelegate(NULL);
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
     delete gameController;
     delete this;
@@ -56,21 +56,22 @@ void GameScreen::init() {
     entered = false;
 }
 
-void GameScreen::onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard &expectedState) {
+void GameScreen::onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) {
     awaitAdjustment = true;
     OffPositionScreen* screen = OffPositionScreen::create(currentState, expectedState);
     Screen::pushScreen(screen);
     std::cout << "[GameScreen] onPiecesOffPosition - done" << std::endl;
 }
 
-void GameScreen::onGameStarted(const GameStartedData& data) {
+void GameScreen::onGameStarted() {
     clear();
     print(1, "Game started");
 }
 
-void GameScreen::onTurnBegan(const TurnBeganData& data) {
-    if (data.opponent_move != "") {
-        print(1, "Opponent move: " + data.opponent_move);
+void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
+	std::cout << "[GameScreen] onTurnBegan" << std::endl;
+    if (previousOpponentMove != BaseTypes::Move()) {
+        print(1, "Opponent move: " + previousOpponentMove.toString());
     }
     
     print(2, "It's your turn.");
@@ -78,17 +79,18 @@ void GameScreen::onTurnBegan(const TurnBeganData& data) {
     print(4, "");
 }
 
-void GameScreen::onTurnEnded(const TurnEndedData& data) {
-    print(3, "You played: " + data.player_move);
-    print(4, "Please wait for opponent move...");
+void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
+	std::cout << "[GameScreen] onTurnEnded" << std::endl;
+    print(3, "Your move: " + playerMove.toString());
+    print(4, "Please wait...");
 }
 
-void GameScreen::onInvalidMove(const InvalidMoveData& data) {
-    print(3, "You play: " + data.player_move);
-    print(4, "Invalid move, please try again: ");
+void GameScreen::onInvalidMove() {
+    //print(3, "You play: " + data.player_move);
+    print(4, "Invalid move.");
 }
 
-void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function<void(bool, BaseTypes::Move)> onSelected) {
+void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, std::function<void(bool, BaseTypes::Move)> onSelected) {
     std::vector<OptionScreenEntry> entries;
     for (int i = 0; i < moves.size(); i++) {
         OptionScreenEntry entry;
@@ -111,7 +113,7 @@ void GameScreen::onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& mo
 }
 
 
-void GameScreen::onWinGame(const WinGameData& data) {
+void GameScreen::onWinGame(BaseTypes::Move lastMove) {
     std::vector<OptionScreenEntry> entries;
     
     OptionScreenEntry newGameEntry;
@@ -132,7 +134,7 @@ void GameScreen::onWinGame(const WinGameData& data) {
     Screen::pushScreen(screen);
 }
 
-void GameScreen::onLoseGame(const LoseGameData& data) {
+void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
     std::vector<OptionScreenEntry> entries;
     
     OptionScreenEntry newGameEntry;
@@ -153,7 +155,7 @@ void GameScreen::onLoseGame(const LoseGameData& data) {
     Screen::pushScreen(screen);    
 }
 
-void GameScreen::onDrawGame(const DrawGameData& data) {
+void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
     std::vector<OptionScreenEntry> entries;
     
     OptionScreenEntry newGameEntry;

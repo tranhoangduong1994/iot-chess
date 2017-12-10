@@ -19,7 +19,7 @@
 class ListScreen: public Screen, public BoardKeyEventsProtocol {
 public:
     static ListScreen* create(std::string header, std::vector<std::string> items);
-    void onKeyPressed(const KeyPressedData& data) override;
+    void onKeyPressed(BoardKey key) override;
     
 protected:
 	ListScreen(std::string header, std::vector<std::string> items);

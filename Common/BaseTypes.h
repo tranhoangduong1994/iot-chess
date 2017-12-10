@@ -25,7 +25,10 @@ namespace BaseTypes {
     struct Position {
         char file;
         int rank;
-        Position() {};
+        Position() {
+			file = 0;
+			rank = 0;
+		};
         Position(char file, int rank) {
             this->file = file;
             this->rank = rank;
@@ -39,13 +42,18 @@ namespace BaseTypes {
         const std::string toString() const {
             return std::string(this->file + std::to_string(this->rank));
         }
+		bool operator!= (const Position& other) {
+            return this->file != other.file || this->rank != other.rank;
+        }
     };
     
     struct Move {
         Position fromPos;
         Position toPos;
         char promotionType;
-        Move() {};
+        Move() {
+			promotionType = 0;
+		};
         Move(Position fromPos, Position toPos) {
             this->fromPos = fromPos;
             this->toPos = toPos;
@@ -76,6 +84,9 @@ namespace BaseTypes {
                 return fromPos.toString() + toPos.toString() + promotionType;
             }
             return fromPos.toString() + toPos.toString();
+        }
+        bool operator!= (const Move& other) {
+            return this->fromPos != other.fromPos || this->toPos != other.toPos || this->promotionType != other.promotionType;
         }
     };
     

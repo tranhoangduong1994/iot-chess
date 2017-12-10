@@ -35,8 +35,8 @@ public:
     virtual void onLoseGame(BaseTypes::Move lastMove) = 0;
     virtual void onDrawGame(DrawGameType type, BaseTypes::Move lastMove) = 0;
     
-    virtual void onDrawGameOffered(const DrawGameData& data) {};
-    virtual void onOpponentSurrendered(const OpponentSurrenderedData& data) {};
+    //virtual void onDrawGameOffered(const DrawGameData& data) {};
+    //virtual void onOpponentSurrendered(const OpponentSurrenderedData& data) {};
 };
 
 #endif /* GameEventsProtocol_h */

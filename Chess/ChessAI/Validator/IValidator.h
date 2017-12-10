@@ -19,7 +19,7 @@ public:
     virtual bool checkDraw() = 0;
     virtual void move(const BaseTypes::Move& move) = 0;
     virtual BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) = 0;
-    virtual BaseTypes::Bitboard getBitboard();
+    virtual BaseTypes::Bitboard getBitboard() = 0;
 };
 
 #endif /* IValidator_h */

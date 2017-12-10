@@ -8,7 +8,7 @@
 
 #include "MainMenuScreen.h"
 #include "GameScreen.h"
-#include "OfflineGame.h"
+#include "GameController.h"
 #include "BoardServices.h"
 
 #include "OptionScreen.h"
@@ -37,8 +37,7 @@ void MainMenuScreen::onExit() {
     BoardServices::getInstance()->setBoardKeyEventsDelegate(NULL);
 }
 
-void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
-    BoardKey key = data.key;
+void MainMenuScreen::onKeyPressed(BoardKey key) {
     if (key == BoardKey::UP) {
         int index = cursorPositionIndex - 1;
         if (index == 0) {
@@ -57,9 +56,8 @@ void MainMenuScreen::onKeyPressed(const KeyPressedData& data) {
         switch (cursorPositionIndex) {
             case 1:
             {
-                OfflineGame* game = new OfflineGame();
-                GameScreen* gameScreen = GameScreen::create(game);
-                game->start(BaseTypes::WHITE, 1);
+                GameController* gameController = new GameController();
+                GameScreen* gameScreen = GameScreen::create(gameController);
                 Screen::runScreen(gameScreen);
                 break;
             }

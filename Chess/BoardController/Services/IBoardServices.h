@@ -26,7 +26,7 @@ public:
     virtual void clearScreen() = 0;
     
     virtual void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) = 0;
-    virtual void setBoardServicesEventsProtocol(BoardIngameEventsProtocol* g_delegate) = 0;
+    virtual void setBoardServicesEventsDelegate(BoardServicesEventsProtocol* g_delegate) = 0;
     virtual void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) = 0;
 };
 

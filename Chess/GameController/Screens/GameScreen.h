@@ -20,18 +20,18 @@ public:
     static GameScreen* create(GameController* gameController);
     
     // GameEventsProtocol implementation
-    void onPiecesOffPosition(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) override;
-    void onGameStarted(const GameStartedData& data) override;
+    void onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) override;
+    void onGameStarted() override;
     
-    void onTurnBegan(const TurnBeganData& data) override;
-    void onTurnEnded(const TurnEndedData& data) override;
-    void onInvalidMove(const InvalidMoveData& data) override;
+    void onTurnBegan(BaseTypes::Move previousOpponentMove) override;
+    void onTurnEnded(BaseTypes::Move playerMove) override;
+    void onInvalidMove() override;
     
-    void onMultipleMovesAvailable(const std::vector<BaseTypes::Move>& moves, std::function<void(bool, BaseTypes::Move)>) override;
+    void onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, std::function<void(bool, BaseTypes::Move)>) override;
     
-    void onWinGame(const WinGameData& data) override;
-    void onLoseGame(const LoseGameData& data) override;
-    void onDrawGame(const DrawGameData& data) override;
+    void onWinGame(BaseTypes::Move lastMove) override;
+    void onLoseGame(BaseTypes::Move lastMove) override;
+    void onDrawGame(DrawGameType type, BaseTypes::Move lastMove) override;
     
 protected:
     void onEnter() override;
@@ -41,7 +41,7 @@ private:
     void init();
     
     ~GameScreen() {}
-    GameController gameController;
+    GameController* gameController;
     
     bool awaitAdjustment;
     

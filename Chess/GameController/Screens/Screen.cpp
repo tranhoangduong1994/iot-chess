@@ -60,6 +60,7 @@ void Screen::popScreen() {
 }
 
 void Screen::print(int lineNumber, std::string content) {
+	std::cout << "[Screen] print(" << std::to_string(lineNumber) << ", " << content << ")" << std::endl;
     IDisplayer* displayer = DisplayerImplementation::getInstance();
     
     if (lineNumber > SCREEN_HEIGHT) {
@@ -80,7 +81,8 @@ void Screen::print(int lineNumber, std::string content) {
 }
 
 void Screen::clear() {
+	std::cout << "[Screen] clear()" << std::endl;
 	IDisplayer* displayer = DisplayerImplementation::getInstance();
-	
+	screenBuffer.clear();
     displayer->clear();
 }

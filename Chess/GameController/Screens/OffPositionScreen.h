@@ -15,13 +15,11 @@
 
 #include <string>
 
-class OffPositionScreen : public ListScreen, public BoardIngameEventsProtocol {
+class OffPositionScreen : public ListScreen, public BoardServicesEventsProtocol {
 public:
     static OffPositionScreen* create(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState);
     
-    void onOpponentFinishedMove(const std::string& data, const std::string& newBoardState) override;
-    void onScanDone(const std::string& boardState) override;
-    void onBoardResetted() override;
+    void onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) override;
     
 private:
 	OffPositionScreen(std::string header, std::vector<std::string> items);

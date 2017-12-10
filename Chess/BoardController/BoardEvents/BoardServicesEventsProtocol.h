@@ -13,9 +13,9 @@
 
 class BoardServicesEventsProtocol {
 public:
-    virtual void onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard expectedState) = 0;
-    virtual void onScanDone(BaseTypes::Bitboard boardState) = 0;
-    virtual void onBoardResetted(BaseTypes::Bitboard currentPhysicsBitboard) = 0;
+    virtual void onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard expectedState) {};
+    virtual void onScanDone(BaseTypes::Bitboard boardState) {};
+    virtual void onBoardResetted(BaseTypes::Bitboard currentPhysicsBitboard) {};
 };
 
 #endif /* BoardServicesEventsProtocol_h */

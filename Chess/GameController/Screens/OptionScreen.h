@@ -23,7 +23,7 @@ struct OptionScreenEntry {
 class OptionScreen : public Screen, public BoardKeyEventsProtocol {
 public:
     static OptionScreen* create(std::string header, std::vector<OptionScreenEntry> entries);
-    void onKeyPressed(const KeyPressedData& data) override;
+    void onKeyPressed(BoardKey key) override;
     
 protected:
     void onEnter() override;

@@ -29,7 +29,7 @@ public:
     void clearScreen() override;
     
     void setBoardSystemEventsDelegate(BoardSystemEventsProtocol* s_delegate) override;
-    void setBoardServicesEventsProtocol(BoardServicesEventsProtocol* g_delegate) override;
+    void setBoardServicesEventsDelegate(BoardServicesEventsProtocol* g_delegate) override;
     void setBoardKeyEventsDelegate(BoardKeyEventsProtocol* k_delegate) override;
     
     static BoardServices* getInstance();

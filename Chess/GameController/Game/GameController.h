@@ -65,7 +65,6 @@ private:
     std::vector<BaseTypes::Move> moves;
     
     GameState* resettingState;
-    GameState* initValidatingState;
     GameState* playerTurnState;
     GameState* opponentTurnState;
     GameState* currentState;
@@ -74,11 +73,6 @@ private:
 };
 
 class ResettingState : public GameState {};
-
-class InitValidatingState : public GameState {
-public:
-    void handleBoardScanningResult(GameController* game, BaseTypes::Bitboard currentPhysicsBitboard) override;
-};
 
 class PlayerTurnState : public GameState {
 public:

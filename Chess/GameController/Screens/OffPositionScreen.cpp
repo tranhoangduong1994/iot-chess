@@ -29,25 +29,21 @@ OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentS
     return screen;
 }
 
-OffPositionScreen::OffPositionScreen(std::string header, std::vector<std::string> items) : ListScreen(header, items) {}
+OffPositionScreen::OffPositionScreen(std::string header, std::vector<std::string> items) : ListScreen(header, items) {
+}
 
 void OffPositionScreen::onEnter() {
     ListScreen::onEnter();
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(this);
+    BoardServices::getInstance()->setBoardServicesEventsDelegate(this);
 }
 
 void OffPositionScreen::onExit() {
-    BoardServices::getInstance()->setBoardIngameEventsDelegate(NULL);
+    BoardServices::getInstance()->setBoardServicesEventsDelegate(NULL);
     ListScreen::onExit();
 }
 
-void OffPositionScreen::onOpponentFinishedMove(const std::string &data, const std::string &newBoardState) {}
-
-void OffPositionScreen::onBoardResetted() {}
-
-void OffPositionScreen::onScanDone(const std::string &boardState) {
-    BaseTypes::Bitboard newState(boardState);
-    BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(newState);
+void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
+    BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentPhysicsBitboard);
     
     std::vector<std::string> items;
     int itemCount = 0;

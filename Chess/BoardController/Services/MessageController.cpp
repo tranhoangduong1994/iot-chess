@@ -68,7 +68,7 @@ void MessageController::processMessageBuffer() {
             if (gDelegate) {
 				std::string move = messageBuffer.substr(2, 4);
 				std::string newState = messageBuffer.substr(6);
-                gDelegate->onOpponentFinishedMove(move, newState);
+                gDelegate->onOpponentFinishedMove(move, BaseTypes::Bitboard(newState));
             }
             return;
         }
@@ -82,7 +82,8 @@ void MessageController::processMessageBuffer() {
         
         if (messageHeader == ServiceResponseType::RESET_DONE) {
             if (gDelegate) {
-                gDelegate->onBoardResetted();
+				std::string newState = messageBuffer.substr(2);
+                gDelegate->onBoardResetted(BaseTypes::Bitboard(newState));
             }
             return;
         }
@@ -156,7 +157,7 @@ void MessageController::startKeyboardScanning() {
 				if (!digitalRead(6)) {
 					upPressed = true;
 					if (kDelegate) {
-						kDelegate->onKeyPressed(KeyPressedData(BoardKey::UP));
+						kDelegate->onKeyPressed(BoardKey::UP);
 					}
 				}
 			}
@@ -172,7 +173,7 @@ void MessageController::startKeyboardScanning() {
 				if (!digitalRead(13)) {
 					downPressed = true;
 					if (kDelegate) {
-						kDelegate->onKeyPressed(KeyPressedData(BoardKey::DOWN));
+						kDelegate->onKeyPressed(BoardKey::DOWN);
 					}
 				}
 			}
@@ -188,7 +189,7 @@ void MessageController::startKeyboardScanning() {
 				if (!digitalRead(19)) {
 					menuPressed = true;
 					if (kDelegate) {
-						kDelegate->onKeyPressed(KeyPressedData(BoardKey::MENU));
+						kDelegate->onKeyPressed(BoardKey::MENU);
 					}
 				}
 			}
@@ -204,7 +205,7 @@ void MessageController::startKeyboardScanning() {
 				if (!digitalRead(26)) {
 					okPressed = true;
 					if (kDelegate) {
-						kDelegate->onKeyPressed(KeyPressedData(BoardKey::OK));
+						kDelegate->onKeyPressed(BoardKey::OK);
 					}
 				}
 			}

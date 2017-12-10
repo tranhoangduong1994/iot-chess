@@ -22,19 +22,18 @@ GameController::GameController() {
     validator = PythonChessValidator::getInstance();
     
     resettingState = new ResettingState();
-    initValidatingState = new InitValidatingState();
     playerTurnState = new PlayerTurnState();
     opponentTurnState = new OpponentTurnState();
 }
 
 GameController::~GameController() {
     delete resettingState;
-    delete initValidatingState;
     delete playerTurnState;
     delete opponentTurnState;
 }
 
 void GameController::start(BaseTypes::Side side, int difficulty) {
+	std::cout << "[GameController] start" << std::endl;
     this->side = side;
     this->difficulty = difficulty;
     
@@ -50,10 +49,15 @@ void GameController::setDelegate(GameEventsProtocol* delegate) {
 }
 
 void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {
+	std::cout << "[GameController] handleInitValidating" << std::endl;
+	std::cout << "BoardState: " << boardState.toString() << std::endl;
     if (boardState != BOARD_INIT_STATE) {
+		std::cout << "[GameController] handleInitValidating - false" << std::endl;
         delegate->onPiecesOffPosition(boardState, BOARD_INIT_STATE);
         return;
     }
+    
+    std::cout << "[GameController] handleInitValidating - true" << std::endl;
     
     currentLogicBitboard = BOARD_INIT_STATE;
     delegate->onGameStarted();
@@ -67,9 +71,11 @@ void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {
 }
 
 void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysicsBitboard) {
-    std::vector<BaseTypes::Move> availableMoves = game->readMove(currentPhysicsBitboard);
+    std::vector<BaseTypes::Move> availableMoves = readMove(currentPhysicsBitboard);
+    std::cout << "[GameController] handlePlayerFinishedMove, available moves = " << std::to_string(availableMoves.size()) << std::endl;
     if (availableMoves.size() < 1) {
         delegate->onInvalidMove();
+        return;
     }
     
     if (availableMoves.size() == 1) {
@@ -82,12 +88,16 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
     delegate->onMultipleMovesAvailable(availableMoves, [=](bool moveSelected, BaseTypes::Move move) {
         if (moveSelected) {
             currentLogicBitboard = currentPhysicsBitboard;
-            this->handlePlayerFinishedMove(move);
+            this->handlePlayerTurnEnded(move);
         }
     });
 }
 
 void GameController::handlePlayerTurnEnded(BaseTypes::Move move) {
+	moves.push_back(move);
+	engine->move(move);
+	validator->move(move);
+	
     if (validator->checkDraw()) {
         delegate->onDrawGame(DrawGameType::INSUFFICENT_MATERIAL, move);
         return;
@@ -121,7 +131,7 @@ void GameController::handlePlayerRequestedGameMenu() {
     OptionScreenEntry resetEntry;
     resetEntry.name = "Reset game";
     resetEntry.onSelected = [=](std::string content) {
-        game->start(game->getSide(), game->getDifficulty());
+        start(side, difficulty);
     };
     entries.push_back(resetEntry);
     
@@ -138,7 +148,17 @@ void GameController::handlePlayerRequestedMoveValidating() {
     BoardServices::getInstance()->scan();
 }
 
+void GameController::handleBackFromOffPositionScreen() {
+	if (moves.size() > 0) {
+		handleOpponentTurnEnded(moves.back());
+		return;
+	}
+	
+	handleInitValidating(BOARD_INIT_STATE);
+}
+
 void GameController::performPlayerTurn() {
+	std::cout << "[GameController] performPlayerTurn" << std::endl;
     currentState = playerTurnState;
     if (moves.size() > 0) {
         delegate->onTurnBegan(moves.back());
@@ -157,7 +177,42 @@ void GameController::performOpponentTurn() {
     });
 }
 
+void GameController::onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard currentPhysicsBitboard) {
+	std::cout << "[GameController] onOpponentFinishedMove" << std::endl;
+	std::cout << "currentLogicBitboard: " << currentLogicBitboard.toString() << std::endl;
+	std::cout << "currentPhysicsBitboard: " << currentPhysicsBitboard.toString() << std::endl;
+    BaseTypes::Bitboard expectedBitboard = PythonChessValidator::getInstance()->getBitboard();
+    std::cout << "expectedBitboard: " << expectedBitboard.toString() << std::endl;
+    currentLogicBitboard = expectedBitboard;
+    if (expectedBitboard == currentPhysicsBitboard) {
+        handleOpponentTurnEnded(move);
+        return;
+    }
+    
+    delegate->onPiecesOffPosition(currentPhysicsBitboard, expectedBitboard);
+}
+
+void GameController::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {    
+    currentState->handleBoardScanningResult(this, currentPhysicsBitboard);
+}
+
+void GameController::onKeyPressed(BoardKey key) {
+    if (currentState) {
+        currentState->handleKey(this, key);
+    }
+}
+
+void GameController::onBoardResetted(BaseTypes::Bitboard currentPhysicsBitboard) {
+	std::cout << "[GameController] onBoardResetted" << std::endl;
+    engine->start(difficulty);
+    validator->start();
+    handleInitValidating(currentPhysicsBitboard);
+}
+
 std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard currentPhysicsBitboard) {
+	std::cout << "[GameController] readMove" << std::endl;
+	std::cout << "currentLogicBitboard: " << currentLogicBitboard.toString() << std::endl;
+	std::cout << "currentPhysicsBitboard: " << currentPhysicsBitboard.toString() << std::endl;
     std::vector<BaseTypes::Move> results;
     BaseTypes::Bitboard changedPositions = currentLogicBitboard ^ currentPhysicsBitboard;
     int popCount = changedPositions.popCount();
@@ -171,8 +226,8 @@ std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard curren
         
         for (int i = 1; i <= count; i++) {
             int toSquareIndex = toBoard.getIndexOfSetBit(i);
-            BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 10 - fromSquareIndex / 8);
-            BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 10 - toSquareIndex / 8);
+            BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 8 - fromSquareIndex / 8);
+            BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 8 - toSquareIndex / 8);
             BaseTypes::Move move(fromPos, toPos);
             
             if (validator->checkMove(move)) {
@@ -189,9 +244,17 @@ std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard curren
         int fromSquareIndex = fromBoard.getIndexOfSetBit(1);
         int toSquareIndex = toBoard.getIndexOfSetBit(1);
         
-        BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 10 - fromSquareIndex / 8);
-        BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 10 - toSquareIndex / 8);
+        BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 8 - fromSquareIndex / 8);
+        BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 8 - toSquareIndex / 8);
         BaseTypes::Move move(fromPos, toPos);
+        
+        std::cout << "From board: " << fromBoard.toString() << std::endl;
+        std::cout << "To board: " << toBoard.toString() << std::endl;
+        std::cout << "From squareIndex: " << fromSquareIndex << std::endl;
+        std::cout << "To squareIndex: " << toSquareIndex << std::endl;
+        std::cout << "From pos: " << fromPos.toString() << std::endl;
+        std::cout << "To pos: " << toPos.toString() << std::endl;
+        std::cout << "Normal move: " << move.toString() << std::endl;
         
         if (validator->checkMove(move)) {
             results.push_back(move);
@@ -208,8 +271,8 @@ std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard curren
         int fromSquareIndex = fromBoard.getIndexOfSetBit(1);
         int toSquareIndex = toBoard.getIndexOfSetBit(1);
         
-        BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 10 - fromSquareIndex / 8);
-        BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 10 - toSquareIndex / 8);
+        BaseTypes::Position fromPos((char)(104 - fromSquareIndex % 8), 8 - fromSquareIndex / 8);
+        BaseTypes::Position toPos((char)(104 - toSquareIndex % 8), 8 - toSquareIndex / 8);
         BaseTypes::Move move(fromPos, toPos);
         
         if (validator->checkMove(move)) {
@@ -226,49 +289,17 @@ std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard curren
     return results;
 }
 
-void GameController::onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard currentPhysicsBitboard) {
-    BaseTypes::Bitboard expectedBitboard = PythonChessValidator::getInstance()->getBitboard();
-    if (expectedBitboard == currentPhysicsBitboard) {
-        currentLogicBitboard = expectedBitboard;
-        handleOpponentTurnEnded(move);
-        return;
-    }
-    
-    delegate->onPiecesOffPosition(currentPhysicsBitboard, expectedBitboard);
-}
-
-void GameController::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {    
-    currentState->handleBoardScanningResult(this, boardState);
-}
-
-void GameController::onKeyPressed(BoardKey key) {
-    if (currentState) {
-        currentState->handleKey(this, key);
-    }
-}
-
-void GameController::onBoardResetted(BaseTypes::Bitboard currentPhysicsBitboard) {
-    currentState = initValidatingState;
-    currentState->handleBoardScanningResult(this, currentPhysicsBitboard);
-    engine->start(difficulty);
-    validator->start();
-}
-
-void InitValidatingState::handleBoardScanningResult(GameController *game, BaseTypes::Bitboard currentPhysicsBitboard) {
-    game->handleInitValidating(currentPhysicsBitboard);
-}
-
-void PlayerTurnState::handleKey(GameController *game, BoardKey key)  {
+void PlayerTurnState::handleKey(GameController *gameController, BoardKey key)  {
     if (key == BoardKey::MENU) {
-        game->handlePlayerRequestedGameMenu();
+        gameController->handlePlayerRequestedGameMenu();
     }
     
     if (key == BoardKey::OK) {
-        game->handlePlayerRequestedMoveValidating();
+        gameController->handlePlayerRequestedMoveValidating();
         return;
     }
 }
 
-void PlayerTurnState::handleBoardScanningResult(GameController *game, BaseTypes::Bitboard currentPhysicsBitboard) {
-    
+void PlayerTurnState::handleBoardScanningResult(GameController *gameController, BaseTypes::Bitboard currentPhysicsBitboard) {
+    gameController->handlePlayerFinishedMove(currentPhysicsBitboard);
 }
