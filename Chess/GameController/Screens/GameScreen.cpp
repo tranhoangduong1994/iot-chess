@@ -16,6 +16,8 @@
 
 #include "OffPositionScreen.h"
 
+#include "MainMenuScreen.h"
+
 #include "BoardServices.h"
 
 GameScreen* GameScreen::create(GameController* gameController) {
@@ -126,7 +128,7 @@ void GameScreen::onWinGame(BaseTypes::Move lastMove) {
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-		
+//        Screen::runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
@@ -147,7 +149,7 @@ void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-		
+//        Screen::runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
@@ -168,7 +170,7 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-		
+//        Screen::runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
