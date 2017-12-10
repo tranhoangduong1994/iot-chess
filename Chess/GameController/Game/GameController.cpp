@@ -17,11 +17,11 @@
 
 const BaseTypes::Bitboard GAME_INIT_BITBOARD("1111111111111111000000000000000000000000000000001111111111111111");
 
-//const BaseTypes::Bitboard CASTLING_BITBOARD("0011011000000000000000000000000000000000000000000000000000110110");
-const BaseTypes::Bitboard WHITE_QUEEN_SIDE_CASTLING_BITBOARD("1011100000000000000000000000000000000000000000000000000000000000");
-const BaseTypes::Bitboard WHITE_KING_SIDE_CASTLING_BITBOARD ("0000111100000000000000000000000000000000000000000000000000000000");
-const BaseTypes::Bitboard BLACK_QUEEN_SIDE_CASTLING_BITBOARD("0000000000000000000000000000000000000000000000000000000010111000");
-const BaseTypes::Bitboard BLACK_KING_SIDE_CASTLING_BITBOARD ("0000000000000000000000000000000000000000000000000000000000001111");
+const BaseTypes::Bitboard CASTLING_BITBOARD("1011111100000000000000000000000000000000000000000000000010111111");
+BaseTypes::Bitboard WHITE_QUEEN_SIDE_CASTLING_BITBOARD("1011100000000000000000000000000000000000000000000000000000000000");
+BaseTypes::Bitboard WHITE_KING_SIDE_CASTLING_BITBOARD ("0000111100000000000000000000000000000000000000000000000000000000");
+BaseTypes::Bitboard BLACK_QUEEN_SIDE_CASTLING_BITBOARD("0000000000000000000000000000000000000000000000000000000010111000");
+BaseTypes::Bitboard BLACK_KING_SIDE_CASTLING_BITBOARD ("0000000000000000000000000000000000000000000000000000000000001111");
 
 GameController::GameController() {
     engine = StockfishEngine::getInstance();
@@ -283,25 +283,25 @@ std::vector<BaseTypes::Move> GameController::readMove(BaseTypes::Bitboard curren
     
     if (popCount == 4) {//CASTLING
         if (side == BaseTypes::Side::WHITE) {
-            if (changedPositions & WHITE_QUEEN_SIDE_CASTLING_BITBOARD) {
+            if ((changedPositions & CASTLING_BITBOARD) == WHITE_QUEEN_SIDE_CASTLING_BITBOARD) {
                 results.push_back(BaseTypes::Move("e1c1"));
                 return results;
             }
             
-            if (changedPositions & WHITE_KING_SIDE_CASTLING_BITBOARD) {
+            if ((changedPositions & CASTLING_BITBOARD) == WHITE_KING_SIDE_CASTLING_BITBOARD) {
                 results.push_back(BaseTypes::Move("e1g1"));
                 return results;
             }
         }
         
         
-        if (changedPositions & BLACK_QUEEN_SIDE_CASTLING_BITBOARD) {
+        if ((changedPositions & CASTLING_BITBOARD) == BLACK_QUEEN_SIDE_CASTLING_BITBOARD) {
             results.push_back(BaseTypes::Move("e8c8"));
             return results;
         }
         
-        if (changedPositions & BLACK_KING_SIDE_CASTLING_BITBOARD) {
-            results.push_back(BaseTypes::Move("e8g8"))
+        if ((changedPositions & CASTLING_BITBOARD) == BLACK_KING_SIDE_CASTLING_BITBOARD) {
+            results.push_back(BaseTypes::Move("e8g8"));
             return results;
         }
     }
