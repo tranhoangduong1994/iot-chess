@@ -21,6 +21,12 @@ OptionScreen* OptionScreen::create(std::string header, std::vector<OptionScreenE
     return screen;
 }
 
+OptionScreen::OptionScreen(std::string header, std::vector<OptionScreenEntry> entries) {
+    this->header = header;
+    this->entries = entries;
+    init();
+}
+
 void OptionScreen::init() {
     cursorPositionIndex = 0;
     minEntryIndex = 0;
@@ -63,7 +69,6 @@ void OptionScreen::onKeyPressed(BoardKey key) {
     if (key == BoardKey::OK) {
         OptionScreenEntry& entry = entries.at(cursorPositionIndex);
         entry.onSelected(entry.name);
-        Screen::popScreen();
         return;
     }
     

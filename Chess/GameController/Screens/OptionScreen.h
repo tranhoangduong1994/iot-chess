@@ -26,24 +26,24 @@ public:
     void onKeyPressed(BoardKey key) override;
     
 protected:
-    void onEnter() override;
-    void onExit() override;
+    OptionScreen(std::string header, std::vector<OptionScreenEntry> entries);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    std::vector<OptionScreenEntry> entries;
+    
+    virtual void init();
     
 private:
     int cursorPositionIndex;
     bool entered;
     std::string header;
     
-    void init();
     void setCursorPosition(int index);
     
     void updateScreen();
     
-    std::vector<OptionScreenEntry> entries;
     int minEntryIndex;
     int maxEntryIndex;
-    
-    OptionScreen() {}
 };
 
 #endif /* OptionScreen_h */

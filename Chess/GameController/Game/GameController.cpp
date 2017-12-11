@@ -23,7 +23,10 @@ BaseTypes::Bitboard WHITE_KING_SIDE_CASTLING_BITBOARD ("000011110000000000000000
 BaseTypes::Bitboard BLACK_QUEEN_SIDE_CASTLING_BITBOARD("0000000000000000000000000000000000000000000000000000000010111000");
 BaseTypes::Bitboard BLACK_KING_SIDE_CASTLING_BITBOARD ("0000000000000000000000000000000000000000000000000000000000001111");
 
-GameController::GameController() {
+GameController::GameController(BaseTypes::Side side, int difficulty) {
+    this->side = side;
+    this->difficulty = difficulty;
+    
     engine = StockfishEngine::getInstance();
     validator = PythonChessValidator::getInstance();
     
@@ -38,10 +41,8 @@ GameController::~GameController() {
     delete opponentTurnState;
 }
 
-void GameController::start(BaseTypes::Side side, int difficulty) {
+void GameController::start() {
 	std::cout << "[GameController] start" << std::endl;
-    this->side = side;
-    this->difficulty = difficulty;
     
     moves.clear();
     
@@ -52,6 +53,14 @@ void GameController::start(BaseTypes::Side side, int difficulty) {
 
 void GameController::setDelegate(GameEventsProtocol* delegate) {
     this->delegate = delegate;
+}
+
+void GameController::setSide(BaseTypes::Side side) {
+    this->side = side;
+}
+
+void GameController::setDifficulty(int difficulty) {
+    this->difficulty = difficulty;
 }
 
 void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {

@@ -9,6 +9,7 @@
 #ifndef GameScreen_h
 #define GameScreen_h
 
+#include "BaseTypes.h"
 #include "GameEventsProtocol.h"
 #include "Screen.h"
 #include <vector>

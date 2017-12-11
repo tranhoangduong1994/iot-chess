@@ -31,6 +31,7 @@ protected:
     void updateList(const std::vector<std::string>& items);
     std::vector<std::string> items;
     
+    virtual void onMenuPressed();
     virtual void onOKPressed();
     virtual void onUpPressed();
     virtual void onDownPressed();

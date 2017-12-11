@@ -64,6 +64,10 @@ void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
 	Screen::popScreen();
 }
 
+void OffPositionScreen::onMenuPressed() {
+    
+}
+
 void OffPositionScreen::onOKPressed() {
 	BoardServices::getInstance()->scan();
 }

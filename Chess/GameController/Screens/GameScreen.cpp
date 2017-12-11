@@ -34,7 +34,7 @@ void GameScreen::onEnter() {
     BoardServices::getInstance()->setBoardKeyEventsDelegate(gameController);
     if (!entered) {
         entered = true;
-        gameController->start(BaseTypes::Side::WHITE, 1);
+        gameController->start();
         gameController->setDelegate(this);
         return;
     }
@@ -99,6 +99,7 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
         entry.name = moves.at(i).toString();
         entry.onSelected = [=](std::string content) {
             onSelected(true, BaseTypes::Move(content));
+            Screen::popScreen();
         };
         entries.push_back(entry);
     }
@@ -107,6 +108,7 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
     cancelEntry.name = "CANCEL";
     cancelEntry.onSelected = [=](BaseTypes::Move move) {
         onSelected(false, BaseTypes::Move());
+        Screen::popScreen();
     };
     entries.push_back(cancelEntry);
     

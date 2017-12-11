@@ -23,8 +23,11 @@
 
 class GameController : public BoardServicesEventsProtocol, public BoardKeyEventsProtocol {
 public:
-    void start(BaseTypes::Side side, int difficulty);
+    void start();
     void setDelegate(GameEventsProtocol* delegate);
+    
+    void setSide(BaseTypes::Side side);
+    void setDifficulty(int difficulty);
     
     void handleInitValidating(BaseTypes::Bitboard boardState);
     
@@ -46,7 +49,7 @@ public:
     //BoardKeyEventsProtocol implementation
     void onKeyPressed(BoardKey key) override;
     
-    GameController();
+    GameController(BaseTypes::Side side, int difficulty);
     ~GameController();
     
 private:

@@ -7,8 +7,7 @@
 //
 
 #include "MainMenuScreen.h"
-#include "GameScreen.h"
-#include "GameController.h"
+#include "GameSettingScreen.h"
 #include "BoardServices.h"
 
 #include "OptionScreen.h"
@@ -56,9 +55,7 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
         switch (cursorPositionIndex) {
             case 1:
             {
-                GameController* gameController = new GameController();
-                GameScreen* gameScreen = GameScreen::create(gameController);
-                Screen::runScreen(gameScreen);
+                Screen::runScreen(GameSettingScreen::create());
                 break;
             }
             case 2:
@@ -80,7 +77,7 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
                     std::cout << "Cancelled";
                 };
                 entries.push_back(cancelEntry);
-                
+
                 OptionScreen* screen = OptionScreen::create("Test option screen", entries);
                 Screen::pushScreen(screen);
                 break;

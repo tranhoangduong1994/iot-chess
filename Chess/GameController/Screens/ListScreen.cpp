@@ -56,6 +56,11 @@ void ListScreen::updateList(const std::vector<std::string>& items) {
 }
 
 void ListScreen::onKeyPressed(BoardKey key) {
+    if (key == BoardKey::MENU) {
+        onMenuPressed();
+        return;
+    }
+    
     if (key == BoardKey::OK) {
 		onOKPressed();
 		return;
@@ -71,6 +76,8 @@ void ListScreen::onKeyPressed(BoardKey key) {
         return;
     }
 }
+
+void ListScreen::onMenuPressed() {}
 
 void ListScreen::onOKPressed() {
 	Screen::popScreen();

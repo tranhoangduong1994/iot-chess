@@ -26,6 +26,7 @@ private:
     void onEnter() override;
     void onExit() override;
     
+    void onMenuPressed() override;
     void onOKPressed() override;
     
     BaseTypes::Bitboard expectedState;
