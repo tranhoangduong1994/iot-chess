@@ -22,6 +22,7 @@ class BoardServices : public IBoardServices {
 public:
     void resetBoard() override;
     void move(BaseTypes::Move move) override;
+    void castling(CastlingType type) override;
     void scan() override;
     
     void display(int line, std::string string) override;

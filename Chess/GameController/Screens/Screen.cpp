@@ -71,9 +71,9 @@ void Screen::print(int lineNumber, std::string content) {
         content = content.substr(SCREEN_WIDTH);
     }
     
-    if (screenBuffer[lineNumber - 1] == content) {
-        return;
-    }
+    //if (screenBuffer[lineNumber - 1] == content) {
+        //return;
+    //}
     
     screenBuffer[lineNumber - 1] = content;
     

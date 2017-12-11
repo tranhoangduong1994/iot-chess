@@ -15,10 +15,18 @@
 #include "BoardServicesEventsProtocol.h"
 #include "BoardKeyEventsProtocol.h"
 
+enum CastlingType {
+	WHITE_QUEEN_SIDE,
+	WHITE_KING_SIDE,
+	BLACK_QUEEN_SIDE,
+	BLACK_KING_SIDE
+};
+
 class IBoardServices {
 public:
     virtual void resetBoard() = 0;
     virtual void move(BaseTypes::Move move) = 0;
+    virtual void castling(CastlingType type) = 0;
     virtual void scan() = 0;
     
     virtual void display(int line, std::string string) = 0;
