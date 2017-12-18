@@ -13,9 +13,9 @@
 
 class ScreenManager {
 public:
+    void runScreen(Screen* screen);
     void pushScreen(Screen* screen);
     void popScreen();
-    void runScreen(Screen* screen);
     
     static ScreenManager* getInstance();
     
