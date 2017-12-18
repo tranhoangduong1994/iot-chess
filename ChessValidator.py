@@ -16,7 +16,8 @@ class Validator():
         return self.board.is_stalemate() or self.board.is_insufficient_material()
 
     def getBitboard(self):
-        str(self.board).replace(" ", "").replace("\n", "").replace("k", "1").replace("q", "1").replace("b", "1").replace("n", "1").replace("r", "1").replace("p", "1").replace("K", "1").replace("Q", "1").replace("B", "1").replace("N", "1").replace("R", "1").replace("P", "1").replace(".", "0")[::-1]
+        rawString = str(self.board).replace(" ", "").replace("\n", "").replace("k", "1").replace("q", "1").replace("b", "1").replace("n", "1").replace("r", "1").replace("p", "1").replace("K", "1").replace("Q", "1").replace("B", "1").replace("N", "1").replace("R", "1").replace("P", "1").replace(".", "0")
+        return rawString[56:64] + rawString[48:56] + rawString[40:48] + rawString[32:40] + rawString[24:32] + rawString[16:24] + rawString[8:16] + rawString[0:8];
 
     def getAttackedSquares(self, attackerSquareIdx):
         print("getAttackedSquares" + str(attackerSquareIdx));

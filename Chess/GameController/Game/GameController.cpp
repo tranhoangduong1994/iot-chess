@@ -141,13 +141,16 @@ void GameController::handlePlayerRequestedGameMenu() {
     OptionScreenEntry resetEntry;
     resetEntry.name = "Reset game";
     resetEntry.onSelected = [=](std::string content) {
-        start(side, difficulty);
+		start();
+		Screen::popScreen();
     };
     entries.push_back(resetEntry);
     
     OptionScreenEntry cancelEntry;
     cancelEntry.name = "Cancel";
-    cancelEntry.onSelected = [=](std::string content) {};
+    cancelEntry.onSelected = [=](std::string content) {
+		Screen::popScreen();
+	};
     entries.push_back(cancelEntry);
     
     OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
