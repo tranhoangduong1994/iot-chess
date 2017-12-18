@@ -45,6 +45,7 @@ void Screen::clear() {
 }
 
 void Screen::refresh() {
+    std::cout << "[Screen] refresh" << std::endl;
     for (int i = 0; i < screenBuffer.size(); i++) {
         print(i + 1, screenBuffer.at(i));
     }
