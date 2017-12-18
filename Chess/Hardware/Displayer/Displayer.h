@@ -9,7 +9,7 @@
 #ifndef Displayer_h
 #define Displayer_h
 
-#include "PythonWrapper.h"
+#include "PythonHelper.h"
 
 class Displayer {
 public:
