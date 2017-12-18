@@ -38,7 +38,6 @@ void ScreenManager::pushScreen(Screen* screen) {
     screenStack.push_back(screen);
     displayer->clear();
     screen->onEnter();
-    screen->refresh();
 }
 
 void ScreenManager::popScreen() {
