@@ -41,9 +41,9 @@ include_directories(
 					Software/Wrappers/PythonHelper
 					Software/Wrappers/Validator
 					../Stockfish/
-					../Network/NetworkEventsProtocol/
+					#[[../Network/NetworkEventsProtocol/
 					../Network/NodeServerEventsImplementation/
-					../../socket.io-client-cpp/build/include/
+					../../socket.io-client-cpp/build/include/]]
 				    ${Boost_INCLUDE_DIRS}
     				${PYTHON_INCLUDE_DIRS}
 					)
@@ -58,8 +58,8 @@ link_directories(
 target_link_libraries(
 					iot-chess 
 					Stockfish
-					Network
-					#sioclient
+					#[[Network
+					#sioclient]]
 					${Boost_LIBRARIES}
 					${PYTHON_LIBRARIES}
 					Threads::Threads
