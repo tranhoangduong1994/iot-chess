@@ -137,7 +137,7 @@ void GameScreen::onGameMenuRequested() {
     newGameEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
     };
-    entries.push_back(newGameEntry);
+    entries.push_back(mainMenuEntry);
     
     OptionScreenEntry cancelEntry;
     cancelEntry.name = "Cancel";
