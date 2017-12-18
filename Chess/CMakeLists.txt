@@ -7,7 +7,7 @@ file(GLOB SOURCES
 				"Hardware/Displayer/*.cpp"
 				"Hardware/KeyboardController/*.cpp"
 				"Hardware/Services/*.cpp"
-				"Software/GameController/*.cpp
+				"Software/GameController/*.cpp"
 				"Software/Screen/*.cpp"
 				"Software/ScreenImplementors/*.cpp"
 				"Software/Wrappers/Engine/*.cpp"
