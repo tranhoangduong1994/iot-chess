@@ -51,7 +51,7 @@ void Screen::print(int lineNumber, std::string content) {
 void Screen::clear() {
 	std::cout << "[Screen] clear()" << std::endl;
 	screenBuffer.clear();
-    Displayer::getInstance(->clear();
+    Displayer::getInstance()->clear();
 }
 
 void Screen::refresh() {
