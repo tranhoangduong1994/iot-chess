@@ -92,7 +92,7 @@ void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 }
 
 void GameScreen::onInvalidMove() {
-    print(3, "You move: " + data.player_move);
+//    print(3, "You move: " + data.player_move);
     print(4, "Invalid. Try again..");
 }
 
