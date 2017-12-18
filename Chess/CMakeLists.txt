@@ -4,13 +4,15 @@ set(CMAKE_BUILD_TYPE Release)
 
 file(GLOB SOURCES 
 				"*.cpp" 
-				"BoardController/BoardEvents/*.cpp"
-				"BoardController/Displayer/*.cpp"
-				"BoardController/Services/*.cpp"
-				"ChessAI/Engine/*.cpp"
-				"ChessAI/Validator/*.cpp"
-				"GameController/Game/*.cpp" 
-				"GameController/Screens/*.cpp" 
+				"Hardware/Displayer/*.cpp"
+				"Hardware/KeyboardController/*.cpp"
+				"Hardware/Services/*.cpp"
+				"Software/GameController/*.cpp
+				"Software/Screen/*.cpp"
+				"Software/ScreenImplementors/*.cpp"
+				"Software/Wrappers/Engine/*.cpp"
+				"Software/Wrappers/PythonHelper/*.cpp"
+				"Software/Wrappers/Validator/*.cpp"
 	)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -29,13 +31,15 @@ add_executable(iot-chess ${SOURCES})
 include_directories(
 					../Common/
 					./
-					BoardController/BoardEvents
-					BoardController/Displayer
-					BoardController/Services
-					ChessAI/Engine/
-					ChessAI/Validator/
-					GameController/Game
-					GameController/Screens
+					Hardware/Displayer
+					Hardware/KeyboardController
+					Hardware/Services
+					Software/GameController
+					Software/Screen
+					Software/ScreenImplementors
+					Software/Wrappers/Engine
+					Software/Wrappers/PythonHelper
+					Software/Wrappers/Validator
 					../Stockfish/
 					../Network/NetworkEventsProtocol/
 					../Network/NodeServerEventsImplementation/
