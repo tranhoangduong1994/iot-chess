@@ -125,13 +125,19 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
 void GameScreen::onGameMenuRequested() {
     std::vector<OptionScreenEntry> entries;
     
-    OptionScreenEntry resetEntry;
-    resetEntry.name = "New game";
-    resetEntry.onSelected = [=](std::string content) {
-        std::cout << "New game is selected" << std::endl;
+    OptionScreenEntry newGameEntry;
+    newGameEntry.name = "New game";
+    newGameEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
     };
-    entries.push_back(resetEntry);
+    entries.push_back(newGameEntry);
+
+    OptionScreenEntry mainMenuEntry;
+    newGameEntry.name = "Go to Main menu";
+    newGameEntry.onSelected = [=](std::string content) {
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
+    };
+    entries.push_back(newGameEntry);
     
     OptionScreenEntry cancelEntry;
     cancelEntry.name = "Cancel";
@@ -155,11 +161,11 @@ void GameScreen::onWinGame(BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
-    newGameEntry.name = "Go to Main menu";
-    newGameEntry.onSelected = [=](std::string content) {
+    mainMenuEntry.name = "Go to Main menu";
+    mainMenuEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
-	entries.push_back(newGameEntry);
+	entries.push_back(mainMenuEntry);
 
     OptionScreen* screen = OptionScreen::create("YOU WIN!!!", entries);
     ScreenManager::getInstance()->pushScreen(screen);
@@ -176,11 +182,11 @@ void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
-    newGameEntry.name = "Go to Main menu";
-    newGameEntry.onSelected = [=](std::string content) {
+    mainMenuEntry.name = "Go to Main menu";
+    mainMenuEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
-	entries.push_back(newGameEntry);
+	entries.push_back(mainMenuEntry);
 
     OptionScreen* screen = OptionScreen::create("YOU LOSE", entries);
     ScreenManager::getInstance()->pushScreen(screen);
@@ -197,11 +203,11 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
-    newGameEntry.name = "Go to Main menu";
-    newGameEntry.onSelected = [=](std::string content) {
+    mainMenuEntry.name = "Go to Main menu";
+    mainMenuEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
-	entries.push_back(newGameEntry);
+	entries.push_back(mainMenuEntry);
 
     OptionScreen* screen = OptionScreen::create("DRAW GAME", entries);
     ScreenManager::getInstance()->pushScreen(screen);        
