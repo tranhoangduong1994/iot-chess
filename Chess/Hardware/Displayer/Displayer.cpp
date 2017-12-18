@@ -21,12 +21,12 @@ Displayer* Displayer::getInstance() {
 }
 
 void Displayer::print(int lineNumber, std::string content) {
-    lcd.attr("lcd_display_string")(CLEARING_STRING, line);
-    lcd.attr("lcd_display_string")(content, line);
+    lcd.attr("lcd_display_string")(CLEARING_STRING, lineNumber);
+    lcd.attr("lcd_display_string")(content, lineNumber);
 }
 
 void Displayer::print(int lineNumber, int position, std::string content) {
-    lcd.attr("lcd_display_string")(line, position, content);
+    lcd.attr("lcd_display_string")(lineNumber, position, content);
 }
 
 void Displayer::clear() {
