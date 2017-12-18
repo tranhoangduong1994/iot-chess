@@ -73,6 +73,7 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
                 entries.push_back("_____Ngoc Hoang_____");
                 entries.push_back("______Gao Tran______");
                 ScreenManager::getInstance()->pushScreen(ListScreen::create("_RoboticsChessboard_", entries));
+            }
             default:
                 break;
         }
