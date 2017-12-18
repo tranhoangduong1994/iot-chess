@@ -14,6 +14,10 @@
 
 Screen::Screen() {
 	screenBuffer.resize(SCREEN_HEIGHT);
+    for (int i = 0; i < screenBuffer.size(); i++) {
+        screenBuffer[i] = "";
+    }
+    
 }
 
 void Screen::print(int lineNumber, std::string content) {
