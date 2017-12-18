@@ -23,7 +23,6 @@ BoardServices* BoardServices::getInstance() {
 
 void BoardServices::init() {
 	std::cout << "[BoardServices] init" << std::endl;
-    lcd = PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd");
 }
 
 void BoardServices::move(BaseTypes::Move move) {

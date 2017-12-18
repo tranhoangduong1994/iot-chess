@@ -16,6 +16,7 @@ Displayer* Displayer::instance = NULL;
 Displayer* Displayer::getInstance() {
     if (!instance) {
         instance = new Displayer();
+        instance->init();
     }
     return instance;
 }
@@ -31,4 +32,8 @@ void Displayer::print(int lineNumber, int position, std::string content) {
 
 void Displayer::clear() {
     lcd.attr("lcd_clear")();
+}
+
+void Displayer::init() {
+    lcd = PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd");
 }
