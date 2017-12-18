@@ -32,7 +32,7 @@ GameScreen* GameScreen::create(GameController* gameController) {
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
-    KeyboardController::getInstance()->setKeyboardEventsDelegator(gameController);
+    BoardServices::getInstance()->setBoardServicesEventsDelegator(gameController);
     KeyboardController::getInstance()->setKeyboardEventsDelegator(gameController);
     if (!entered) {
         entered = true;
@@ -50,7 +50,7 @@ void GameScreen::onEnter() {
 void GameScreen::onExit() {
     std::cout << "GameScreen - onExit" << std::endl;
     BoardServices::getInstance()->setBoardServicesEventsDelegator(NULL);
-    BoardServices::getInstance()->setBoardKeyEventsDelegator(NULL);
+    KeyboardController::getInstance()->setKeyboardEventsDelegator(NULL);
     delete gameController;
     delete this;
 }
