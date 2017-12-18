@@ -41,10 +41,10 @@ void BoardServices::resetBoard() {
     MessageController::getInstance()->send(ServiceRequestType::RESET_BOARD);
 }
 
-void BoardServices::setBoardSystemEventsDelegate(BoardSystemEventsProtocol* delegator) {
+void BoardServices::setBoardSystemEventsDelegator(BoardSystemEventsProtocol* delegator) {
     MessageController::getInstance()->setBoardSystemEventsDelegator(delegator);
 }
 
-void BoardServices::setBoardServicesEventsDelegate(BoardServicesEventsProtocol* delegator) {
+void BoardServices::setBoardServicesEventsDelegator(BoardServicesEventsProtocol* delegator) {
     MessageController::getInstance()->setBoardServicesEventsDelegator(delegator);
 }
