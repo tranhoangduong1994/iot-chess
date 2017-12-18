@@ -19,7 +19,7 @@ PythonChessValidator* PythonChessValidator::getInstance() {
 }
 
 void PythonChessValidator::init() {
-    validator = PythonHelper::getInstance()->createObject("ChessValidator", "Validator");
+    validator = PythonHelper::getInstance()->getObject("ChessValidator", "Validator");
 }
 
 void PythonChessValidator::start() {
