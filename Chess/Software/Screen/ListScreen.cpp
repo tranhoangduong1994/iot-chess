@@ -94,7 +94,7 @@ void ListScreen::onUpPressed() {
 
 void ListScreen::onDownPressed() {
 	int totalPage = items.size() / (SCREEN_HEIGHT - 1) + ((items.size() % SCREEN_HEIGHT - 1) ? 1 : 0);
-	if (currentPage < totalPage - 1) {
+	if (currentPage < totalPage) {
 		currentPage++;
 		updateScreen();
 	}
