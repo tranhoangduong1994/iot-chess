@@ -51,8 +51,6 @@ void ScreenManager::popScreen() {
     delete screenStack.back();
     screenStack.pop_back();
     
-    displayer->clear();
-    
     if (screenStack.size() > 0) {
         Screen* currentScreen = screenStack.back();
         currentScreen->onEnter();
