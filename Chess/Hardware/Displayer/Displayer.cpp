@@ -23,8 +23,8 @@ Displayer* Displayer::getInstance() {
 
 void Displayer::print(int lineNumber, std::string content) {
     std::cout << "[Displayer] print(" << lineNumber << ", " << content << ")" << std::endl;
-    lcd.attr("lcd_display_string")(CLEARING_STRING, lineNumber);
-    std::cout << "[Displayer] print - 1";
+//    lcd.attr("lcd_display_string")(CLEARING_STRING, lineNumber);
+//    std::cout << "[Displayer] print - 1";
     lcd.attr("lcd_display_string")(content, lineNumber);
     std::cout << "[Displayer] print - 2";
 }
