@@ -15,6 +15,8 @@
 #include "KeyboardController.h"
 #include "ScreenManager.h"
 
+#include "ListScreen.h"
+
 MainMenuScreen* MainMenuScreen::create() {
     MainMenuScreen* screen = new MainMenuScreen();
     return screen;
@@ -30,7 +32,7 @@ void MainMenuScreen::onEnter() {
         print(1, "MENU");	
         print(2, "->Single game");
         print(3, "  Multiplayer game");
-        print(4, "  Settings");
+        print(4, "  About");
     }
 }
 
@@ -65,26 +67,12 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
                 break;
             case 3:
             {
-                std::vector<OptionScreenEntry> entries;
-                for (int i = 0; i < 20; i++) {
-                    OptionScreenEntry entry;
-                    entry.name = "Test " + std::to_string(i);
-                    entry.onSelected = [=](std::string content) {
-                        std::cout << "You selected: " + content << std::endl;
-                    };
-                    entries.push_back(entry);
-                }
-                OptionScreenEntry cancelEntry;
-                cancelEntry.name = "CANCEL";
-                cancelEntry.onSelected = [=](std::string content) {
-                    std::cout << "Cancelled";
-                };
-                entries.push_back(cancelEntry);
-
-                OptionScreen* screen = OptionScreen::create("Test option screen", entries);
-                ScreenManager::getInstance()->pushScreen(screen);
-                break;
-            }
+                std::vector<std::string> entries;
+                entries.push_back("");
+                entries.push_back("____Duong H Tran____");
+                entries.push_back("_____Ngoc Hoang_____");
+                entries.push_back("______Gao Tran______");
+                ScreenManager::getInstance()->pushScreen(ListScreen::create("_RoboticsChessboard_", entries));
             default:
                 break;
         }
