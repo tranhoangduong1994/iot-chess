@@ -71,7 +71,6 @@ void GameScreen::onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes
 }
 
 void GameScreen::onGameStarted() {
-    clear();
     print(1, "Game started");
 }
 
