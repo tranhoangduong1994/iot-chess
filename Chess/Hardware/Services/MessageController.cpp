@@ -22,7 +22,7 @@
 
 const char* PORT_PREFIX = "/dev/ttyUSB";
 const int MAX_PORT_INDEX = 254;
-const int BAUD = 9600;
+const int BAUD = 115200;
 
 MessageController* MessageController::instance = NULL;
 
