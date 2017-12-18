@@ -9,8 +9,6 @@
 #ifndef ScreenManager_h
 #define ScreenManager_h
 
-#include "Screen.h"
-
 class Screen;
 
 class ScreenManager {
