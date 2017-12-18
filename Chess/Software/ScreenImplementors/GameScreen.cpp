@@ -49,7 +49,6 @@ void GameScreen::onExit() {
     BoardServices::getInstance()->setBoardServicesEventsDelegator(NULL);
     KeyboardController::getInstance()->setKeyboardEventsDelegator(NULL);
     delete gameController;
-    delete this;
 }
 
 void GameScreen::init() {
