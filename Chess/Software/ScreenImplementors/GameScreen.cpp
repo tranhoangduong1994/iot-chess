@@ -133,8 +133,8 @@ void GameScreen::onGameMenuRequested() {
     entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
-    newGameEntry.name = "Go to Main menu";
-    newGameEntry.onSelected = [=](std::string content) {
+    mainMenuEntry.name = "Go to Main menu";
+    mainMenuEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
     };
     entries.push_back(mainMenuEntry);
