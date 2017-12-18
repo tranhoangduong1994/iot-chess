@@ -68,7 +68,6 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
             case 3:
             {
                 std::vector<std::string> entries;
-                entries.push_back("");
                 entries.push_back("____Duong H Tran____");
                 entries.push_back("_____Ngoc Hoang_____");
                 entries.push_back("______Gao Tran______");
@@ -97,7 +96,7 @@ void MainMenuScreen::setCursorPosition(int index) {
             print(3, "  Multiplayer game");
             break;
         case 3:
-            print(4, "  Settings");
+            print(4, "  About");
             break;	
     }
 
@@ -109,7 +108,7 @@ void MainMenuScreen::setCursorPosition(int index) {
             print(3, "->Multiplayer game");
             break;
         case 3:
-            print(4, "->Settings");
+            print(4, "->About");
             break;
         default:
             break;
