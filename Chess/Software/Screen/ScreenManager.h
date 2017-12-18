@@ -9,6 +9,8 @@
 #ifndef ScreenManager_h
 #define ScreenManager_h
 
+#include <vector>
+
 class Screen;
 
 class ScreenManager {
