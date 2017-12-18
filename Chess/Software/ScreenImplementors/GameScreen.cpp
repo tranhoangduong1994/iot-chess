@@ -60,6 +60,12 @@ void GameScreen::init() {
     entered = false;
 }
 
+void GameScreen::onReset() {
+    clear();
+    print(1, "Resetting board...");
+    print(2, "Please wait");
+}
+
 void GameScreen::onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) {
     awaitAdjustment = true;
     OffPositionScreen* screen = OffPositionScreen::create(currentState, expectedState);
