@@ -39,6 +39,7 @@ void GameScreen::onEnter() {
     }
     
     if (awaitAdjustment) {
+        std::cout << "[GameScreen] back from off position screen" << std::endl;
         awaitAdjustment = false;
         gameController->handleBackFromOffPositionScreen();
     }

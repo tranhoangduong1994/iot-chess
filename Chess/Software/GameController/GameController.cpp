@@ -65,19 +65,24 @@ void GameController::setDifficulty(int difficulty) {
 }
 
 void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {
+    std::cout << "[GameController] handleInitValidating" << std::endl;
     if (boardState != GAME_INIT_BITBOARD) {
+        std::cout << "[GameController] handleInitValidating - INVALID" << std::endl;
         delegator->onPiecesOffPosition(boardState, GAME_INIT_BITBOARD);
         return;
     }
     
+    std::cout << "[GameController] handleInitValidating - VALID" << std::endl;
     currentLogicBitboard = GAME_INIT_BITBOARD;
     delegator->onGameStarted();
     
     if (side == BaseTypes::Side::WHITE) {
+        std::cout << "[GameController] YOU PLAY FIRST" << std::endl;
         performPlayerTurn();
         return;
     }
     
+    std::cout << "[GameController] COM PLAYS FIRST" << std::endl;
     performOpponentTurn();
 }
 
@@ -147,11 +152,14 @@ void GameController::handlePlayerRequestedMoveValidating() {
 }
 
 void GameController::handleBackFromOffPositionScreen() {
+    std::cout << "[GameController] handleBackFromOffPositionScreen" << std::endl;
 	if (moves.size() > 0) {
+        std::cout << "[GameController] handleBackFromOffPositionScreen - case 1" << std::endl;
 		handleOpponentTurnEnded(moves.back());
 		return;
 	}
 	
+    std::cout << "[GameController] handleBackFromOffPositionScreen - case 2" << std::endl;
 	handleInitValidating(GAME_INIT_BITBOARD);
 }
 
