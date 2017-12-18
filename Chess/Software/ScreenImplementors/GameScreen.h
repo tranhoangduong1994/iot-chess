@@ -21,7 +21,7 @@ public:
     static GameScreen* create(GameController* gameController);
     
     // GameEventsProtocol implementation
-    void onResetting
+    void onReset() override;
     void onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) override;
     void onGameStarted() override;
     
