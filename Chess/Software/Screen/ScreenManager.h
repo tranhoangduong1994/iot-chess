@@ -11,6 +11,8 @@
 
 #include "Screen.h"
 
+class Screen;
+
 class ScreenManager {
 public:
     void runScreen(Screen* screen);

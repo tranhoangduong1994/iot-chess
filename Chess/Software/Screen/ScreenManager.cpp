@@ -9,6 +9,8 @@
 #include "ScreenManager.h"
 #include "Displayer.h"
 
+#include "Screen.h"
+
 std::vector<Screen*> ScreenManager::screenStack;
 ScreenManager* ScreenManager::instance = NULL;
 
