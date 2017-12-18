@@ -176,14 +176,17 @@ void GameController::performPlayerTurn() {
 void GameController::performOpponentTurn() {
     currentState = opponentTurnState;
     engine->calculate([=](BaseTypes::Move move) {
-        engine->move(move);
-        validator->move(move);
-        moves.push_back(move);
+//        engine->move(move);
+//        validator->move(move);
+//        moves.push_back(move);
         BoardServices::getInstance()->move(move);
     });
 }
 
 void GameController::onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard currentPhysicsBitboard) {
+    engine->move(move);
+    validator->move(move);
+    moves.push_back(move);
 	std::cout << "[GameController] onOpponentFinishedMove" << std::endl;
 	std::cout << "currentLogicBitboard: " << currentLogicBitboard.toString() << std::endl;
 	std::cout << "currentPhysicsBitboard: " << currentPhysicsBitboard.toString() << std::endl;
