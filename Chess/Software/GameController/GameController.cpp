@@ -118,6 +118,8 @@ void GameController::handlePlayerTurnEnded(BaseTypes::Move move) {
         return;
     }
     
+    delegator->onTurnEnded(move);
+    
     performOpponentTurn();
 }
 
