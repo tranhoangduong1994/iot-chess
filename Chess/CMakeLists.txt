@@ -4,15 +4,15 @@ set(CMAKE_BUILD_TYPE Release)
 
 file(GLOB SOURCES 
 				"*.cpp" 
-				"Hardware/Displayer/*.cpp"
-				"Hardware/KeyboardController/*.cpp"
-				"Hardware/Services/*.cpp"
-				"Software/GameController/*.cpp
-				"Software/Screen/*.cpp"
-				"Software/ScreenImplementors/*.cpp"
-				"Software/Wrappers/Engine/*.cpp"
-				"Software/Wrappers/PythonHelper/*.cpp"
-				"Software/Wrappers/Validator/*.cpp"
+				"Hardware/Displayer/*.cpp" 
+				"Hardware/KeyboardController/*.cpp" 
+				"Hardware/Services/*.cpp" 
+				"Software/GameController/*.cpp 
+				"Software/Screen/*.cpp" 
+				"Software/ScreenImplementors/*.cpp" 
+				"Software/Wrappers/Engine/*.cpp" 
+				"Software/Wrappers/PythonHelper/*.cpp" 
+				"Software/Wrappers/Validator/*.cpp" 
 	)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
