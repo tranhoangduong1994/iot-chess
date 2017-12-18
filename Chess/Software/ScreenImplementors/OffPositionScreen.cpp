@@ -10,6 +10,7 @@
 #include "BoardServices.h"
 #include "ScreenManager.h"
 #include "GameSettingScreen.h"
+#include "MainMenuScreen.h"
 
 OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) {
 	BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentState);
