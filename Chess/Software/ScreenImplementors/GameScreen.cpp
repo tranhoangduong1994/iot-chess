@@ -92,8 +92,8 @@ void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 }
 
 void GameScreen::onInvalidMove() {
-    //print(3, "You play: " + data.player_move);
-    print(4, "Invalid move.");
+    print(3, "You move: " + data.player_move);
+    print(4, "Invalid. Try again..");
 }
 
 void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, std::function<void(bool, BaseTypes::Move)> onSelected) {
