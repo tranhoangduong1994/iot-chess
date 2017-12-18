@@ -141,7 +141,7 @@ void GameScreen::onGameMenuRequested() {
     entries.push_back(cancelEntry);
     
     OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
-    ScreenManager::pushScreen(gameMenuScreen);
+    ScreenManager::getInstance()->pushScreen(gameMenuScreen);
 }
 
 void GameScreen::onWinGame(BaseTypes::Move lastMove) {
