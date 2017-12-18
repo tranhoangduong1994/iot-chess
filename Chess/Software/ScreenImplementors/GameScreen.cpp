@@ -57,10 +57,11 @@ void GameScreen::init() {
     entered = false;
 }
 
-void GameScreen::onReset() {
-    clear();
-    print(1, "Resetting board...");
-    print(2, "Please wait");
+void GameScreen::onResetting() {
+    print(1, "Setting up new game");
+    print(2, "Please wait...");
+    print(3, "");
+    print(4, "");
 }
 
 void GameScreen::onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) {

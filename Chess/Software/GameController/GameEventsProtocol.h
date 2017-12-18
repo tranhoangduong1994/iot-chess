@@ -20,7 +20,7 @@ enum DrawGameType {
 
 class GameEventsProtocol {
 public:
-	virtual void onReset() = 0;
+	virtual void onResetting() = 0;
     virtual void onBoardInitStateValid() {};
     
     virtual void onGameStarted() = 0;

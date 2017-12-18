@@ -49,6 +49,7 @@ void GameController::start() {
     currentState = resettingState;
 
     BoardServices::getInstance()->resetBoard();
+    delegator->onResetting();
 }
 
 void GameController::setDelegator(GameEventsProtocol* delegator) {
