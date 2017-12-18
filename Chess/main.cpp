@@ -31,7 +31,7 @@ public:
 int main(int argc, char* argv[]) {
     shouldEnd = false;
     std::thread([]() {
-        BoardServices::getInstance()->setBoardSystemEventsDelegate(new MainDelegation());
+        BoardServices::getInstance()->setBoardSystemEventsDelegator(new MainDelegation());
     }).detach();
     std::string message = "";
     while (!shouldEnd) {

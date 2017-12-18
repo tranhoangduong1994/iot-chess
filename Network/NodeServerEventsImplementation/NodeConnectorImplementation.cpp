@@ -169,15 +169,15 @@ void NodeConnectorImplementation::init() {
     });
 }
 
-void NodeConnectorImplementation::setConnectingEventsDelegate(ConnectingEventsProtocol* delegate) {
-    connectingDelegate = delegate;
+void NodeConnectorImplementation::setConnectingEventsDelegator(ConnectingEventsProtocol* delegator) {
+    connectingDelegator = delegator;
 }
 
-void NodeConnectorImplementation::setRoomEventsDelegate(RoomEventsProtocol* delegate) {
-    roomDelegate = delegate;
+void NodeConnectorImplementation::setRoomEventsDelegator(RoomEventsProtocol* delegator) {
+    roomDelegator = delegator;
 }
 
-//void NodeConnectorImplementation::setGameEventsDelegate(GameEventsProtocol* delegate) {
-//    gameDelegate = delegate;
+//void NodeConnectorImplementation::setGameEventsDelegator(GameEventsProtocol* delegator) {
+//    gameDelegator = delegator;
 //}
 

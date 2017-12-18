@@ -16,8 +16,8 @@ class RoomEventsProtocol;
 
 class BaseConnectorProtocol {
 public:
-    virtual void setConnectingEventsDelegate(ConnectingEventsProtocol* delegate) = 0;
-    virtual void setRoomEventsDelegate(RoomEventsProtocol* delegate) = 0;
+    virtual void setConnectingEventsDelegator(ConnectingEventsProtocol* delegator) = 0;
+    virtual void setRoomEventsDelegator(RoomEventsProtocol* delegator) = 0;
     
     //connecting functions
     virtual void connect(std::string host) = 0;

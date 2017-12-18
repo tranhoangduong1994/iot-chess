@@ -19,9 +19,9 @@
 
 class NodeConnectorImplementation : public BaseConnectorProtocol {
 private:
-    ConnectingEventsProtocol* connectingDelegate = NULL;
-    RoomEventsProtocol* roomDelegate = NULL;
-//    GameEventsProtocol* gameDelegate = NULL;
+    ConnectingEventsProtocol* connectingDelegator = NULL;
+    RoomEventsProtocol* roomDelegator = NULL;
+//    GameEventsProtocol* gameDelegator = NULL;
     
     sio::client* client;
     void init();
@@ -40,9 +40,9 @@ public:
 //    virtual void offerDrawGame() override;
 //    virtual void surrender() override;
     
-    virtual void setConnectingEventsDelegate(ConnectingEventsProtocol* delegate) override;
-    virtual void setRoomEventsDelegate(RoomEventsProtocol* delegate) override;
-//    virtual void setGameEventsDelegate(GameEventsProtocol* delegate) override;
+    virtual void setConnectingEventsDelegator(ConnectingEventsProtocol* delegator) override;
+    virtual void setRoomEventsDelegator(RoomEventsProtocol* delegator) override;
+//    virtual void setGameEventsDelegator(GameEventsProtocol* delegator) override;
     
     static NodeConnectorImplementation* getInstance();
 };
