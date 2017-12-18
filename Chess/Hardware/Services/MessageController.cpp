@@ -89,7 +89,6 @@ void MessageController::processMessageBuffer() {
         }
     } else if (messageType == MessageType::Event) {
         if (messageHeader == EventType::SYSTEM_READY) {
-            startLoop();
             if (sDelegator) {
                 SerialPortConnectedData data(fileDescription);
                 sDelegator->onSerialPortConnected(data);
@@ -118,22 +117,21 @@ void MessageController::initSerialPort() {
             std::cout << "Trying port " << usbPortNumber << std::endl;
             fileDescription = serialOpen(usbPortNumber.c_str(), BAUD);
         }
+        startLoop();
     }).detach();
 }
 
 void MessageController::startLoop() {
-    std::thread([=]() {
-        while (true) {
-            if ((fileDescription = serialOpen(usbPortNumber.c_str(), BAUD)) < 0) {
-                break;
-            }
-            checkMessage();
+    while (true) {
+        if ((fileDescription = serialOpen(usbPortNumber.c_str(), BAUD)) < 0) {
+            break;
         }
-        
-        if (sDelegator) {
-            sDelegator->onSerialPortDisconnected();
-        }
-    }).detach();
+        checkMessage();
+    }
+    
+    if (sDelegator) {
+        sDelegator->onSerialPortDisconnected();
+    }
 }
 
 void MessageController::setBoardSystemEventsDelegator(BoardSystemEventsProtocol* delegator) {
