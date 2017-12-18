@@ -22,7 +22,6 @@ Screen::Screen() {
 
 void Screen::print(int lineNumber, std::string content) {
 	std::cout << "[Screen] print(" << std::to_string(lineNumber) << ", " << content << ")" << std::endl;
-    Displayer* displayer = Displayer::getInstance();
     
     if (lineNumber > SCREEN_HEIGHT) {
         std::cout << "[Screen] print - 1" << std::endl;
@@ -44,16 +43,15 @@ void Screen::print(int lineNumber, std::string content) {
     
     std::cout << "[Screen] print - 4" << std::endl;
     
-    displayer->print(lineNumber, content);
+    Displayer::getInstance()->print(lineNumber, content);
     
     std::cout << "[Screen] print - 5" << std::endl;
 }
 
 void Screen::clear() {
 	std::cout << "[Screen] clear()" << std::endl;
-	Displayer* displayer = Displayer::getInstance();
 	screenBuffer.clear();
-    displayer->clear();
+    Displayer::getInstance(->clear();
 }
 
 void Screen::refresh() {
