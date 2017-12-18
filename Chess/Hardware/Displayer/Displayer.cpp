@@ -39,5 +39,4 @@ void Displayer::clear() {
 
 void Displayer::init() {
     lcd = PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd");
-    Py_INCREF(lcd);
 }
