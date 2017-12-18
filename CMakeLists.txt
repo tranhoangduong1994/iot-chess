@@ -6,6 +6,6 @@ if(UNIX)
 endif()
 
 add_subdirectory(Stockfish)
-add_subdirectory(Network)
+#[[add_subdirectory(Network)]]
 add_subdirectory(Chess)
 
