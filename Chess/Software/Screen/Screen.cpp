@@ -12,8 +12,6 @@
 
 #include "Displayer.h"
 
-std::vector<Screen*> Screen::screenStack;
-
 Screen::Screen() {
 	screenBuffer.resize(SCREEN_HEIGHT);
 }
@@ -44,4 +42,10 @@ void Screen::clear() {
 	Displayer* displayer = Displayer::getInstance();
 	screenBuffer.clear();
     displayer->clear();
+}
+
+void Screen::refresh() {
+    for (int i = 0; i < screenBuffer.size(); i++) {
+        print(i + 1, screenBuffer.at(i));
+    }
 }

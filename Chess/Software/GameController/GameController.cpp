@@ -136,25 +136,7 @@ void GameController::handleOpponentTurnEnded(BaseTypes::Move move) {
 }
 
 void GameController::handlePlayerRequestedGameMenu() {
-    std::vector<OptionScreenEntry> entries;
-    
-    OptionScreenEntry resetEntry;
-    resetEntry.name = "Reset game";
-    resetEntry.onSelected = [=](std::string content) {
-		start();
-		Screen::popScreen();
-    };
-    entries.push_back(resetEntry);
-    
-    OptionScreenEntry cancelEntry;
-    cancelEntry.name = "Cancel";
-    cancelEntry.onSelected = [=](std::string content) {
-		Screen::popScreen();
-	};
-    entries.push_back(cancelEntry);
-    
-    OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
-    Screen::pushScreen(gameMenuScreen);
+    delegator->onGameMenuRequested();
 }
 
 void GameController::handlePlayerRequestedMoveValidating() {

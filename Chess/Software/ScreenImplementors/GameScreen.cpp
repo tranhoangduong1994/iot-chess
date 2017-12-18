@@ -40,6 +40,8 @@ void GameScreen::onEnter() {
     if (awaitAdjustment) {
         awaitAdjustment = false;
         gameController->handleBackFromOffPositionScreen();
+    } else {
+        refresh();
     }
 }
 
@@ -120,6 +122,27 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
     ScreenManager::getInstance()->pushScreen(screen);
 }
 
+void GameScreen::onGameMenuRequested() {
+    std::vector<OptionScreenEntry> entries;
+    
+    OptionScreenEntry resetEntry;
+    resetEntry.name = "Reset game";
+    resetEntry.onSelected = [=](std::string content) {
+        gameController->start();
+        ScreenManager::getInstance()->popScreen();
+    };
+    entries.push_back(resetEntry);
+    
+    OptionScreenEntry cancelEntry;
+    cancelEntry.name = "Cancel";
+    cancelEntry.onSelected = [=](std::string content) {
+        ScreenManager::getInstance()->popScreen();
+    };
+    entries.push_back(cancelEntry);
+    
+    OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
+    ScreenManager::pushScreen(gameMenuScreen);
+}
 
 void GameScreen::onWinGame(BaseTypes::Move lastMove) {
     std::vector<OptionScreenEntry> entries;

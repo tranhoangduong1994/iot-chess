@@ -28,6 +28,7 @@ protected:
     
     void print(int lineNumber, std::string content);
     void clear();
+    void refresh();
 };
 
 #endif /* Screen_h */
