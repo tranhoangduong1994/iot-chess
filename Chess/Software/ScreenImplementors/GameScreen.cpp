@@ -128,6 +128,7 @@ void GameScreen::onGameMenuRequested() {
     OptionScreenEntry resetEntry;
     resetEntry.name = "New game";
     resetEntry.onSelected = [=](std::string content) {
+        std::cout << "New game is selected" << std::endl;
         ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
     };
     entries.push_back(resetEntry);
