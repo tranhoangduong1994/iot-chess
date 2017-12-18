@@ -69,12 +69,19 @@ void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
 void OffPositionScreen::onMenuPressed() {
     std::vector<OptionScreenEntry> entries;
     
-    OptionScreenEntry resetEntry;
-    resetEntry.name = "New game";
-    resetEntry.onSelected = [=](std::string content) {
+    OptionScreenEntry newGameEntry;
+    newGameEntry.name = "New game";
+    newGameEntry.onSelected = [=](std::string content) {
         ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
     };
-    entries.push_back(resetEntry);
+    entries.push_back(newGameEntry);
+    
+    OptionScreenEntry mainMenuEntry;
+    mainMenuEntry.name = "Go to Main menu";
+    mainMenuEntry.onSelected = [=](std::string content) {
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
+    };
+    entries.push_back(mainMenuEntry);
     
     OptionScreenEntry cancelEntry;
     cancelEntry.name = "Cancel";
