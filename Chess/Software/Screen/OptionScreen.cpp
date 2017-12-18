@@ -15,12 +15,8 @@
 #include <thread>
 
 OptionScreen* OptionScreen::create(std::string header, std::vector<OptionScreenEntry> entries) {    
-    OptionScreen* screen = new OptionScreen();
-    screen->header = header;
-    screen->entries = entries;
-    screen->init();
-    
-    return screen;
+    OptionScreen* screen = new OptionScreen(header, entries);
+    return screen;    
 }
 
 OptionScreen::OptionScreen(std::string header, std::vector<OptionScreenEntry> entries) {

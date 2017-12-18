@@ -8,11 +8,11 @@
 
 #include "GameSettingScreen.h"
 #include "OptionScreen.h"
+#include "GameController.h"
 #include "GameScreen.h"
 
 GameSettingScreen* GameSettingScreen::create() {
     GameSettingScreen* screen = new GameSettingScreen();
-    screen->init();
     return screen;
 }
 
@@ -23,6 +23,7 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         std::vector<OptionScreenEntry> sideEntries;
         
         OptionScreenEntry whiteEntry;
+        whiteEntry.name = "WHITE";
         whiteEntry.onSelected = [=](std::string name) {
             side = BaseTypes::Side::WHITE;
             Screen::popScreen();
@@ -30,6 +31,7 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         sideEntries.push_back(whiteEntry);
         
         OptionScreenEntry blackEntry;
+        blackEntry.name = "BLACK";
         blackEntry.onSelected = [=](std::string name) {
             side = BaseTypes::Side::BLACK;
             Screen::popScreen();
@@ -47,11 +49,12 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         
         for (int i = 0; i < 20; i++) {
             OptionScreenEntry subEntry;
-            subEntry.name = std::to_string(i);
+            subEntry.name = std::to_string(i + 1);
             subEntry.onSelected = [=](std::string name) {
                 difficulty = atoi(name.c_str());
                 Screen::popScreen();
             };
+            difficultyEntries.push_back(subEntry);
         }
         
         Screen::pushScreen(OptionScreen::create("Select difficulty", difficultyEntries));
@@ -65,12 +68,15 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         GameScreen* gameScreen = GameScreen::create(gameController);
         Screen::runScreen(gameScreen);
     };
+    entries.push_back(startGameEntry);
+    
+    init();
 }
 
 void GameSettingScreen::init() {
     OptionScreen::init();
-    screen->side = BaseTypes::Side::WHITE;
-    screen->difficulty = 10;
+    side = BaseTypes::Side::WHITE;
+    difficulty = 10;
 }
 
 void GameSettingScreen::onEnter() {
