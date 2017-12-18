@@ -13,6 +13,7 @@
 #include "OptionScreen.h"
 
 #include "KeyboardController.h"
+#include "ScreenManager.h"
 
 MainMenuScreen* MainMenuScreen::create() {
     MainMenuScreen* screen = new MainMenuScreen();
@@ -57,7 +58,7 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
         switch (cursorPositionIndex) {
             case 1:
             {
-                Screen::runScreen(GameSettingScreen::create());
+                ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
                 break;
             }
             case 2:
@@ -81,7 +82,7 @@ void MainMenuScreen::onKeyPressed(BoardKey key) {
                 entries.push_back(cancelEntry);
 
                 OptionScreen* screen = OptionScreen::create("Test option screen", entries);
-                Screen::pushScreen(screen);
+                ScreenManager::getInstance()->pushScreen(screen);
                 break;
             }
             default:

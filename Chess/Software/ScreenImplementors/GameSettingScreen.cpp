@@ -10,6 +10,7 @@
 #include "OptionScreen.h"
 #include "GameController.h"
 #include "GameScreen.h"
+#include "ScreenManager.h"
 
 GameSettingScreen* GameSettingScreen::create() {
     GameSettingScreen* screen = new GameSettingScreen();
@@ -26,7 +27,7 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         whiteEntry.name = "WHITE";
         whiteEntry.onSelected = [=](std::string name) {
             side = BaseTypes::Side::WHITE;
-            Screen::popScreen();
+            ScreenManager::getInstance()->popScreen();
         };
         sideEntries.push_back(whiteEntry);
         
@@ -34,11 +35,11 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
         blackEntry.name = "BLACK";
         blackEntry.onSelected = [=](std::string name) {
             side = BaseTypes::Side::BLACK;
-            Screen::popScreen();
+            ScreenManager::getInstance()->popScreen();
         };
         sideEntries.push_back(blackEntry);
         
-        Screen::pushScreen(OptionScreen::create("Select side", sideEntries));
+        ScreenManager::getInstance()->pushScreen(OptionScreen::create("Select side", sideEntries));
     };
     entries.push_back(sideEntry);
     
@@ -52,12 +53,12 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
             subEntry.name = std::to_string(i + 1);
             subEntry.onSelected = [=](std::string name) {
                 difficulty = atoi(name.c_str());
-                Screen::popScreen();
+                ScreenManager::getInstance()->popScreen();
             };
             difficultyEntries.push_back(subEntry);
         }
         
-        Screen::pushScreen(OptionScreen::create("Select difficulty", difficultyEntries));
+        ScreenManager::getInstance()->pushScreen(OptionScreen::create("Select difficulty", difficultyEntries));
     };
     entries.push_back(difficultyEntry);
     
@@ -66,7 +67,7 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
     startGameEntry.onSelected = [=](std::string content) {
         GameController* gameController = new GameController(side, difficulty);
         GameScreen* gameScreen = GameScreen::create(gameController);
-        Screen::runScreen(gameScreen);
+        ScreenManager::getInstance()->runScreen(gameScreen);
     };
     entries.push_back(startGameEntry);
     

@@ -67,58 +67,58 @@ void NodeConnectorImplementation::init() {
     //CONNECTING EVENTS
     client->set_socket_open_listener([&](std::string nsp) {
         EventData data;
-        connectingDelegate->onConnected(data);
+        connectingDelegator->onConnected(data);
     });
     
     client->socket()->on("loginSucceeded", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        connectingDelegate->onLoggedInSucceeded(data);
+        connectingDelegator->onLoggedInSucceeded(data);
     });
     
     client->socket()->on("loginFailed", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["error"] = message->get_map()["error"]->get_string();
-        connectingDelegate->onLoggedInFailed(data);
+        connectingDelegator->onLoggedInFailed(data);
     });
     
     //ROOM EVENTS
     client->socket()->on("createRoomSucceeded", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["roomId"] = message->get_map()["roomId"]->get_string();
-        roomDelegate->onRoomCreatedSucceeded(data);
+        roomDelegator->onRoomCreatedSucceeded(data);
     });
     
     client->socket()->on("createRoomFailed", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["error"] = message->get_map()["error"]->get_string();
-        roomDelegate->onRoomCreatedFailed(data);
+        roomDelegator->onRoomCreatedFailed(data);
     });
     
     client->socket()->on("joinedRoomSucceeded", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        roomDelegate->onJoinedRoomSucceeded(data);
+        roomDelegator->onJoinedRoomSucceeded(data);
     });
     
     client->socket()->on("joinedRoomFailed", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["error"] = message->get_map()["error"]->get_string();
-        roomDelegate->onJoinedRoomFailed(data);
+        roomDelegator->onJoinedRoomFailed(data);
     });
     
     client->socket()->on("opponentJoined", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
         data["opponentUsername"] = message->get_map()["opponentUsername"]->get_string();
-        roomDelegate->onOpponentJoined(data);
+        roomDelegator->onOpponentJoined(data);
     });
     
     client->socket()->on("opponentQuited", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        roomDelegate->onOpponentQuited(data);
+        roomDelegator->onOpponentQuited(data);
     });
     
     client->socket()->on("opponentDisconnected", [&](const std::string& name,sio::message::ptr const& message,bool need_ack, sio::message::list& ack_message) {
         EventData data;
-        roomDelegate->onOpponentDisconnected(data);
+        roomDelegator->onOpponentDisconnected(data);
     });
     
     //GAME EVENTS

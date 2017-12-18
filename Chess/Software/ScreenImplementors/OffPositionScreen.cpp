@@ -8,6 +8,7 @@
 
 #include "OffPositionScreen.h"
 #include "BoardServices.h"
+#include "ScreenManager.h"
 
 OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) {
 	BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentState);
@@ -61,7 +62,7 @@ void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
 		updateList(items);
 		return;
 	} 
-	Screen::popScreen();
+    ScreenManager::getInstance()->popScreen();
 }
 
 void OffPositionScreen::onMenuPressed() {

@@ -11,16 +11,12 @@
 #include <iostream>
 
 #include "GameController.h"
-
 #include "OptionScreen.h"
-
 #include "OffPositionScreen.h"
-
 #include "MainMenuScreen.h"
-
 #include "BoardServices.h"
-
 #include "KeyboardController.h"
+#include "ScreenManager.h"
 
 GameScreen* GameScreen::create(GameController* gameController) {
     GameScreen* screen = new GameScreen();
@@ -69,7 +65,7 @@ void GameScreen::onReset() {
 void GameScreen::onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) {
     awaitAdjustment = true;
     OffPositionScreen* screen = OffPositionScreen::create(currentState, expectedState);
-    Screen::pushScreen(screen);
+    ScreenManager::getInstance()->pushScreen(screen);
     std::cout << "[GameScreen] onPiecesOffPosition - done" << std::endl;
 }
 
@@ -107,7 +103,7 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
         entry.name = moves.at(i).toString();
         entry.onSelected = [=](std::string content) {
             onSelected(true, BaseTypes::Move(content));
-            Screen::popScreen();
+            ScreenManager::getInstance()->popScreen();
         };
         entries.push_back(entry);
     }
@@ -116,12 +112,12 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
     cancelEntry.name = "CANCEL";
     cancelEntry.onSelected = [=](BaseTypes::Move move) {
         onSelected(false, BaseTypes::Move());
-        Screen::popScreen();
+        ScreenManager::getInstance()->popScreen();
     };
     entries.push_back(cancelEntry);
     
     OptionScreen* screen = OptionScreen::create("Which is your move?", entries);
-    Screen::pushScreen(screen);
+    ScreenManager::getInstance()->pushScreen(screen);
 }
 
 
@@ -143,7 +139,7 @@ void GameScreen::onWinGame(BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreen* screen = OptionScreen::create("YOU WIN!!!", entries);
-    Screen::pushScreen(screen);
+    ScreenManager::getInstance()->pushScreen(screen);
 }
 
 void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
@@ -164,7 +160,7 @@ void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreen* screen = OptionScreen::create("YOU LOSE", entries);
-    Screen::pushScreen(screen);    
+    ScreenManager::getInstance()->pushScreen(screen);
 }
 
 void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
@@ -185,5 +181,5 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
 	entries.push_back(newGameEntry);
 
     OptionScreen* screen = OptionScreen::create("DRAW GAME", entries);
-    Screen::pushScreen(screen);        
+    ScreenManager::getInstance()->pushScreen(screen);        
 }

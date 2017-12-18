@@ -12,6 +12,7 @@
 #include "BoardServices.h"
 #include "MainMenuScreen.h"
 #include "OptionScreen.h"
+#include "ScreenManager.h"
 
 bool shouldEnd;
 
@@ -19,7 +20,7 @@ class MainDelegation : public BoardSystemEventsProtocol {
 public:
     void onSerialPortConnected(const SerialPortConnectedData& data) {
         std::cout << "[MAIN] MainDelegation - onSerialPortConnected. Port number:  " << data.file_description << "." << std::endl;
-        Screen::runScreen(MainMenuScreen::create());
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
     };
     
     void onSerialPortDisconnected() {

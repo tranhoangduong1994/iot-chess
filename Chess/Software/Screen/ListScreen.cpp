@@ -9,6 +9,7 @@
 #include "ListScreen.h"
 #include "BoardServices.h"
 #include "KeyboardController.h"
+#include "ScreenManager.h"
 
 ListScreen* ListScreen::create(std::string header, std::vector<std::string> items) {
     ListScreen* screen = new ListScreen();
@@ -81,7 +82,7 @@ void ListScreen::onKeyPressed(BoardKey key) {
 void ListScreen::onMenuPressed() {}
 
 void ListScreen::onOKPressed() {
-	Screen::popScreen();
+    ScreenManager::getInstance()->popScreen();
 }
 
 void ListScreen::onUpPressed() {

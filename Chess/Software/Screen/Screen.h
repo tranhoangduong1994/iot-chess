@@ -17,23 +17,17 @@ const int SCREEN_HEIGHT = 4;
 
 class Screen {
 public:
-    static void pushScreen(Screen* screen);
-    static void popScreen();
-    static void runScreen(Screen* screen);
+    virtual void onEnter() {};
+    virtual void onExit() {};
+    virtual ~Screen() {};
     
 protected:
-    static std::vector<Screen*> screenStack;
-
     std::vector<std::string> screenBuffer;
     
     Screen();
-    virtual ~Screen() {};
     
     void print(int lineNumber, std::string content);
     void clear();
-    
-    virtual void onEnter() {};
-    virtual void onExit() {};
 };
 
 #endif /* Screen_h */

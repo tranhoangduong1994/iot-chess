@@ -18,47 +18,6 @@ Screen::Screen() {
 	screenBuffer.resize(SCREEN_HEIGHT);
 }
 
-void Screen::runScreen(Screen* screen) {
-	if (screenStack.size() > 0) {
-		screenStack.back()->onExit();
-		delete screenStack.back();
-		screenStack.pop_back();
-	}
-	
-	pushScreen(screen);
-}
-
-void Screen::pushScreen(Screen* screen) {
-	Displayer* displayer = Displayer::getInstance();
-	screenStack.push_back(screen);
-	displayer->clear();
-	screen->onEnter();
-	for (int i = 0; i < screen->screenBuffer.size(); i++) {
-		displayer->print(i + 1, screen->screenBuffer[i]);
-	}
-}
-
-void Screen::popScreen() {
-	Displayer* displayer = Displayer::getInstance();
-    if (screenStack.size() == 0) {
-        return;
-    }
-    
-    screenStack.back()->onExit();
-    delete screenStack.back();
-    screenStack.pop_back();
-    
-    displayer->clear();
-    
-    if (screenStack.size() > 0) {
-		Screen* currentScreen = screenStack.back();
-		currentScreen->onEnter();
-        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
-			displayer->print(i + 1, currentScreen->screenBuffer[i]);
-		}
-    }
-}
-
 void Screen::print(int lineNumber, std::string content) {
 	std::cout << "[Screen] print(" << std::to_string(lineNumber) << ", " << content << ")" << std::endl;
     Displayer* displayer = Displayer::getInstance();
