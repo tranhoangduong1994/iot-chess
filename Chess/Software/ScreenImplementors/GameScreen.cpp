@@ -33,8 +33,8 @@ void GameScreen::onEnter() {
     KeyboardController::getInstance()->setKeyboardEventsDelegator(gameController);
     if (!entered) {
         entered = true;
-        gameController->start();
         gameController->setDelegator(this);
+        gameController->start();
         return;
     }
     
