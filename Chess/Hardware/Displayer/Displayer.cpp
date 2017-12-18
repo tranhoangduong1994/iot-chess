@@ -23,20 +23,20 @@ Displayer* Displayer::getInstance() {
 
 void Displayer::print(int lineNumber, std::string content) {
     std::cout << "[Displayer] print(" << lineNumber << ", " << content << ")" << std::endl;
-    (PythonHelper::getInstance()->getObject("I2C_LCD_driver", "lcd")).attr("lcd_display_string")(CLEARING_STRING, lineNumber);
+    lcd.attr("lcd_display_string")(CLEARING_STRING, lineNumber);
     std::cout << "[Displayer] print - 1";
-    (PythonHelper::getInstance()->getObject("I2C_LCD_driver", "lcd")).attr("lcd_display_string")(content, lineNumber);
+    lcd.attr("lcd_display_string")(content, lineNumber);
     std::cout << "[Displayer] print - 2";
 }
 
 void Displayer::print(int lineNumber, int position, std::string content) {
-    (PythonHelper::getInstance()->getObject("I2C_LCD_driver", "lcd")).attr("lcd_display_string")(lineNumber, position, content);
+    lcd.attr("lcd_display_string")(lineNumber, position, content);
 }
 
 void Displayer::clear() {
-    (PythonHelper::getInstance()->getObject("I2C_LCD_driver", "lcd")).attr("lcd_clear")();
+    lcd.attr("lcd_clear")();
 }
 
 void Displayer::init() {
-    lcd =
+    lcd(PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd"));
 }

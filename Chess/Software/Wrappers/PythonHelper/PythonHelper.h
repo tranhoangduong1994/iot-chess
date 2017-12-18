@@ -13,7 +13,7 @@ private:
 public:
     static PythonHelper* getInstance();
 
-    python::object getObject(std::string moduleName, std::string className);
+    python::object createObject(std::string moduleName, std::string className);
 };
 
 #endif
