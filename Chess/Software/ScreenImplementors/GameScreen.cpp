@@ -127,8 +127,7 @@ void GameScreen::onGameMenuRequested() {
     OptionScreenEntry resetEntry;
     resetEntry.name = "New game";
     resetEntry.onSelected = [=](std::string content) {
-        gameController->start();
-        ScreenManager::getInstance()->popScreen();
+        ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
     };
     entries.push_back(resetEntry);
     
