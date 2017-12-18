@@ -25,10 +25,12 @@ void Screen::print(int lineNumber, std::string content) {
     Displayer* displayer = Displayer::getInstance();
     
     if (lineNumber > SCREEN_HEIGHT) {
+        std::cout << "[Screen] print - 1" << std::endl;
         return;
     }
     
     if (content.size() > SCREEN_WIDTH) {
+        std::cout << "[Screen] print - 2" << std::endl;
         content = content.substr(SCREEN_WIDTH);
     }
     
@@ -36,9 +38,15 @@ void Screen::print(int lineNumber, std::string content) {
         //return;
     //}
     
+    std::cout << "[Screen] print - 3" << std::endl;
+    
     screenBuffer[lineNumber - 1] = content;
     
+    std::cout << "[Screen] print - 4" << std::endl;
+    
     displayer->print(lineNumber, content);
+    
+    std::cout << "[Screen] print - 5" << std::endl;
 }
 
 void Screen::clear() {
@@ -51,9 +59,9 @@ void Screen::clear() {
 void Screen::refresh() {
     std::cout << "[Screen] refresh, buffer size = " << screenBuffer.size() << std::endl;
     for (int i = 0; i < screenBuffer.size(); i++) {
-        std::cout << "[Screen] line " << i + 1 << " begin";
+        std::cout << "[Screen] line " << i + 1 << " begin" << std::endl;
         std::cout << "[Screen] buffer " << i + 1 << ": " << screenBuffer.at(i) << std::endl;
         print(i + 1, screenBuffer.at(i));
-        std::cout << "[Screen] line " << i + 1 << " end";
+        std::cout << "[Screen] line " << i + 1 << " end" << std::endl;
     }
 }
