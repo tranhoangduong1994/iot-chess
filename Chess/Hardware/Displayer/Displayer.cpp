@@ -38,5 +38,12 @@ void Displayer::clear() {
 }
 
 void Displayer::init() {
-    lcd(PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd"));
+    try {
+        python::object module = python::import(moduleName.c_str());
+        lcd(module.attr(className.c_str())());
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        assert(false);
+    }
+//    lcd(PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd"));
 }
