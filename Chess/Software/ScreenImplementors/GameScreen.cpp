@@ -40,8 +40,6 @@ void GameScreen::onEnter() {
     if (awaitAdjustment) {
         awaitAdjustment = false;
         gameController->handleBackFromOffPositionScreen();
-    } else {
-        refresh();
     }
 }
 

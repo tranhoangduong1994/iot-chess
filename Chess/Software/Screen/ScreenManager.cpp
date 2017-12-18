@@ -38,9 +38,7 @@ void ScreenManager::pushScreen(Screen* screen) {
     screenStack.push_back(screen);
     displayer->clear();
     screen->onEnter();
-    for (int i = 0; i < screen->screenBuffer.size(); i++) {
-        displayer->print(i + 1, screen->screenBuffer[i]);
-    }
+    screen->refresh();
 }
 
 void ScreenManager::popScreen() {
@@ -58,9 +56,7 @@ void ScreenManager::popScreen() {
     if (screenStack.size() > 0) {
         Screen* currentScreen = screenStack.back();
         currentScreen->onEnter();
-        for (int i = 0; i < currentScreen->screenBuffer.size(); i++) {
-            displayer->print(i + 1, currentScreen->screenBuffer[i]);
-        }
+        currentScreen->refresh();
     }
 }
 

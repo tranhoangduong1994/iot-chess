@@ -21,14 +21,14 @@ public:
     virtual void onExit() {};
     virtual ~Screen() {};
     
+    void print(int lineNumber, std::string content);
+    void clear();
+    void refresh();
+    
 protected:
     std::vector<std::string> screenBuffer;
     
     Screen();
-    
-    void print(int lineNumber, std::string content);
-    void clear();
-    void refresh();
 };
 
 #endif /* Screen_h */
