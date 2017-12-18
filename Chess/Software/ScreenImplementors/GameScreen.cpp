@@ -80,14 +80,15 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
         print(1, "Opponent move: " + previousOpponentMove.toString());
     }
     
-    print(2, "It's your turn.");
+    print(2, "It's your turn");
     print(3, "Make your move...");
     print(4, "");
 }
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    print(3, "Your move: " + playerMove.toString());
+    print(2, "Your move: " + playerMove.toString());
+    print(3, "It's opponent's turn");
     print(4, "Please wait...");
 }
 
