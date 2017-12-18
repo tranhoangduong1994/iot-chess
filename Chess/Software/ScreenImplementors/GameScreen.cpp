@@ -14,6 +14,7 @@
 #include "OptionScreen.h"
 #include "OffPositionScreen.h"
 #include "MainMenuScreen.h"
+#include "GameSettingScreen.h"
 #include "BoardServices.h"
 #include "KeyboardController.h"
 #include "ScreenManager.h"
@@ -124,7 +125,7 @@ void GameScreen::onGameMenuRequested() {
     std::vector<OptionScreenEntry> entries;
     
     OptionScreenEntry resetEntry;
-    resetEntry.name = "Reset game";
+    resetEntry.name = "New game";
     resetEntry.onSelected = [=](std::string content) {
         gameController->start();
         ScreenManager::getInstance()->popScreen();
@@ -148,14 +149,14 @@ void GameScreen::onWinGame(BaseTypes::Move lastMove) {
     OptionScreenEntry newGameEntry;
     newGameEntry.name = "Play new game";
     newGameEntry.onSelected = [=](std::string content) {
-		
+		ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-//        Screen::runScreen(MainMenuScreen::create());
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
@@ -169,14 +170,14 @@ void GameScreen::onLoseGame(BaseTypes::Move lastMove) {
     OptionScreenEntry newGameEntry;
     newGameEntry.name = "Play new game";
     newGameEntry.onSelected = [=](std::string content) {
-		
+		ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-//        Screen::runScreen(MainMenuScreen::create());
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
@@ -190,14 +191,14 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
     OptionScreenEntry newGameEntry;
     newGameEntry.name = "Play new game";
     newGameEntry.onSelected = [=](std::string content) {
-		
+		ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
 	};
 	entries.push_back(newGameEntry);
 
     OptionScreenEntry mainMenuEntry;
     newGameEntry.name = "Go to Main menu";
     newGameEntry.onSelected = [=](std::string content) {
-//        Screen::runScreen(MainMenuScreen::create());
+        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
 	};
 	entries.push_back(newGameEntry);
 

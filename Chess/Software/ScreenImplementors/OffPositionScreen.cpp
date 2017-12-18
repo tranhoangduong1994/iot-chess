@@ -9,6 +9,7 @@
 #include "OffPositionScreen.h"
 #include "BoardServices.h"
 #include "ScreenManager.h"
+#include "GameSettingScreen.h"
 
 OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentState, const BaseTypes::Bitboard& expectedState) {
 	BaseTypes::Bitboard offPiecePositions = expectedState.getOffPiecePositions(currentState);
@@ -66,7 +67,24 @@ void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
 }
 
 void OffPositionScreen::onMenuPressed() {
+    std::vector<OptionScreenEntry> entries;
     
+    OptionScreenEntry resetEntry;
+    resetEntry.name = "New game";
+    resetEntry.onSelected = [=](std::string content) {
+        ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
+    };
+    entries.push_back(resetEntry);
+    
+    OptionScreenEntry cancelEntry;
+    cancelEntry.name = "Cancel";
+    cancelEntry.onSelected = [=](std::string content) {
+        ScreenManager::getInstance()->popScreen();
+    };
+    entries.push_back(cancelEntry);
+    
+    OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
+    ScreenManager::getInstance()->pushScreen(gameMenuScreen);
 }
 
 void OffPositionScreen::onOKPressed() {
