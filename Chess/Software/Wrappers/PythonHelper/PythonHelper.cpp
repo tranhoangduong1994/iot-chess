@@ -25,7 +25,7 @@ void PythonHelper::init() {
 	}
 }
 
-python::object PythonHelper::createObject(std::string moduleName, std::string className)  {
+python::object PythonHelper::getObject(std::string moduleName, std::string className)  {
 	std::cout << "[PythonWrapper] createObject(" << moduleName << ", " << className << ")" << std::endl;
 	try {
 		python::object module = python::import(moduleName.c_str());

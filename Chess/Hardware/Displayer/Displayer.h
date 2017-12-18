@@ -21,7 +21,6 @@ public:
     
 private:
     static Displayer* instance;
-    python::object lcd;
     void init();
 };
 
