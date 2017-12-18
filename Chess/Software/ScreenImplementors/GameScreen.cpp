@@ -20,6 +20,8 @@
 
 #include "BoardServices.h"
 
+#include "KeyboardController.h"
+
 GameScreen* GameScreen::create(GameController* gameController) {
     GameScreen* screen = new GameScreen();
     screen->gameController = gameController;
@@ -30,8 +32,8 @@ GameScreen* GameScreen::create(GameController* gameController) {
 
 void GameScreen::onEnter() {
     std::cout << "GameScreen - onEnter" << std::endl;
-    BoardServices::getInstance()->setBoardServicesEventsDelegator(gameController);
-    BoardServices::getInstance()->setBoardKeyEventsDelegator(gameController);
+    KeyboardController::getInstance()->setKeyboardEventsDelegator(gameController);
+    KeyboardController::getInstance()->setKeyboardEventsDelegator(gameController);
     if (!entered) {
         entered = true;
         gameController->start();
