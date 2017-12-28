@@ -65,6 +65,7 @@ void GameController::setDifficulty(int difficulty) {
 }
 
 void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {
+    std::cout << "[GameController] handleInitValidating" << std::endl;
     if (boardState != GAME_INIT_BITBOARD) {
         delegator->onPiecesOffPosition(boardState, GAME_INIT_BITBOARD);
         return;
@@ -147,6 +148,7 @@ void GameController::handlePlayerRequestedMoveValidating() {
 }
 
 void GameController::handleBackFromOffPositionScreen() {
+    std::cout << "[GameController] handleBackFromOffPositionScreen" << std::endl;
 	if (moves.size() > 0) {
 		handleOpponentTurnEnded(moves.back());
 		return;
@@ -165,6 +167,7 @@ void GameController::performPlayerTurn() {
 }
 
 void GameController::performOpponentTurn() {
+    std::cout << "[GameController] performOpponentTurn" << std::endl;
     currentState = opponentTurnState;
     engine->calculate([=](BaseTypes::Move move) {
 //        engine->move(move);
