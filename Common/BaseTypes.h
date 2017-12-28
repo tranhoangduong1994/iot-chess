@@ -22,6 +22,22 @@ namespace BaseTypes {
         WHITE
     };
     
+    enum PieceType {
+        NONE,
+        WHITE_KING,
+        WHITE_QUEEN,
+        WHITE_BISHOP,
+        WHITE_KNIGHT,
+        WHITE_ROOK,
+        WHITE_PAWN,
+        BLACK_KING,
+        BLACK_QUEEN,
+        BLACK_BISHOP,
+        BLACK_KNIGHT,
+        BLACK_ROOK,
+        BLACK_PAWN
+    };
+    
     struct Position {
         char file;
         int rank;
@@ -41,6 +57,9 @@ namespace BaseTypes {
         }
         const std::string toString() const {
             return std::string(this->file + std::to_string(this->rank));
+        }
+        int toSquareIndex() const {
+            return (this->file - 97) + (this->rank - 1) * 8;
         }
 		bool operator!= (const Position& other) {
             return this->file != other.file || this->rank != other.rank;

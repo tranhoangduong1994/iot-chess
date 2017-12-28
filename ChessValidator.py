@@ -20,10 +20,13 @@ class Validator():
         return rawString[56:64] + rawString[48:56] + rawString[40:48] + rawString[32:40] + rawString[24:32] + rawString[16:24] + rawString[8:16] + rawString[0:8];
 
     def getAttackedSquares(self, attackerSquareIdx):
-        print("getAttackedSquares" + str(attackerSquareIdx));
         attackedSquares = list(self.board.attacks(attackerSquareIdx))
         attackedSquareSet = chess.SquareSet()
         for square in attackedSquares:
             attackedSquareSet.add(square)
         print("result: " + str(bin(attackedSquareSet)).replace("0b", "")[::-1]);
         return str(bin(attackedSquareSet)).replace("0b", "")[::-1]
+
+    def getPieceType(self, squareIdx):
+        return str(self.board).replace(" ", "").replace("\n", "").replace(".", "X")[::-1][squareIdx]
+

@@ -95,3 +95,46 @@ BaseTypes::Bitboard PythonChessValidator::getBitboard() {
         assert(false);
     }
 }
+
+BaseTypes::PieceType PythonChessValidator::getPieceType(int squareIndex) {
+    try {
+        std::string typeString = python::extract<std::string>(validator.attr("getPieceType")(squareIndex));
+        if (typeString == "K") {
+            return BaseTypes::PieceType::WHITE_KING;
+        }
+        if (typeString == "Q") {
+            return BaseTypes::PieceType::WHITE_QUEEN;
+        }
+        if (typeString == "B") {
+            return BaseTypes::PieceType::WHITE_BISHOP;
+        }
+        if (typeString == "N") {
+            return BaseTypes::PieceType::WHITE_KNIGHT;
+        }
+        if (typeString == "R") {
+            return BaseTypes::PieceType::WHITE_ROOK;
+        }
+        if (typeString == "P") {
+            return BaseTypes::PieceType::WHITE_PAWN;
+        }
+        if (typeString == "k") {
+            return BaseTypes::PieceType::BLACK_KING;
+        }
+        if (typeString == "q") {
+            return BaseTypes::PieceType::BLACK_QUEEN;
+        }
+        if (typeString == "b") {
+            return BaseTypes::PieceType::BLACK_BISHOP;
+        }
+        if (typeString == "n") {
+            return BaseTypes::PieceType::BLACK_KNIGHT;
+        }
+        if (typeString == "p") {
+            return BaseTypes::PieceType::BLACK_PAWN;
+        }
+        return BaseTypes::NONE;
+    } catch (const python::error_already_set) {
+        PyErr_Print();
+        assert(false);
+    }
+}

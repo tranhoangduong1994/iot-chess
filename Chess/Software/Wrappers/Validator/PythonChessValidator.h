@@ -20,6 +20,7 @@ public:
     bool checkGameOver() override;
     bool checkDraw() override;
     void move(const BaseTypes::Move& move) override;
+    BaseTypes::PieceType getPieceType(int squareIndex) override;
     
     BaseTypes::Bitboard getAttackedSquares(int attackerSquareIndex) override;
     BaseTypes::Bitboard getBitboard() override;

@@ -170,6 +170,23 @@ void GameController::performOpponentTurn() {
 //        engine->move(move);
 //        validator->move(move);
 //        moves.push_back(move);
+        BaseTypes::Position fromPos = move.fromPos;
+        BaseTypes::Position toPos = move.toPos;
+        BaseTypes::PieceType pieceType = validator->getPieceType(fromPos.toSquareIndex());
+        if (pieceType == BaseTypes::PieceType::WHITE_KING) {
+            if (toPos.file - fromPos.file == 2) {
+                BoardServices::getInstance()->castling(CastlingType::WHITE_QUEEN_SIDE);
+            } else if (toPos.file - fromPos.file == -2) {
+                BoardServices::getInstance()->castling(CastlingType::WHITE_KING_SIDE);
+            }
+        }
+        if (pieceType == BaseTypes::PieceType::BLACK_KING) {
+            if (toPos.file - fromPos.file == 2) {
+                BoardServices::getInstance()->castling(CastlingType::BLACK_QUEEN_SIDE);
+            } else if (toPos.file - fromPos.file == -2) {
+                BoardServices::getInstance()->castling(CastlingType::BLACK_KING_SIDE);
+            }
+        }
         BoardServices::getInstance()->move(move);
     });
 }
