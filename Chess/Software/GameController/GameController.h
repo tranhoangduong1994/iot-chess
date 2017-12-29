@@ -57,6 +57,8 @@ private:
     void performPlayerTurn();
     void performOpponentTurn();
     
+    void handleComputerFinishedThinking(BaseTypes::Move move);
+    
     GameEventsProtocol* delegator;
     
     IEngine* engine;
