@@ -9,6 +9,8 @@
 #ifndef Displayer_h
 #define Displayer_h
 
+#include <string>
+
 class Displayer {
 public:
     static Displayer* getInstance();
