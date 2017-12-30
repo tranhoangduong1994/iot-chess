@@ -58,8 +58,6 @@ const std::string CLEARING_STRING = "                    ";
 #define LCD_NOBACKLIGHT 0x00
 
 void Displayer::init() {
-    //    lcd = PythonHelper::getInstance()->createObject("I2C_LCD_driver", "lcd");
-    
     wiringPiSetup();
     fd = wiringPiI2CSetup(I2C_ADDR);
     
@@ -120,7 +118,7 @@ void Displayer::print(int lineNumber, int position, std::string content) {
         pos = 0x54 + position;
     }
     
-    lcdWrite(pos, LCD_CMD);
+    lcdWrite(0x80 + pos, LCD_CMD);
     const char* s = content.c_str();
     while (*s) {
         lcdWrite(*(s++), LCD_CHR);

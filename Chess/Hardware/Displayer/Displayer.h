@@ -9,8 +9,6 @@
 #ifndef Displayer_h
 #define Displayer_h
 
-#include "PythonHelper.h"
-
 class Displayer {
 public:
     static Displayer* getInstance();
@@ -21,7 +19,6 @@ public:
     
 private:
     static Displayer* instance;
-    python::object lcd;
     
     int fd;
     
