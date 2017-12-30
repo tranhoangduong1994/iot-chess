@@ -105,7 +105,7 @@ Displayer* Displayer::getInstance() {
 }
 
 void Displayer::print(int lineNumber, std::string content) {
-    print(int lineNumber, 0, content);
+    print(lineNumber, 0, content);
 }
 
 void Displayer::print(int lineNumber, int position, std::string content) {
