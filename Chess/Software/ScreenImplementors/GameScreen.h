@@ -13,6 +13,7 @@
 #include "GameEventsProtocol.h"
 #include "Screen.h"
 #include <vector>
+#include <string>
 
 class GameController;
 
