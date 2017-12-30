@@ -44,6 +44,8 @@ protected:
 private:
     void init();
     
+    std::string getPieceNameByType(PieceType type)
+    
     ~GameScreen() {}
     GameController* gameController;
     

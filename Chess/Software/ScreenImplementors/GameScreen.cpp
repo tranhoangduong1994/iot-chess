@@ -81,7 +81,7 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 	std::cout << "[GameScreen] onTurnBegan" << std::endl;
     if (previousOpponentMove != BaseTypes::Move()) {
         BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(previousOpponentMove.fromPos.toSquareIndex());
-        std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
+        std::string pieceName = getPieceNameByType(pieceType);
         print(1, "Opponent move:" + pieceName + previousOpponentMove.toString());
     }
     
@@ -93,7 +93,7 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
     BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(playerMove.fromPos.toSquareIndex());
-    std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
+    std::string pieceName = getPieceNameByType(pieceType);
     print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
     print(4, "Please wait...");
@@ -217,4 +217,35 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
 
     OptionScreen* screen = OptionScreen::create("DRAW GAME", entries);
     ScreenManager::getInstance()->pushScreen(screen);        
+}
+
+std::string GameScreen::getPieceNameByType(PieceType type) {
+    switch (type) {
+        case WHITE_KING:
+            return "K";
+        case WHITE_QUEEN:
+            return "Q";
+        case WHITE_BISHOP:
+            return "B";
+        case WHITE_KNIGHT:
+            return "N";
+        case WHITE_ROOK:
+            return "R";
+        case WHITE_PAWN:
+            return "P";
+        case BLACK_KING:
+            return "k";
+        case BLACK_QUEEN:
+            return "q";
+        case BLACK_BISHOP:
+            return "b";
+        case BLACK_KNIGHT:
+            return "n";
+        case BLACK_ROOK:
+            return "r";
+        case BLACK_PAWN:
+            return "p";
+        default:
+            return "";
+    }
 }
