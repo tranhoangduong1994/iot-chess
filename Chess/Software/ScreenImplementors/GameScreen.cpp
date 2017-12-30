@@ -219,31 +219,31 @@ void GameScreen::onDrawGame(DrawGameType type, BaseTypes::Move lastMove) {
     ScreenManager::getInstance()->pushScreen(screen);        
 }
 
-std::string GameScreen::getPieceNameByType(PieceType type) {
+std::string GameScreen::getPieceNameByType(BaseTypes::PieceType type) {
     switch (type) {
-        case WHITE_KING:
+        case BaseTypes::PieceType::WHITE_KING:
             return "K";
-        case WHITE_QUEEN:
+        case BaseTypes::PieceType::WHITE_QUEEN:
             return "Q";
-        case WHITE_BISHOP:
+        case BaseTypes::PieceType::WHITE_BISHOP:
             return "B";
-        case WHITE_KNIGHT:
+        case BaseTypes::PieceType::WHITE_KNIGHT:
             return "N";
-        case WHITE_ROOK:
+        case BaseTypes::PieceType::WHITE_ROOK:
             return "R";
-        case WHITE_PAWN:
+        case BaseTypes::PieceType::WHITE_PAWN:
             return "P";
-        case BLACK_KING:
+        case BaseTypes::PieceType::BLACK_KING:
             return "k";
-        case BLACK_QUEEN:
+        case BaseTypes::PieceType::BLACK_QUEEN:
             return "q";
-        case BLACK_BISHOP:
+        case BaseTypes::PieceType::BLACK_BISHOP:
             return "b";
-        case BLACK_KNIGHT:
+        case BaseTypes::PieceType::BLACK_KNIGHT:
             return "n";
-        case BLACK_ROOK:
+        case BaseTypes::PieceType::BLACK_ROOK:
             return "r";
-        case BLACK_PAWN:
+        case BaseTypes::PieceType::BLACK_PAWN:
             return "p";
         default:
             return "";
