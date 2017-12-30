@@ -80,7 +80,7 @@ void GameScreen::onGameStarted() {
 void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 	std::cout << "[GameScreen] onTurnBegan" << std::endl;
     if (previousOpponentMove != BaseTypes::Move()) {
-        BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(previousOpponentMove.fromPos.toString());
+        BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(previousOpponentMove.fromPos.toSquareIndex());
         std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
         print(1, "Opponent move:" + pieceName + previousOpponentMove.toString());
     }
@@ -92,7 +92,7 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(playerMove.fromPos.toString());
+    BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(playerMove.fromPos.toSquareIndex());
     std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
     print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
