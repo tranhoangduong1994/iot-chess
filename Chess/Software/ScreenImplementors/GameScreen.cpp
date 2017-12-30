@@ -19,6 +19,8 @@
 #include "KeyboardController.h"
 #include "ScreenManager.h"
 
+#include "PythonChessValidator.h"
+
 GameScreen* GameScreen::create(GameController* gameController) {
     GameScreen* screen = new GameScreen();
     screen->gameController = gameController;
@@ -78,7 +80,8 @@ void GameScreen::onGameStarted() {
 void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 	std::cout << "[GameScreen] onTurnBegan" << std::endl;
     if (previousOpponentMove != BaseTypes::Move()) {
-        std::string pieceName = BaseTypes::getPieceNameByType(previousOpponentMove.fromPos);
+        BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(previousOpponentMove.fromPos.toString());
+        std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
         print(1, "Opponent move:" + pieceName + previousOpponentMove.toString());
     }
     
@@ -89,7 +92,8 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    std::string pieceName = BaseTypes::getPieceNameByType(playerMove.fromPos);
+    BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(playerMove.fromPos.toString());
+    std::string pieceName = BaseTypes::getPieceNameByType(pieceType);
     print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
     print(4, "Please wait...");
