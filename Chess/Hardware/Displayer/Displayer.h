@@ -22,7 +22,14 @@ public:
 private:
     static Displayer* instance;
     python::object lcd;
+    
+    int fd;
+    
     void init();
+    
+    void lcdStrobe(int data);
+    void lcdWriteFourBits(int data);
+    void lcdWrite(int data, int mode);
 };
 
 #endif /* Displayer_h */
