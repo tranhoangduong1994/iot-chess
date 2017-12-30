@@ -78,7 +78,8 @@ void GameScreen::onGameStarted() {
 void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 	std::cout << "[GameScreen] onTurnBegan" << std::endl;
     if (previousOpponentMove != BaseTypes::Move()) {
-        print(1, "Opponent move: " + previousOpponentMove.toString());
+        std::string pieceName = BaseTypes::getPieceNameByType(previousOpponentMove.fromPos);
+        print(1, "Opponent move:" + pieceName + previousOpponentMove.toString());
     }
     
     print(2, "It's your turn");
@@ -88,7 +89,8 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    print(2, "Your move: " + playerMove.toString());
+    std::string pieceName = BaseTypes::getPieceNameByType(playerMove.fromPos);
+    print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
     print(4, "Please wait...");
 }

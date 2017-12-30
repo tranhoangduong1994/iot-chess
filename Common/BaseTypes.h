@@ -38,6 +38,37 @@ namespace BaseTypes {
         BLACK_PAWN
     };
     
+    std::string getPieceNameByType(PieceType type) {
+        switch (type) {
+            case WHITE_KING:
+                return "K";
+            case WHITE_QUEEN:
+                return "Q";
+            case WHITE_BISHOP:
+                return "B";
+            case WHITE_KNIGHT:
+                return "N";
+            case WHITE_ROOK:
+                return "R";
+            case WHITE_PAWN:
+                return "P";
+            case BLACK_KING:
+                return "k";
+            case BLACK_QUEEN:
+                return "q";
+            case BLACK_BISHOP:
+                return "b";
+            case BLACK_KNIGHT:
+                return "n";
+            case BLACK_ROOK:
+                return "r";
+            case BLACK_PAWN:
+                return "p";
+            default:
+                return "";
+        }
+    }
+    
     struct Position {
         char file;
         int rank;
