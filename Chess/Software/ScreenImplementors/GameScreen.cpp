@@ -92,7 +92,7 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    BaseTypes::PieceType pieceType = previousOpponentMove.pieceType;
+    BaseTypes::PieceType pieceType = playerMove.pieceType;
     std::string pieceName = getPieceNameByType(pieceType);
     print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
