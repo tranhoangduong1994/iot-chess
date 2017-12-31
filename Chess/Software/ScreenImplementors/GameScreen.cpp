@@ -243,7 +243,7 @@ std::string GameScreen::getPieceNameByType(BaseTypes::PieceType type) {
             return "n";
         case BaseTypes::PieceType::BLACK_ROOK:
             return "r";
-        case BLACK_PAWN:
+        case BaseTypes::PieceType::BLACK_PAWN:
             return "p";
         default:
             return "";
