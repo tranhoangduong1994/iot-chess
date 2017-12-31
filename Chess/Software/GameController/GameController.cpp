@@ -106,6 +106,8 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
 }
 
 void GameController::handlePlayerTurnEnded(BaseTypes::Move move) {
+    BaseTypes::PieceType pieceType = validator->getPieceType(move.fromPos.toSquareIndex());
+    move.pieceType = pieceType;
 	moves.push_back(move);
 	engine->move(move);
 	validator->move(move);
