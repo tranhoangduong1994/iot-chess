@@ -80,7 +80,7 @@ void GameScreen::onGameStarted() {
 void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 	std::cout << "[GameScreen] onTurnBegan" << std::endl;
     if (previousOpponentMove != BaseTypes::Move()) {
-        BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(previousOpponentMove.fromPos.toSquareIndex());
+        BaseTypes::PieceType pieceType = previousOpponentMove.pieceType;
         std::string pieceName = getPieceNameByType(pieceType);
         print(1, "Opponent move:" + pieceName + previousOpponentMove.toString());
     }
@@ -92,7 +92,7 @@ void GameScreen::onTurnBegan(BaseTypes::Move previousOpponentMove) {
 
 void GameScreen::onTurnEnded(BaseTypes::Move playerMove) {
 	std::cout << "[GameScreen] onTurnEnded" << std::endl;
-    BaseTypes::PieceType pieceType = PythonChessValidator::getInstance()->getPieceType(playerMove.fromPos.toSquareIndex());
+    BaseTypes::PieceType pieceType = previousOpponentMove.pieceType;
     std::string pieceName = getPieceNameByType(pieceType);
     print(2, "Your move:" + pieceName + playerMove.toString());
     print(3, "It's opponent's turn");
@@ -243,7 +243,7 @@ std::string GameScreen::getPieceNameByType(BaseTypes::PieceType type) {
             return "n";
         case BaseTypes::PieceType::BLACK_ROOK:
             return "r";
-        case BaseTypes::PieceType::BLACK_PAWN:
+        case BLACK_PAWN:
             return "p";
         default:
             return "";

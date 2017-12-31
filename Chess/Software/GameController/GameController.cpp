@@ -178,6 +178,10 @@ void GameController::handleComputerFinishedThinking(BaseTypes::Move move) {
     BaseTypes::Position fromPos = move.fromPos;
     BaseTypes::Position toPos = move.toPos;
     BaseTypes::PieceType pieceType = validator->getPieceType(fromPos.toSquareIndex());
+    move.pieceType = pieceType;
+    engine->move(move);
+    validator->move(move);
+    moves.push_back(move);
     if (pieceType == BaseTypes::PieceType::WHITE_KING) {
         if (toPos.file - fromPos.file == 2) {
             BoardServices::getInstance()->castling(CastlingType::WHITE_QUEEN_SIDE);
@@ -196,9 +200,6 @@ void GameController::handleComputerFinishedThinking(BaseTypes::Move move) {
 }
 
 void GameController::onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bitboard currentPhysicsBitboard) {
-    engine->move(move);
-    validator->move(move);
-    moves.push_back(move);
 	std::cout << "[GameController] onOpponentFinishedMove" << std::endl;
 	std::cout << "currentLogicBitboard: " << currentLogicBitboard.toString() << std::endl;
 	std::cout << "currentPhysicsBitboard: " << currentPhysicsBitboard.toString() << std::endl;
@@ -343,3 +344,5 @@ void PlayerTurnState::handleKey(GameController *gameController, BoardKey key)  {
 void PlayerTurnState::handleBoardScanningResult(GameController *gameController, BaseTypes::Bitboard currentPhysicsBitboard) {
     gameController->handlePlayerFinishedMove(currentPhysicsBitboard);
 }
+
+

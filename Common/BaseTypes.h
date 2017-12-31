@@ -70,6 +70,7 @@ namespace BaseTypes {
         Position fromPos;
         Position toPos;
         char promotionType;
+        PieceType pieceType;
         Move() {
 			promotionType = 0;
 		};
