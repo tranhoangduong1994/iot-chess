@@ -28,5 +28,10 @@ class Validator():
         return str(bin(attackedSquareSet)).replace("0b", "")[::-1]
 
     def getPieceType(self, squareIdx):
-        return str(self.board).replace(" ", "").replace("\n", "").replace(".", "X")[::-1][squareIdx]
-
+        print("getPieceType, squareIdx = " + str(squareIdx))
+        fs = str(self.board).replace(" ", "").replace("\n", "").replace(".", "X")
+        s = fs[56:64] + fs[48:56] + fs[40:48] + fs[32:40] + fs[24:32] + fs[16:24] + fs[8:16] + fs[0:8]
+        print("fs is: " + fs);
+        print("s is: " + s);
+        print("result: " + s[squareIdx]);
+        return s[squareIdx]
