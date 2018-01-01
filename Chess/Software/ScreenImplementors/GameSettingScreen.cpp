@@ -48,9 +48,9 @@ GameSettingScreen::GameSettingScreen() : OptionScreen("GAME SETTINGS", std::vect
     difficultyEntry.onSelected = [=](std::string name) {
         std::vector<OptionScreenEntry> difficultyEntries;
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i <= 21; i++) {
             OptionScreenEntry subEntry;
-            subEntry.name = std::to_string(i + 1);
+            subEntry.name = std::to_string(i);
             subEntry.onSelected = [=](std::string name) {
                 difficulty = atoi(name.c_str());
                 ScreenManager::getInstance()->popScreen();
