@@ -265,7 +265,7 @@ void StockfishWrapper::move(BaseTypes::Move move) {
 }
 
 void StockfishWrapper::calculate(std::function<void(BaseTypes::Move bestMove)> onCalculated) {
-    std::istringstream is(gameMoves);
+    std::istringstream is(gameMoves + " depth 3");
     go(pos, is);
     this->onCalculated = onCalculated;
 }
