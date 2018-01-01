@@ -187,15 +187,21 @@ void GameController::handleComputerFinishedThinking(BaseTypes::Move move) {
     if (pieceType == BaseTypes::PieceType::WHITE_KING) {
         if (toPos.file - fromPos.file == 2) {
             BoardServices::getInstance()->castling(CastlingType::WHITE_KING_SIDE);
-        } else if (toPos.file - fromPos.file == -2) {
+            return;
+        }
+        if (toPos.file - fromPos.file == -2) {
             BoardServices::getInstance()->castling(CastlingType::WHITE_QUEEN_SIDE);
+            return;
         }
     }
     if (pieceType == BaseTypes::PieceType::BLACK_KING) {
         if (toPos.file - fromPos.file == 2) {
             BoardServices::getInstance()->castling(CastlingType::BLACK_KING_SIDE);
-        } else if (toPos.file - fromPos.file == -2) {
+            return;
+        }
+        if (toPos.file - fromPos.file == -2) {
             BoardServices::getInstance()->castling(CastlingType::BLACK_QUEEN_SIDE);
+            return;
         }
     }
     BoardServices::getInstance()->move(move);
