@@ -249,8 +249,8 @@ void StockfishWrapper::start(int difficulty) {
     pos.set(StartFEN, false, &States->back(), Threads.main());
     
     //set difficulty;
-    std::istringstream is;
-    is << "name Skill Level value " << difficulty;
+    std::string difficultyString = "name Skill Level value " + std::to_string(difficulty);
+    std::istringstream is(difficultyString);
     setoption(is);
 }
 
