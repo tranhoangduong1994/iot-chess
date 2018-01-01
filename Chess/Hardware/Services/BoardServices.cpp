@@ -41,6 +41,10 @@ void BoardServices::resetBoard() {
     MessageController::getInstance()->send(ServiceRequestType::RESET_BOARD);
 }
 
+void BoardServices::playSound(SoundType type) {
+    MessageController::getInstance()->send(ServiceRequestType::PLAY_SOUND, std::to_string(type));
+}
+
 void BoardServices::setBoardSystemEventsDelegator(BoardSystemEventsProtocol* delegator) {
     MessageController::getInstance()->setBoardSystemEventsDelegator(delegator);
 }

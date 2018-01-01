@@ -21,12 +21,22 @@ enum CastlingType {
     BLACK_KING_SIDE
 };
 
+enum SoundType {
+    SOUND_SYSTEM_READY,
+    SOUND_GAME_READY,
+    SOUND_VALID_MOVE,
+    SOUND_INVALID_MOVE,
+    SOUND_OFFPOSITION,
+    SOUND_MULTIPLEMOVE
+};
+
 class BoardServices {
 public:
     void resetBoard();
     void move(BaseTypes::Move move);
     void castling(CastlingType type);
     void scan();
+    void playSound(SoundType type);
     
     void setBoardSystemEventsDelegator(BoardSystemEventsProtocol* delegator);
     void setBoardServicesEventsDelegator(BoardServicesEventsProtocol* delegator);

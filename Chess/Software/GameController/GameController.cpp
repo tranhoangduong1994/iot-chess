@@ -69,9 +69,12 @@ void GameController::setDifficulty(int difficulty) {
 void GameController::handleInitValidating(BaseTypes::Bitboard boardState) {
     std::cout << "[GameController] handleInitValidating" << std::endl;
     if (boardState != GAME_INIT_BITBOARD) {
+        BoardServices::getInstance()->playSound(SoundType::SOUND_OFFPOSITION);
         delegator->onPiecesOffPosition(boardState, GAME_INIT_BITBOARD);
         return;
     }
+    
+    BoardServices::getInstance()->playSound(SoundType::SOUND_GAME_READY);
     
     currentLogicBitboard = GAME_INIT_BITBOARD;
     delegator->onGameStarted();
@@ -88,20 +91,24 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
     std::vector<BaseTypes::Move> availableMoves = readMove(currentPhysicsBitboard);
     std::cout << "[GameController] handlePlayerFinishedMove, available moves = " << std::to_string(availableMoves.size()) << std::endl;
     if (availableMoves.size() < 1) {
+        BoardServices::getInstance()->playSound(SoundType::SOUND_INVALID_MOVE);
         delegator->onInvalidMove();
         return;
     }
     
     if (availableMoves.size() == 1) {
+        BoardServices::getInstance()->playSound(SoundType::SOUND_VALID_MOVE);
         BaseTypes::Move move = availableMoves.at(0);
         currentLogicBitboard = currentPhysicsBitboard;
         handlePlayerTurnEnded(move);
         return;
     }
     
+    BoardServices::getInstance()->playSound(SoundType::SOUND_MULTIPLEMOVE);
     currentState = multipleMovesSelectingState;
     delegator->onMultipleMovesAvailable(availableMoves, [=](bool moveSelected, BaseTypes::Move move) {
         if (moveSelected) {
+            BoardServices::getInstance()->playSound(SoundType::SOUND_VALID_MOVE);
             currentLogicBitboard = currentPhysicsBitboard;
             this->handlePlayerTurnEnded(move);
             return;
@@ -224,6 +231,7 @@ void GameController::onOpponentFinishedMove(BaseTypes::Move move, BaseTypes::Bit
         return;
     }
     
+    BoardServices::getInstance()->playSound(SoundType::SOUND_OFFPOSITION);
     delegator->onPiecesOffPosition(currentPhysicsBitboard, expectedBitboard);
 }
 

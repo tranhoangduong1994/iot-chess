@@ -20,6 +20,7 @@ class MainDelegation : public BoardSystemEventsProtocol {
 public:
     void onSerialPortConnected(const SerialPortConnectedData& data) {
         std::cout << "[MAIN] MainDelegation - onSerialPortConnected. Port number:  " << data.file_description << "." << std::endl;
+        BoardServices::getInstance()->playSound(SoundType::SOUND_SYSTEM_READY);
         ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
     };
     

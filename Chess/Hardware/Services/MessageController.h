@@ -24,7 +24,8 @@ enum ServiceRequestType {
     MOVE,
     CASTLING,
     SCAN_BOARD,
-    RESET_BOARD
+    RESET_BOARD,
+    PLAY_SOUND
 };
 
 enum ServiceResponseType {
