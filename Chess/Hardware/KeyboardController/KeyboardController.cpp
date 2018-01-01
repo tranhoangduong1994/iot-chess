@@ -50,66 +50,66 @@ void KeyboardController::startKeyboardScanning() {
     std::thread([=]() {
         while(true) {
             if (!digitalRead(6) && !upPressed && !downPressed && !okPressed && !menuPressed) {
-                if (!digitalRead(6)) {
+//                if (!digitalRead(6)) {
                     upPressed = true;
                     if (delegator) {
                         delegator->onKeyPressed(BoardKey::UP);
                     }
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             if (digitalRead(6) && upPressed) {
-                if (digitalRead(6)) {
+//                if (digitalRead(6)) {
                     upPressed = false;
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             
             if (!digitalRead(13) && !upPressed && !downPressed && !okPressed && !menuPressed) {
-                if (!digitalRead(13)) {
+//                if (!digitalRead(13)) {
                     downPressed = true;
                     if (delegator) {
                         delegator->onKeyPressed(BoardKey::DOWN);
                     }
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             if (digitalRead(13) && downPressed) {
-                if (digitalRead(13)) {
+//                if (digitalRead(13)) {
                     downPressed = false;
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             
             if (!digitalRead(19) && !upPressed && !downPressed && !okPressed && !menuPressed) {
-                if (!digitalRead(19)) {
+//                if (!digitalRead(19)) {
                     menuPressed = true;
                     if (delegator) {
                         delegator->onKeyPressed(BoardKey::MENU);
                     }
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             if (digitalRead(19) && menuPressed) {
-                if (digitalRead(19)) {
+//                if (digitalRead(19)) {
                     menuPressed = false;
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             
             if (!digitalRead(26) && !upPressed && !downPressed && !okPressed && !menuPressed) {
-                if (!digitalRead(26)) {
+//                if (!digitalRead(26)) {
                     okPressed = true;
                     if (delegator) {
                         delegator->onKeyPressed(BoardKey::OK);
                     }
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
             if (digitalRead(26) && okPressed) {
-                if (digitalRead(26)) {
+//                if (digitalRead(26)) {
                     okPressed = false;
-                }
+//                }
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
         }
