@@ -247,6 +247,11 @@ void StockfishWrapper::start(int difficulty) {
     std::string token, cmd;
     newgame();
     pos.set(StartFEN, false, &States->back(), Threads.main());
+    
+    //set difficulty;
+    std::string is;
+    is << "name Skill Level value " << difficulty;
+    setoption(is);
 }
 
 void StockfishWrapper::move(BaseTypes::Move move) {
