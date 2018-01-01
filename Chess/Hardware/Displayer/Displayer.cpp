@@ -12,7 +12,7 @@
 #include "wiringPiI2C.h"
 #include <thread>
 
-const std::string CLEARING_STRING = "                    ";
+const char* CLEARING_STRING = "                    ";
 
 #define I2C_ADDR 0x3f
 
@@ -119,7 +119,12 @@ void Displayer::print(int lineNumber, int position, std::string content) {
     }
     
     lcdWrite(0x80 + pos, LCD_CMD);
+    while(*CLEARING_STRING) {
+        lcdWrite(*(CLEARING_STRING++), LCD_CHR);
+    }
+    
     const char* s = content.c_str();
+    lcdWrite(0x80 + pos, LCD_CMD);
     while (*s) {
         lcdWrite(*(s++), LCD_CHR);
     }
