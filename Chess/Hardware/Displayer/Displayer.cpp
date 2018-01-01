@@ -12,7 +12,7 @@
 #include "wiringPiI2C.h"
 #include <thread>
 
-#define LINE_LENGTH 20;
+#define LINE_LENGTH 20
 
 #define I2C_ADDR 0x3f
 
