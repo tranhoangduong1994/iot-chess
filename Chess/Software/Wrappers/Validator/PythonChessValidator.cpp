@@ -129,6 +129,9 @@ BaseTypes::PieceType PythonChessValidator::getPieceType(int squareIndex) {
         if (typeString == "n") {
             return BaseTypes::PieceType::BLACK_KNIGHT;
         }
+        if (typeString == "r") {
+            return BaseTypes::PieceType::BLACK_ROOK;
+        }
         if (typeString == "p") {
             return BaseTypes::PieceType::BLACK_PAWN;
         }
