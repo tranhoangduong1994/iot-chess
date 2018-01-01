@@ -22,6 +22,7 @@ public:
     void onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) override;
     
 private:
+    bool buttonLocked;
 	OffPositionScreen(std::string header, std::vector<std::string> items);
     void onEnter() override;
     void onExit() override;

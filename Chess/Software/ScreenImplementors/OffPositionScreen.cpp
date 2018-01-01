@@ -28,6 +28,7 @@ OffPositionScreen* OffPositionScreen::create(const BaseTypes::Bitboard& currentS
     }
 
     OffPositionScreen* screen = new OffPositionScreen("OFF POSITIONS", items);
+    screen->buttonLocked = false;
     screen->expectedState = expectedState;
     return screen;
 }
@@ -62,39 +63,45 @@ void OffPositionScreen::onScanDone(BaseTypes::Bitboard currentPhysicsBitboard) {
     
     if (items.size() > 0) {
 		updateList(items);
+        buttonLocked = false;
 		return;
 	} 
     ScreenManager::getInstance()->popScreen();
 }
 
 void OffPositionScreen::onMenuPressed() {
-    std::vector<OptionScreenEntry> entries;
-    
-    OptionScreenEntry newGameEntry;
-    newGameEntry.name = "New game";
-    newGameEntry.onSelected = [=](std::string content) {
-        ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
-    };
-    entries.push_back(newGameEntry);
-    
-    OptionScreenEntry mainMenuEntry;
-    mainMenuEntry.name = "Go to Main menu";
-    mainMenuEntry.onSelected = [=](std::string content) {
-        ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
-    };
-    entries.push_back(mainMenuEntry);
-    
-    OptionScreenEntry cancelEntry;
-    cancelEntry.name = "Cancel";
-    cancelEntry.onSelected = [=](std::string content) {
-        ScreenManager::getInstance()->popScreen();
-    };
-    entries.push_back(cancelEntry);
-    
-    OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
-    ScreenManager::getInstance()->pushScreen(gameMenuScreen);
+    if (!buttonLocked) {
+        std::vector<OptionScreenEntry> entries;
+        
+        OptionScreenEntry newGameEntry;
+        newGameEntry.name = "New game";
+        newGameEntry.onSelected = [=](std::string content) {
+            ScreenManager::getInstance()->runScreen(GameSettingScreen::create());
+        };
+        entries.push_back(newGameEntry);
+        
+        OptionScreenEntry mainMenuEntry;
+        mainMenuEntry.name = "Go to Main menu";
+        mainMenuEntry.onSelected = [=](std::string content) {
+            ScreenManager::getInstance()->runScreen(MainMenuScreen::create());
+        };
+        entries.push_back(mainMenuEntry);
+        
+        OptionScreenEntry cancelEntry;
+        cancelEntry.name = "Cancel";
+        cancelEntry.onSelected = [=](std::string content) {
+            ScreenManager::getInstance()->popScreen();
+        };
+        entries.push_back(cancelEntry);
+        
+        OptionScreen* gameMenuScreen = OptionScreen::create("GAME MENU", entries);
+        ScreenManager::getInstance()->pushScreen(gameMenuScreen);
+    }
 }
 
 void OffPositionScreen::onOKPressed() {
-	BoardServices::getInstance()->scan();
+    if (!buttonLocked) {
+        buttonLocked = true;
+        BoardServices::getInstance()->scan();
+    }
 }
