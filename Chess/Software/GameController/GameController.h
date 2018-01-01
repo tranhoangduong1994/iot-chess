@@ -72,6 +72,7 @@ private:
     GameState* resettingState;
     GameState* playerTurnState;
     GameState* opponentTurnState;
+    GameState* multipleMovesSelectingState;
     GameState* currentState;
     
     BaseTypes::Bitboard currentLogicBitboard;
@@ -86,5 +87,7 @@ public:
 };
 
 class OpponentTurnState : public GameState {};
+
+class MultipleMoveSelectingState : public GameState {};
 
 #endif /* GameController_h */

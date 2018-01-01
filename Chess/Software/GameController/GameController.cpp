@@ -31,12 +31,14 @@ GameController::GameController(BaseTypes::Side side, int difficulty) {
     validator = PythonChessValidator::getInstance();
     
     resettingState = new ResettingState();
+    multipleMovesSelectingState = new MultipleMoveSelectingState();
     playerTurnState = new PlayerTurnState();
     opponentTurnState = new OpponentTurnState();
 }
 
 GameController::~GameController() {
     delete resettingState;
+    delete multipleMovesSelectingState;
     delete playerTurnState;
     delete opponentTurnState;
 }
@@ -97,11 +99,14 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
         return;
     }
     
+    currentState = multipleMovesSelectingState;
     delegator->onMultipleMovesAvailable(availableMoves, [=](bool moveSelected, BaseTypes::Move move) {
         if (moveSelected) {
             currentLogicBitboard = currentPhysicsBitboard;
             this->handlePlayerTurnEnded(move);
+            return;
         }
+        currentState = playerTurnState;
     });
 }
 
