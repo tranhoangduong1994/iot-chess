@@ -99,7 +99,13 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
     if (availableMoves.size() == 1) {
         BoardServices::getInstance()->playSound(SoundType::SOUND_VALID_MOVE);
         BaseTypes::Move move = availableMoves.at(0);
+
         currentLogicBitboard = currentPhysicsBitboard;
+        
+        if (tryPromotion(move)) {
+            return;
+        }
+        
         handlePlayerTurnEnded(move);
         return;
     }
@@ -110,11 +116,53 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
         if (moveSelected) {
             BoardServices::getInstance()->playSound(SoundType::SOUND_VALID_MOVE);
             currentLogicBitboard = currentPhysicsBitboard;
+            
+            if (tryPromotion(move)) {
+                return;
+            }
+            
             this->handlePlayerTurnEnded(move);
             return;
         }
         currentState = playerTurnState;
     });
+}
+
+bool GameController::tryPromotion(BaseTypes::Move move) {
+    BaseTypes::Position fromPos = move.fromPos;
+    BaseTypes::Position toPos = move.toPos;
+    BaseTypes::PieceType pieceType = validator->getPieceType(fromPos.toSquareIndex());
+    
+    if (pieceType == BaseTypes::PieceType::WHITE_PAWN && toPos.rank == 8 || pieceType == BaseTypes::PieceType::BLACK_PAWN && toPos.rank == 1) {
+        delegator->onPlayerPromotion([=](std::string pieceType) {
+            if (pieceType == "Queen") {
+                move.promotionType = 'q';
+                handlePlayerTurnEnded(move);
+                return;
+            }
+            
+            if (pieceType == "Rook") {
+                move.promotionType = 'r';
+                handlePlayerTurnEnded(move);
+                return;
+            }
+            
+            if (pieceType == "Bishop") {
+                move.promotionType = 'b';
+                handlePlayerTurnEnded(move);
+                return;
+            }
+            
+            if (pieceType == "Knight") {
+                move.promotionType = 'n';
+                handlePlayerTurnEnded(move);
+                return;
+            }
+        });
+        return true;
+    }
+    
+    return false;
 }
 
 void GameController::handlePlayerTurnEnded(BaseTypes::Move move) {
@@ -206,6 +254,7 @@ void GameController::handleComputerFinishedThinking(BaseTypes::Move move) {
             return;
         }
     }
+    
     if (pieceType == BaseTypes::PieceType::BLACK_KING) {
         if (toPos.file - fromPos.file == 2) {
             BoardServices::getInstance()->castling(CastlingType::BLACK_KING_SIDE);
@@ -214,6 +263,17 @@ void GameController::handleComputerFinishedThinking(BaseTypes::Move move) {
         if (toPos.file - fromPos.file == -2) {
             BoardServices::getInstance()->castling(CastlingType::BLACK_QUEEN_SIDE);
             return;
+        }
+    }
+    
+    if (pieceType == BaseTypes::PieceType::WHITE_PAWN || pieceType == BaseTypes::PieceType::BLACK_PAWN) {
+        if (move.toPos.file != move.fromPos.file) {//THE PAWN CAPTURES A PIECE
+            int toPosIndex = (move.toPos.rank - 1) * 8 + (move.toPos.file - 'a');
+            bool toPosState = currentLogicBitboard.get(toPosIndex);
+            if (!toPosState) {//EN PASSANT
+                BoardServices::getInstance()->enPassant(move);
+                return;
+            }
         }
     }
     BoardServices::getInstance()->move(move);

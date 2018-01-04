@@ -128,6 +128,24 @@ void GameScreen::onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, st
     ScreenManager::getInstance()->pushScreen(screen);
 }
 
+void GameScreen::onPlayerPromotion(std::function<void(std::string pieceType)> onSelected) {
+    const int PROMOTION_TYPES = 4;
+    std::string promotionTypes[PROMOTION_TYPES] = {"Queen", "Rook", "Bishop", "Knight"};
+    std::vector<OptionScreenEntry> entries;
+    for (int i = 0; i < PROMOTION_TYPES; i++) {
+        OptionScreenEntry entry;
+        entry.name = promotionTypes[i].toString();
+        entry.onSelected = [=](std::string content) {
+            onSelected(content);
+            ScreenManager::getInstance()->popScreen();
+        };
+        entries.push_back(entry);
+    }
+    
+    OptionScreen* screen = OptionScreen::create("Select type...", entries);
+    ScreenManager::getInstance()->pushScreen(screen);
+}
+
 void GameScreen::onGameMenuRequested() {
     std::vector<OptionScreenEntry> entries;
     

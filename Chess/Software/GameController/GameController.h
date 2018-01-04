@@ -32,6 +32,7 @@ public:
     void handleInitValidating(BaseTypes::Bitboard boardState);
     
     void handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysicsBitboard);
+    bool tryPromotion(BaseTypes::Move move);
     void handlePlayerTurnEnded(BaseTypes::Move move);
 
     void handleOpponentTurnEnded(BaseTypes::Move move);

@@ -32,6 +32,8 @@ public:
     
     void onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, std::function<void(bool, BaseTypes::Move)>) override;
     
+    void onPlayerPromotion(std::function<void(std::string pieceType)> onSelected) override;
+    
     void onGameMenuRequested() override;
     
     void onWinGame(BaseTypes::Move lastMove) override;

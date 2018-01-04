@@ -34,6 +34,7 @@ class BoardServices {
 public:
     void resetBoard();
     void move(BaseTypes::Move move);
+    void enPassant(BaseTypes::Move move);
     void castling(CastlingType type);
     void scan();
     void playSound(SoundType type);

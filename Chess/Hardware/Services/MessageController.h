@@ -22,6 +22,7 @@ enum MessageType {
 
 enum ServiceRequestType {
     MOVE,
+    EN_PASSANT,
     CASTLING,
     SCAN_BOARD,
     RESET_BOARD,

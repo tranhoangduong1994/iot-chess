@@ -29,6 +29,10 @@ void BoardServices::move(BaseTypes::Move move) {
     MessageController::getInstance()->send(ServiceRequestType::MOVE, move.toString());
 }
 
+void BoardServices::enPassant(BaseTypes::Move move) {
+    MessageController::getInstance()->send(ServiceRequestType::EN_PASSANT, move.toString());
+}
+
 void BoardServices::castling(CastlingType type) {
 	MessageController::getInstance()->send(ServiceRequestType::CASTLING, std::to_string(type));
 }

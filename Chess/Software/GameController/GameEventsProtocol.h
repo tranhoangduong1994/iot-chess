@@ -28,6 +28,8 @@ public:
     virtual void onPiecesOffPosition(BaseTypes::Bitboard currentState, BaseTypes::Bitboard expectedState) = 0;
     virtual void onMultipleMovesAvailable(std::vector<BaseTypes::Move> moves, std::function<void(bool, BaseTypes::Move)> onSelected) = 0;
     
+    virtual void onPlayerPromotion(std::function<void(std::string pieceType)> onSelected) = 0;
+    
     virtual void onGameMenuRequested() = 0;
     
     virtual void onTurnBegan(BaseTypes::Move previousOpponentMove) = 0;
