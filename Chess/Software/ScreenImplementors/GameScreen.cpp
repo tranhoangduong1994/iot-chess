@@ -134,7 +134,7 @@ void GameScreen::onPlayerPromotion(std::function<void(std::string pieceType)> on
     std::vector<OptionScreenEntry> entries;
     for (int i = 0; i < PROMOTION_TYPES; i++) {
         OptionScreenEntry entry;
-        entry.name = promotionTypes[i].toString();
+        entry.name = promotionTypes[i];
         entry.onSelected = [=](std::string content) {
             onSelected(content);
             ScreenManager::getInstance()->popScreen();
