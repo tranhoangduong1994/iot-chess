@@ -128,7 +128,8 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
     });
 }
 
-bool GameController::tryPromotion(BaseTypes::Move move) {
+bool GameController::tryPromotion(BaseTypes::Move move_) {
+    BaseTypes::Move move(move_);
     BaseTypes::Position fromPos = move.fromPos;
     BaseTypes::Position toPos = move.toPos;
     BaseTypes::PieceType pieceType = validator->getPieceType(fromPos.toSquareIndex());
