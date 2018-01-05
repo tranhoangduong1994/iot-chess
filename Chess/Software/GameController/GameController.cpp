@@ -128,14 +128,13 @@ void GameController::handlePlayerFinishedMove(BaseTypes::Bitboard currentPhysics
     });
 }
 
-bool GameController::tryPromotion(BaseTypes::Move move_) {
-    BaseTypes::Move move(move_);
+bool GameController::tryPromotion(BaseTypes::Move move) {
     BaseTypes::Position fromPos = move.fromPos;
     BaseTypes::Position toPos = move.toPos;
     BaseTypes::PieceType pieceType = validator->getPieceType(fromPos.toSquareIndex());
     
     if (pieceType == BaseTypes::PieceType::WHITE_PAWN && toPos.rank == 8 || pieceType == BaseTypes::PieceType::BLACK_PAWN && toPos.rank == 1) {
-        delegator->onPlayerPromotion([=](std::string pieceType) {
+        delegator->onPlayerPromotion([&](std::string pieceType) {
             if (pieceType == "Queen") {
                 move.promotionType = 'q';
                 handlePlayerTurnEnded(move);
